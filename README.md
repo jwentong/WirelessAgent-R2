@@ -4,6 +4,14 @@
 
 WirelessAgent is an automated LLM agent system for solving wireless communication homework problems (WCHW dataset). It uses Monte Carlo Tree Search (MCTS) to automatically discover and optimize agentic workflows for domain-specific problem solving.
 
+## 🏆 Performance Highlights
+
+<p align="center">
+  <img src="assets/method_comparison.png" alt="Method Comparison" width="700">
+</p>
+
+**WirelessAgent achieves 77.94% accuracy on the WCHW test set**, outperforming all baseline methods including AFlow (+7.0%), MedPrompt (+16.7%), and standard Chain-of-Thought (+17.6%).
+
 ---
 
 ## WCHW Dataset
@@ -11,6 +19,10 @@ WirelessAgent is an automated LLM agent system for solving wireless communicatio
 ### Overview
 
 The **Wireless Communication Homework (WCHW)** dataset contains 349 validated problems and 100 test problems covering core wireless communication concepts:
+
+<p align="center">
+  <img src="assets/knowledge_points_pie.png" alt="Knowledge Points Distribution" width="500">
+</p>
 
 | Topic | Examples |
 |-------|----------|
@@ -20,6 +32,10 @@ The **Wireless Communication Homework (WCHW)** dataset contains 349 validated pr
 | Signal Processing | Bandwidth, sampling, spectral efficiency |
 | Propagation | Free-space loss, path loss models |
 | Noise Analysis | BER, noise power, Q-function |
+
+<p align="center">
+  <img src="assets/knowledge_points_bar.png" alt="Knowledge Points Bar Chart" width="700">
+</p>
 
 ### Data Format
 
@@ -169,13 +185,49 @@ WirelessAgent/
 
 ## Results
 
-Best performance achieved on validation set:
+### MCTS Optimization Process
+
+WirelessAgent uses Monte Carlo Tree Search to explore and optimize agentic workflows:
+
+<p align="center">
+  <img src="assets/mcts_tree.png" alt="MCTS Tree Visualization" width="800">
+</p>
+
+### Performance Evolution
+
+The optimization converges to high-performing workflows over 10 rounds:
+
+<p align="center">
+  <img src="assets/performance_curve.png" alt="Performance Curve" width="700">
+</p>
+
+### Validation Set Results
 
 | Round | Score | Model |
 |-------|-------|-------|
 | Round 14 | **81.78%** | Claude + qwen-turbo-latest |
 | Round 11 | 81.21% | Claude + qwen-turbo-latest |
-| Round 2 | 80.86% | Claude + qwen-turbo-latest|
+| Round 2 | 80.86% | Claude + qwen-turbo-latest |
+
+### Score Distribution Analysis
+
+<p align="center">
+  <img src="assets/score_analysis.png" alt="Score Distribution" width="700">
+</p>
+
+### Test Set Comparison
+
+Comparison with baseline methods on WCHW test set (100 problems):
+
+| Method | Accuracy | Improvement |
+|--------|----------|-------------|
+| Original (Qwen-Turbo) | 58.34% | - |
+| ADAS (Hu et al., 2024) | 53.13% | -5.21% |
+| CoT-SC (Wang et al., 2022) | 60.01% | +1.67% |
+| CoT (Wei et al., 2022) | 60.32% | +1.98% |
+| MedPrompt (Nori et al., 2023) | 61.22% | +2.88% |
+| AFlow (Zhang et al., 2025) | 69.92% | +11.58% |
+| **WirelessAgent (Ours)** | **77.94%** | **+19.60%** |
 
 ---
 
