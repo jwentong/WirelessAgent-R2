@@ -1,4 +1,4 @@
-# WirelessAgent: LLM Agents for Wireless Communication Problems
+# WirelessAgent: LLM Agents for Wireless Communication Tasks
 
 **UC Berkeley AgentX Competition Benchmark Submission**
 
