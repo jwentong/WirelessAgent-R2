@@ -1,0 +1,349 @@
+﻿# -*- coding: utf-8 -*-
+# @Date    : 1/13/2026
+# @Author  : Jingwen
+# @Desc    : optimizer for graph (updated with AsyncLLM integration)
+
+import asyncio
+import time
+from typing import List, Literal, Dict
+
+from pydantic import BaseModel, Field
+
+from scripts.evaluator import DatasetType
+from scripts.optimizer_utils.convergence_utils import ConvergenceUtils
+from scripts.optimizer_utils.data_utils import DataUtils
+from scripts.optimizer_utils.evaluation_utils import EvaluationUtils
+from scripts.optimizer_utils.experience_utils import ExperienceUtils
+from scripts.optimizer_utils.graph_utils import GraphUtils
+from scripts.optimizer_utils.critic_utils import CriticUtils
+from scripts.async_llm import create_llm_instance
+from scripts.formatter import XmlFormatter, FormatError
+from scripts.logs import logger
+
+QuestionType = Literal["math", "code", "qa"]
+OptimizerType = Literal["Graph", "Test"]
+
+
+class GraphOptimize(BaseModel):
+    modification: str = Field(default="", description="modification")
+    graph: str = Field(default="", description="graph")
+    prompt: str = Field(default="", description="prompt")
+    operator_code: str = Field(default="", description="The complete Python code for operator.py. If you want to modify operators (e.g., improve RAG, add UnitConverter), provide the FULL updated code here. If no changes to operators, leave empty.")
+
+
+class Optimizer:
+    def __init__(
+        self,
+        dataset: DatasetType,
+        question_type: QuestionType,
+        opt_llm_config,
+        exec_llm_config,
+        operators: List,
+        sample: int,
+        check_convergence: bool = False,
+        optimized_path: str = None,
+        initial_round: int = 1,
+        max_rounds: int = 20,
+        validation_rounds: int = 5,
+        test_rounds: str = "1",  # NEW: rounds to test on test set
+    ) -> None:
+        self.optimize_llm_config = opt_llm_config
+        self.optimize_llm = create_llm_instance(self.optimize_llm_config)
+        self.execute_llm_config = exec_llm_config
+
+        self.dataset = dataset
+        self.type = question_type
+        self.check_convergence = check_convergence
+
+        self.graph = None
+        self.operators = operators
+
+        self.root_path = f"{optimized_path}/{self.dataset}"
+        self.sample = sample
+        self.top_scores = []
+        self.round = initial_round
+        self.max_rounds = max_rounds
+        self.validation_rounds = validation_rounds
+        self.test_rounds = test_rounds  # NEW: store test_rounds
+
+        self.graph_utils = GraphUtils(self.root_path)
+        self.data_utils = DataUtils(self.root_path)
+        self.experience_utils = ExperienceUtils(self.root_path)
+        self.evaluation_utils = EvaluationUtils(self.root_path)
+        self.convergence_utils = ConvergenceUtils(self.root_path)
+        self.critic_utils = CriticUtils(self.root_path)
+
+    def optimize(self, mode: OptimizerType = "Graph"):
+        if mode == "Test":
+            test_n = 1  # validation datasets's execution number
+            for i in range(test_n):
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                score = loop.run_until_complete(self.test())
+            return None
+
+        for opt_round in range(self.max_rounds):
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+
+            retry_count = 0
+            max_retries = 1
+
+            while retry_count < max_retries:
+                try:
+                    score = loop.run_until_complete(self._optimize_graph())
+                    break
+                except Exception as e:
+                    retry_count += 1
+                    logger.info(f"Error occurred: {e}. Retrying... (Attempt {retry_count}/{max_retries})")
+                    if retry_count == max_retries:
+                        logger.info("Max retries reached. Moving to next round.")
+                        score = None
+
+                    wait_time = 5 * retry_count
+                    time.sleep(wait_time)
+
+                if retry_count < max_retries:
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+
+            self.round += 1
+            logger.info(f"Score for round {self.round}: {score}")
+
+            converged, convergence_round, final_round = self.convergence_utils.check_convergence(top_k=3)
+
+            if converged and self.check_convergence:
+                logger.info(
+                    f"Convergence detected, occurred in round {convergence_round}, final round is {final_round}"
+                )
+                # Print average scores and standard deviations for each round
+                self.convergence_utils.print_results()
+                break
+
+            time.sleep(5)
+
+    async def _optimize_graph(self):
+        validation_n = self.validation_rounds  # validation datasets's execution number
+        graph_path = f"{self.root_path}/workflows"
+        data = self.data_utils.load_results(graph_path)
+
+        if self.round == 1:
+            directory = self.graph_utils.create_round_directory(graph_path, self.round)
+            # Load graph using graph_utils
+            self.graph = self.graph_utils.load_graph(self.round, graph_path)
+            avg_score = await self.evaluation_utils.evaluate_graph(self, directory, validation_n, data, initial=True)
+
+        # Create a loop until the generated graph meets the check conditions
+        while True:
+            directory = self.graph_utils.create_round_directory(graph_path, self.round + 1)
+
+            # Load experience FIRST to inform selection
+            processed_experience = self.experience_utils.load_experience()
+            
+            top_rounds = self.data_utils.get_top_rounds(self.sample)
+            # Pass experience data to enable exploration-aware selection
+            sample = self.data_utils.select_round(top_rounds, experience_data=processed_experience)
+
+            prompt, graph_load = self.graph_utils.read_graph_files(sample["round"], graph_path)
+            graph = self.graph_utils.extract_solve_graph(graph_load)
+
+            experience = self.experience_utils.format_experience(processed_experience, sample["round"])
+
+            operator_description = self.graph_utils.load_operators_description(self.operators)
+            log_data = self.data_utils.load_log(sample["round"])
+
+            operator_description = self.graph_utils.load_operators_description(self.operators)
+            log_data = self.data_utils.load_log(sample["round"])
+
+            # CRITIC STEP: Analyze logs with CURRENT SCORE for smart recommendations
+            critic_report = self.critic_utils.analyze(sample["round"], current_score=sample["score"])
+            logger.info(f"Critic Report for Round {sample['round']}:\n{critic_report}")
+            log_data = f"{log_data}\n\n{critic_report}"
+
+            graph_optimize_prompt = self.graph_utils.create_graph_optimize_prompt(
+                experience, sample["score"], graph[0], prompt, operator_description, self.type, log_data
+            )
+
+            # Replace ActionNode with AsyncLLM and XmlFormatter
+            try:
+                # Create XmlFormatter based on GraphOptimize model
+                graph_formatter = XmlFormatter.from_model(GraphOptimize)
+                
+                # Call the LLM with formatter
+                response = await self.optimize_llm.call_with_format(
+                    graph_optimize_prompt, 
+                    graph_formatter
+                )
+                
+                # If we reach here, response is properly formatted and validated
+                logger.info(f"Graph optimization response received successfully")
+            except FormatError as e:
+                # Handle format validation errors
+                logger.error(f"Format error in graph optimization: {str(e)}")
+                # Try again with a fallback approach - direct call with post-processing
+                raw_response = await self.optimize_llm(graph_optimize_prompt)
+                
+                # Try to extract fields using basic parsing
+                response = self._extract_fields_from_response(raw_response)
+                if not response:
+                    logger.error("Failed to extract fields from raw response, retrying...")
+                    continue
+
+            # Check if the modification meets the conditions
+            check = self.experience_utils.check_modification(
+                processed_experience, response["modification"], sample["round"]
+            )
+
+            # If `check` is True, break the loop; otherwise, regenerate the graph
+            if check:
+                break
+
+        # Save the graph and evaluate
+        self.graph_utils.write_graph_files(directory, response, self.round + 1, self.dataset)
+
+        experience = self.experience_utils.create_experience_data(sample, response["modification"])
+
+        self.graph = self.graph_utils.load_graph(self.round + 1, graph_path)
+
+        logger.info(directory)
+
+        avg_score = await self.evaluation_utils.evaluate_graph(self, directory, validation_n, data, initial=False)
+
+        self.experience_utils.update_experience(directory, experience, avg_score)
+
+        return avg_score
+
+    def _extract_fields_from_response(self, response: str) -> Dict[str, str]:
+        """
+        Fallback method to extract fields from raw response text using basic parsing
+        
+        Args:
+            response: Raw response text from LLM
+            
+        Returns:
+            Dictionary with extracted fields or None if extraction fails
+        """
+        try:
+            # Try to extract XML tags with regex
+            import re
+            
+            # Initialize result dictionary with default values
+            result = {
+                "modification": "",
+                "graph": "",
+                "prompt": ""
+            }
+            
+            # Extract each field with regex
+            for field in result.keys():
+                pattern = rf"<{field}>(.*?)</{field}>"
+                match = re.search(pattern, response, re.DOTALL)
+                if match:
+                    result[field] = match.group(1).strip()
+            
+            # Verify we have at least some content
+            if not any(result.values()):
+                logger.error("No fields could be extracted from response")
+                return None
+            
+            return result
+        except Exception as e:
+            logger.error(f"Error extracting fields from response: {str(e)}")
+            return None
+
+    async def test(self):
+        """
+        Test workflow on test dataset
+        
+        Supports testing specific rounds or all available rounds.
+        Configure via --test_rounds parameter:
+        - Single round: --test_rounds 1
+        - Multiple rounds: --test_rounds 1,3,12
+        - All rounds: --test_rounds all
+        """
+        # Parse test_rounds parameter
+        if self.test_rounds.lower() == "all":
+            # Find all available rounds in workflows directory
+            import os
+            workflows_dir = f"{self.root_path}/workflows"
+            if os.path.exists(workflows_dir):
+                rounds = []
+                for item in os.listdir(workflows_dir):
+                    if item.startswith("round_") and os.path.isdir(os.path.join(workflows_dir, item)):
+                        try:
+                            round_num = int(item.split("_")[1])
+                            rounds.append(round_num)
+                        except (IndexError, ValueError):
+                            continue
+                rounds.sort()
+                logger.info(f"Testing all available rounds: {rounds}")
+            else:
+                logger.warning(f"Workflows directory not found: {workflows_dir}")
+                rounds = [1]
+        else:
+            # Parse comma-separated round numbers
+            rounds = [int(r.strip()) for r in self.test_rounds.split(",")]
+            logger.info(f"Testing specified rounds: {rounds}")
+        
+        data = []
+
+        # Use workflows_test directory to store test results
+        graph_path = f"{self.root_path}/workflows_test"
+        json_file_path = self.data_utils.get_results_file_path(graph_path)
+
+        # Load existing test results
+        data = self.data_utils.load_results(graph_path)
+
+        logger.info(f"Starting test on {self.dataset} test dataset...")
+        logger.info(f"Test rounds: {rounds}")
+        logger.info(f"Results will be saved to: {json_file_path}")
+
+        for round_num in rounds:
+            logger.info(f"\n{'='*60}")
+            logger.info(f"Testing Round {round_num} on TEST dataset")
+            logger.info(f"{'='*60}")
+            
+            try:
+                # Create test directory for this round
+                directory = self.graph_utils.create_round_directory(graph_path, round_num)
+                
+                # Load graph from workflows/round_X (not workflows_test)
+                source_graph_path = f"{self.root_path}/workflows"
+                self.graph = self.graph_utils.load_graph(round_num, source_graph_path)
+                
+                logger.info(f"Loaded graph from: {source_graph_path}/round_{round_num}")
+                logger.info(f"Evaluating on TEST dataset...")
+
+                # Evaluate on TEST dataset (is_test=True)
+                score, avg_cost, total_cost = await self.evaluation_utils.evaluate_graph_test(
+                    self, directory, is_test=True
+                )
+
+                logger.info(f"Round {round_num} TEST Results:")
+                logger.info(f"  Score: {score:.4f}")
+                logger.info(f"  Avg Cost: ${avg_cost:.4f}")
+                logger.info(f"  Total Cost: ${total_cost:.4f}")
+
+                # Save results
+                new_data = self.data_utils.create_result_data(round_num, score, avg_cost, total_cost)
+                data.append(new_data)
+                self.data_utils.save_results(json_file_path, data)
+                
+                logger.info(f"Results saved to: {json_file_path}")
+                
+            except FileNotFoundError as e:
+                logger.error(f"Round {round_num} graph not found: {e}")
+                logger.error(f"Skipping round {round_num}")
+                continue
+            except Exception as e:
+                logger.error(f"Error testing round {round_num}: {e}")
+                import traceback
+                logger.error(traceback.format_exc())
+                continue
+        
+        logger.info(f"\n{'='*60}")
+        logger.info(f"Test completed for {len(rounds)} rounds")
+        logger.info(f"Results saved to: {json_file_path}")
+        logger.info(f"{'='*60}")
+        
+        return data
