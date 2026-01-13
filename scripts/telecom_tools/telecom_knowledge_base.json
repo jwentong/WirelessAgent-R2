@@ -1,0 +1,422 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "description": "Telecommunications Formula Knowledge Base for RAG Retrieval",
+    "categories": ["BER", "channel_capacity", "fading", "modulation", "special_functions", "noise", "diversity"]
+  },
+  
+  "formulas": [
+    {
+      "id": "ber_bpsk_coherent",
+      "name": "BPSK BER (Coherent Detection)",
+      "category": "BER",
+      "formula_latex": "P_b = \\frac{1}{2} \\text{erfc}\\left(\\sqrt{\\frac{E_b}{N_0}}\\right)",
+      "formula_text": "P_b = 0.5 * erfc(sqrt(Eb/N0))",
+      "variables": {
+        "P_b": "Bit Error Rate (probability)",
+        "Eb": "Energy per bit (Joules)",
+        "N0": "Noise power spectral density (W/Hz)",
+        "Eb/N0": "Signal-to-noise ratio per bit"
+      },
+      "keywords": ["BPSK", "bit error rate", "BER", "coherent", "erfc", "error function", "相干BPSK", "误码率"],
+      "notes": "This is the optimal BER for binary modulation in AWGN channel",
+      "calculator_function": "ber_bpsk_coherent"
+    },
+    {
+      "id": "ber_qpsk_coherent",
+      "name": "QPSK BER (Coherent Detection)",
+      "category": "BER",
+      "formula_latex": "P_b = \\frac{1}{2} \\text{erfc}\\left(\\sqrt{\\frac{E_b}{N_0}}\\right)",
+      "formula_text": "P_b = 0.5 * erfc(sqrt(Eb/N0))",
+      "variables": {
+        "P_b": "Bit Error Rate",
+        "Eb": "Energy per bit",
+        "N0": "Noise power spectral density"
+      },
+      "keywords": ["QPSK", "quadrature", "BER", "coherent", "四相移键控"],
+      "notes": "QPSK has same BER performance as BPSK per bit, but 2x spectral efficiency",
+      "calculator_function": "ber_bpsk_coherent"
+    },
+    {
+      "id": "ber_bfsk_coherent",
+      "name": "BFSK BER (Coherent Detection)",
+      "category": "BER",
+      "formula_latex": "P_b = \\frac{1}{2} \\text{erfc}\\left(\\sqrt{\\frac{E_b}{2N_0}}\\right)",
+      "formula_text": "P_b = 0.5 * erfc(sqrt(Eb/(2*N0)))",
+      "variables": {
+        "P_b": "Bit Error Rate",
+        "Eb": "Energy per bit",
+        "N0": "Noise power spectral density"
+      },
+      "keywords": ["BFSK", "FSK", "frequency shift keying", "coherent", "频移键控"],
+      "notes": "BFSK has 3dB penalty compared to BPSK (divide Eb/N0 by 2 in erfc)",
+      "calculator_function": "ber_bfsk_coherent"
+    },
+    {
+      "id": "ber_bfsk_noncoherent",
+      "name": "BFSK BER (Non-Coherent Detection)",
+      "category": "BER",
+      "formula_latex": "P_b = \\frac{1}{2} \\exp\\left(-\\frac{E_b}{2N_0}\\right)",
+      "formula_text": "P_b = 0.5 * exp(-Eb/(2*N0))",
+      "keywords": ["BFSK", "FSK", "non-coherent", "noncoherent", "非相干"],
+      "notes": "Non-coherent detection does not require carrier phase recovery",
+      "calculator_function": "ber_bfsk_noncoherent"
+    },
+    {
+      "id": "ber_dpsk",
+      "name": "DPSK BER",
+      "category": "BER",
+      "formula_latex": "P_b = \\frac{1}{2} \\exp\\left(-\\frac{E_b}{N_0}\\right)",
+      "formula_text": "P_b = 0.5 * exp(-Eb/N0)",
+      "keywords": ["DPSK", "differential", "PSK", "差分相移键控"],
+      "notes": "DPSK uses differential encoding, avoiding coherent carrier recovery",
+      "calculator_function": "ber_dpsk"
+    },
+    {
+      "id": "ber_mqam",
+      "name": "M-QAM BER (Coherent Detection)",
+      "category": "BER",
+      "formula_latex": "P_b \\approx \\frac{4}{\\log_2 M} \\left(1 - \\frac{1}{\\sqrt{M}}\\right) Q\\left(\\sqrt{\\frac{3 \\log_2 M}{M-1} \\frac{E_b}{N_0}}\\right)",
+      "formula_text": "P_b ≈ (4/log2(M)) * (1 - 1/sqrt(M)) * Q(sqrt(3*log2(M)/(M-1) * Eb/N0))",
+      "variables": {
+        "M": "Number of constellation points (16, 64, 256, etc.)",
+        "P_b": "Bit Error Rate",
+        "Q": "Gaussian Q-function"
+      },
+      "keywords": ["QAM", "M-QAM", "16-QAM", "64-QAM", "quadrature amplitude modulation", "正交幅度调制"],
+      "notes": "Approximate formula valid for high SNR"
+    },
+    {
+      "id": "shannon_capacity",
+      "name": "Shannon Channel Capacity",
+      "category": "channel_capacity",
+      "formula_latex": "C = B \\log_2\\left(1 + \\frac{S}{N}\\right)",
+      "formula_text": "C = B * log2(1 + SNR)",
+      "variables": {
+        "C": "Channel capacity (bits/second)",
+        "B": "Channel bandwidth (Hz)",
+        "S": "Signal power",
+        "N": "Noise power",
+        "SNR": "Signal-to-noise ratio (linear, not dB)"
+      },
+      "keywords": ["Shannon", "capacity", "channel capacity", "香农", "信道容量", "Shannon limit"],
+      "notes": "Fundamental limit on error-free transmission rate over AWGN channel",
+      "calculator_function": "shannon_capacity"
+    },
+    {
+      "id": "spectral_efficiency",
+      "name": "Spectral Efficiency",
+      "category": "channel_capacity",
+      "formula_latex": "\\eta = \\frac{C}{B} = \\log_2(1 + \\text{SNR})",
+      "formula_text": "η = C/B = log2(1 + SNR)",
+      "variables": {
+        "η": "Spectral efficiency (bits/s/Hz)",
+        "C": "Channel capacity",
+        "B": "Bandwidth"
+      },
+      "keywords": ["spectral efficiency", "频谱效率", "bits per second per Hz"],
+      "notes": "Measures how efficiently the bandwidth is used"
+    },
+    {
+      "id": "rayleigh_pdf",
+      "name": "Rayleigh Fading PDF",
+      "category": "fading",
+      "formula_latex": "p(r) = \\frac{r}{\\sigma^2} \\exp\\left(-\\frac{r^2}{2\\sigma^2}\\right), \\quad r \\geq 0",
+      "formula_text": "p(r) = (r/σ²) * exp(-r²/(2σ²))",
+      "variables": {
+        "r": "Envelope amplitude",
+        "σ²": "Variance of underlying Gaussian components"
+      },
+      "keywords": ["Rayleigh", "fading", "pdf", "NLOS", "瑞利", "衰落"],
+      "notes": "Models amplitude when there is no LOS component (rich scattering)"
+    },
+    {
+      "id": "rayleigh_outage",
+      "name": "Rayleigh Outage Probability",
+      "category": "fading",
+      "formula_latex": "P_{out} = 1 - \\exp\\left(-\\frac{\\gamma_{th}}{\\bar{\\gamma}}\\right)",
+      "formula_text": "P_out = 1 - exp(-γ_th/γ_avg)",
+      "variables": {
+        "P_out": "Outage probability",
+        "γ_th": "Threshold SNR (linear)",
+        "γ_avg": "Average SNR (linear)"
+      },
+      "keywords": ["Rayleigh", "outage", "中断概率", "瑞利衰落"],
+      "calculator_function": "rayleigh_outage_probability"
+    },
+    {
+      "id": "rayleigh_level_crossing",
+      "name": "Rayleigh Level Crossing Rate",
+      "category": "fading",
+      "formula_latex": "N_R = \\sqrt{2\\pi} f_D \\rho \\exp(-\\rho^2)",
+      "formula_text": "N_R = sqrt(2π) * f_D * ρ * exp(-ρ²)",
+      "variables": {
+        "N_R": "Level crossing rate (crossings/sec)",
+        "f_D": "Maximum Doppler frequency (Hz)",
+        "ρ": "Normalized threshold (R/R_rms)"
+      },
+      "keywords": ["level crossing rate", "LCR", "Rayleigh", "电平穿越率"],
+      "calculator_function": "rayleigh_level_crossing_rate"
+    },
+    {
+      "id": "rayleigh_fade_duration",
+      "name": "Rayleigh Average Fade Duration",
+      "category": "fading",
+      "formula_latex": "\\bar{\\tau} = \\frac{\\exp(\\rho^2) - 1}{\\rho f_D \\sqrt{2\\pi}}",
+      "formula_text": "τ = (exp(ρ²) - 1) / (ρ * f_D * sqrt(2π))",
+      "variables": {
+        "τ": "Average fade duration (seconds)",
+        "ρ": "Normalized threshold",
+        "f_D": "Maximum Doppler frequency"
+      },
+      "keywords": ["fade duration", "AFD", "average fade duration", "平均衰落持续时间"],
+      "calculator_function": "rayleigh_average_fade_duration"
+    },
+    {
+      "id": "rician_pdf",
+      "name": "Rician Fading PDF",
+      "category": "fading",
+      "formula_latex": "p(r) = \\frac{r}{\\sigma^2} \\exp\\left(-\\frac{r^2+s^2}{2\\sigma^2}\\right) I_0\\left(\\frac{rs}{\\sigma^2}\\right)",
+      "formula_text": "p(r) = (r/σ²) * exp(-(r²+s²)/(2σ²)) * I_0(rs/σ²)",
+      "variables": {
+        "r": "Envelope amplitude",
+        "s": "LOS component amplitude",
+        "σ²": "Scattered power variance",
+        "I_0": "Modified Bessel function of order 0"
+      },
+      "keywords": ["Rician", "Rice", "fading", "LOS", "K-factor", "莱斯衰落"],
+      "notes": "K = s²/(2σ²) is the Rician K-factor"
+    },
+    {
+      "id": "rician_k_factor",
+      "name": "Rician K-Factor Definition",
+      "category": "fading",
+      "formula_latex": "K = \\frac{s^2}{2\\sigma^2} = \\frac{\\text{LOS power}}{\\text{Scattered power}}",
+      "formula_text": "K = LOS_power / scattered_power",
+      "keywords": ["K-factor", "Rician", "LOS", "莱斯K因子"],
+      "notes": "K=0 → Rayleigh; K→∞ → AWGN (no fading)"
+    },
+    {
+      "id": "rician_outage",
+      "name": "Rician Outage Probability",
+      "category": "fading",
+      "formula_latex": "P_{out} = 1 - Q_1\\left(\\sqrt{2K}, \\sqrt{\\frac{2(K+1)\\gamma_{th}}{\\bar{\\gamma}}}\\right)",
+      "formula_text": "P_out = 1 - Q_1(sqrt(2K), sqrt(2(K+1)γ_th/γ_avg))",
+      "variables": {
+        "Q_1": "First-order Marcum Q-function",
+        "K": "Rician K-factor",
+        "γ_th": "Threshold SNR",
+        "γ_avg": "Average SNR"
+      },
+      "keywords": ["Rician", "outage", "Marcum Q", "莱斯衰落中断概率"],
+      "calculator_function": "rician_outage_probability"
+    },
+    {
+      "id": "doppler_frequency",
+      "name": "Maximum Doppler Frequency",
+      "category": "fading",
+      "formula_latex": "f_D = \\frac{v}{\\lambda} = \\frac{v \\cdot f_c}{c}",
+      "formula_text": "f_D = v/λ = v * f_c / c",
+      "variables": {
+        "f_D": "Maximum Doppler frequency (Hz)",
+        "v": "Vehicle speed (m/s)",
+        "λ": "Wavelength (m)",
+        "f_c": "Carrier frequency (Hz)",
+        "c": "Speed of light (3×10⁸ m/s)"
+      },
+      "keywords": ["Doppler", "frequency", "多普勒频移", "移动速度"],
+      "notes": "Determines how fast the channel changes"
+    },
+    {
+      "id": "coherence_time",
+      "name": "Coherence Time",
+      "category": "fading",
+      "formula_latex": "T_c \\approx \\frac{1}{f_D} = \\frac{\\lambda}{v}",
+      "formula_text": "T_c ≈ 1/f_D = λ/v",
+      "variables": {
+        "T_c": "Coherence time (seconds)",
+        "f_D": "Maximum Doppler frequency"
+      },
+      "keywords": ["coherence time", "相干时间", "时间相关"],
+      "notes": "Time over which channel can be considered constant"
+    },
+    {
+      "id": "coherence_bandwidth",
+      "name": "Coherence Bandwidth",
+      "category": "fading",
+      "formula_latex": "B_c \\approx \\frac{1}{\\tau_{rms}} \\approx \\frac{1}{5\\sigma_\\tau}",
+      "formula_text": "B_c ≈ 1/τ_rms",
+      "variables": {
+        "B_c": "Coherence bandwidth (Hz)",
+        "τ_rms": "RMS delay spread (seconds)"
+      },
+      "keywords": ["coherence bandwidth", "delay spread", "相干带宽", "时延扩展"],
+      "notes": "Bandwidth over which channel response is approximately flat"
+    },
+    {
+      "id": "Q_function",
+      "name": "Q-Function (Gaussian Tail)",
+      "category": "special_functions",
+      "formula_latex": "Q(x) = \\frac{1}{\\sqrt{2\\pi}} \\int_x^\\infty e^{-t^2/2} dt = \\frac{1}{2}\\text{erfc}\\left(\\frac{x}{\\sqrt{2}}\\right)",
+      "formula_text": "Q(x) = 0.5 * erfc(x/sqrt(2))",
+      "keywords": ["Q function", "Gaussian", "tail probability", "Q函数", "高斯"],
+      "notes": "Q(x) = P(Z > x) for standard normal Z",
+      "calculator_function": "Q_function"
+    },
+    {
+      "id": "erfc",
+      "name": "Complementary Error Function",
+      "category": "special_functions",
+      "formula_latex": "\\text{erfc}(x) = 1 - \\text{erf}(x) = \\frac{2}{\\sqrt{\\pi}} \\int_x^\\infty e^{-t^2} dt",
+      "formula_text": "erfc(x) = 1 - erf(x)",
+      "keywords": ["erfc", "error function", "complementary", "互补误差函数"],
+      "calculator_function": "erfc"
+    },
+    {
+      "id": "marcum_Q",
+      "name": "Marcum Q-Function",
+      "category": "special_functions",
+      "formula_latex": "Q_M(a,b) = \\int_b^\\infty x \\left(\\frac{x}{a}\\right)^{M-1} e^{-(x^2+a^2)/2} I_{M-1}(ax) dx",
+      "formula_text": "Q_1(a,b) = ∫[b,∞] x * exp(-(x²+a²)/2) * I_0(ax) dx",
+      "variables": {
+        "a": "Non-centrality parameter",
+        "b": "Threshold",
+        "M": "Order (typically 1)",
+        "I_n": "Modified Bessel function"
+      },
+      "keywords": ["Marcum", "Q function", "Rician", "detection", "Marcum Q函数"],
+      "notes": "Used in Rician fading outage and radar detection theory",
+      "calculator_function": "marcum_Q"
+    },
+    {
+      "id": "bessel_J",
+      "name": "Bessel Function (First Kind)",
+      "category": "special_functions",
+      "formula_latex": "J_n(x) = \\sum_{m=0}^\\infty \\frac{(-1)^m}{m!(m+n)!}\\left(\\frac{x}{2}\\right)^{2m+n}",
+      "formula_text": "J_n(x) - Bessel function of first kind, order n",
+      "keywords": ["Bessel", "J function", "FM", "贝塞尔函数"],
+      "notes": "Used in FM modulation: carrier amplitude = J_0(β), sideband n = J_n(β)",
+      "calculator_function": "bessel_J"
+    },
+    {
+      "id": "bessel_I",
+      "name": "Modified Bessel Function (First Kind)",
+      "category": "special_functions",
+      "formula_latex": "I_n(x) = i^{-n} J_n(ix)",
+      "formula_text": "I_n(x) - Modified Bessel function",
+      "keywords": ["Bessel", "modified", "I function", "Rician", "修正贝塞尔函数"],
+      "notes": "Appears in Rician fading PDF and Marcum Q-function",
+      "calculator_function": "bessel_I"
+    },
+    {
+      "id": "fm_bandwidth",
+      "name": "FM Bandwidth (Carson's Rule)",
+      "category": "modulation",
+      "formula_latex": "B_{FM} \\approx 2(\\Delta f + f_m) = 2f_m(\\beta + 1)",
+      "formula_text": "B_FM = 2*(Δf + f_m) = 2*f_m*(β + 1)",
+      "variables": {
+        "B_FM": "FM signal bandwidth",
+        "Δf": "Peak frequency deviation",
+        "f_m": "Maximum modulating frequency",
+        "β": "Modulation index = Δf/f_m"
+      },
+      "keywords": ["Carson", "FM bandwidth", "modulation index", "调频带宽", "卡森规则"],
+      "calculator_function": "fm_carson_bandwidth"
+    },
+    {
+      "id": "fm_snr_improvement",
+      "name": "FM SNR Improvement",
+      "category": "modulation",
+      "formula_latex": "\\text{SNR}_{out} = 3\\beta^2 \\cdot \\text{SNR}_{in}",
+      "formula_text": "SNR_out = 3 * β² * SNR_in",
+      "variables": {
+        "β": "Modulation index"
+      },
+      "keywords": ["FM", "SNR improvement", "调频信噪比改善"],
+      "notes": "FM trades bandwidth for SNR improvement (wideband FM)"
+    },
+    {
+      "id": "noise_figure",
+      "name": "Noise Figure",
+      "category": "noise",
+      "formula_latex": "F = \\frac{\\text{SNR}_{in}}{\\text{SNR}_{out}} = 1 + \\frac{T_e}{T_0}",
+      "formula_text": "F = SNR_in / SNR_out",
+      "variables": {
+        "F": "Noise figure (linear)",
+        "T_e": "Equivalent noise temperature",
+        "T_0": "Reference temperature (290K)"
+      },
+      "keywords": ["noise figure", "NF", "噪声系数"],
+      "notes": "NF(dB) = 10*log10(F)"
+    },
+    {
+      "id": "cascaded_noise_figure",
+      "name": "Cascaded Noise Figure (Friis)",
+      "category": "noise",
+      "formula_latex": "F_{total} = F_1 + \\frac{F_2-1}{G_1} + \\frac{F_3-1}{G_1 G_2} + \\cdots",
+      "formula_text": "F_total = F1 + (F2-1)/G1 + (F3-1)/(G1*G2) + ...",
+      "variables": {
+        "F_i": "Noise figure of stage i",
+        "G_i": "Gain of stage i"
+      },
+      "keywords": ["Friis", "cascade", "noise figure", "级联噪声", "弗里斯"],
+      "notes": "First stage dominates when G1 is large"
+    },
+    {
+      "id": "thermal_noise_power",
+      "name": "Thermal Noise Power",
+      "category": "noise",
+      "formula_latex": "N = kTB",
+      "formula_text": "N = k * T * B",
+      "variables": {
+        "N": "Noise power (Watts)",
+        "k": "Boltzmann constant (1.38×10⁻²³ J/K)",
+        "T": "Temperature (Kelvin)",
+        "B": "Bandwidth (Hz)"
+      },
+      "keywords": ["thermal noise", "kTB", "热噪声"],
+      "notes": "At room temperature (290K): N₀ = kT = 4×10⁻²¹ W/Hz = -174 dBm/Hz"
+    },
+    {
+      "id": "diversity_mrc",
+      "name": "Maximal Ratio Combining (MRC)",
+      "category": "diversity",
+      "formula_latex": "\\gamma_{MRC} = \\sum_{i=1}^{L} \\gamma_i",
+      "formula_text": "γ_MRC = γ_1 + γ_2 + ... + γ_L",
+      "variables": {
+        "γ_MRC": "Combined SNR",
+        "γ_i": "SNR of branch i",
+        "L": "Number of diversity branches"
+      },
+      "keywords": ["MRC", "maximal ratio combining", "最大比合并", "diversity"],
+      "notes": "Optimal combining technique that maximizes output SNR"
+    },
+    {
+      "id": "diversity_order",
+      "name": "Diversity Order",
+      "category": "diversity",
+      "formula_latex": "P_e \\propto \\left(\\frac{1}{\\text{SNR}}\\right)^L",
+      "formula_text": "P_e ∝ (1/SNR)^L",
+      "variables": {
+        "L": "Diversity order"
+      },
+      "keywords": ["diversity order", "分集阶数", "分集增益"],
+      "notes": "Higher diversity order means steeper BER slope at high SNR"
+    },
+    {
+      "id": "path_loss_free_space",
+      "name": "Free Space Path Loss",
+      "category": "propagation",
+      "formula_latex": "L_p = \\left(\\frac{4\\pi d}{\\lambda}\\right)^2 = \\left(\\frac{4\\pi d f}{c}\\right)^2",
+      "formula_text": "L_p = (4πd/λ)² = (4πdf/c)²",
+      "formula_dB": "L_p(dB) = 20*log10(4πdf/c) = 32.4 + 20*log10(f_MHz) + 20*log10(d_km)",
+      "variables": {
+        "d": "Distance",
+        "λ": "Wavelength",
+        "f": "Frequency"
+      },
+      "keywords": ["path loss", "free space", "FSPL", "自由空间路径损耗"],
+      "notes": "Increases 6dB per doubling of distance, 6dB per doubling of frequency"
+    }
+  ]
+}

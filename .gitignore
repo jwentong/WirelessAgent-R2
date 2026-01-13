@@ -1,9 +1,9 @@
 .DS_Store
 config/config2.yaml
 logs
-data/datasets
 optimized
 */__pycache__
 *.pyc
 /workspace
-*.json
+data/Textbooks/*.pdf
+data/Textbooks/.cache/
