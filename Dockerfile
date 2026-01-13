@@ -1,10 +1,19 @@
 # WirelessAgent - Green Agent Docker Image
 # UC Berkeley AgentX Competition Submission
 # AgentBeats Compatible
+# 
+# Docker Image: ghcr.io/jwentong/wirelessagent-r2:latest
 # Author: Jingwen
 # Date: 1/13/2026
 
 FROM python:3.11-slim
+
+# Metadata
+LABEL org.opencontainers.image.title="WirelessAgent"
+LABEL org.opencontainers.image.description="Green Agent for WCHW Benchmark - UC Berkeley AgentX Competition"
+LABEL org.opencontainers.image.authors="Jingwen Tong <jwentong@foxmail.com>"
+LABEL org.opencontainers.image.source="https://github.com/jwentong/WirelessAgent-R2"
+LABEL org.opencontainers.image.licenses="MIT"
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -21,21 +30,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uv for fast package management
-RUN pip install --no-cache-dir uv
-
-# Copy dependency files
-COPY pyproject.toml .
+# Copy dependency files first (for better layer caching)
 COPY requirements.txt .
 
 # Install Python dependencies
-RUN uv pip install --system -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY src/ ./src/
-COPY data/ ./data/
+COPY data/datasets/ ./data/datasets/
 COPY benchmarks/ ./benchmarks/
-COPY config/ ./config/
 
 # Create necessary directories
 RUN mkdir -p /app/logs
