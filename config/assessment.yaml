@@ -1,0 +1,146 @@
+# WirelessAgent Assessment Configuration
+# UC Berkeley AgentX Competition - AgentBeats Green Agent
+# 
+# This configuration defines the assessment setup for testing purple agents
+# on the WCHW (Wireless Communication Homework) benchmark.
+
+[config]
+
+# Assessment Metadata
+name: "WCHW Benchmark Assessment"
+version: "1.0.0"
+description: "Wireless Communication Homework benchmark for evaluating AI agents on telecommunications problems"
+author: "Jingwen Tong"
+category: "Telecommunications"
+
+# Dataset Configuration
+[datasets]
+
+# Test dataset (100 problems) - Used for final evaluation
+test:
+  name: "wchw_test"
+  path: "data/datasets/wchw_test.jsonl"
+  format: "jsonl"
+  count: 100
+  fields:
+    question: "question"
+    answer: "answer"
+    cot: "cot"
+    id: "id"
+
+# Validation dataset (349 problems) - Used for development
+validate:
+  name: "wchw_validate"
+  path: "data/datasets/wchw_validate.jsonl"
+  format: "jsonl"
+  count: 349
+  fields:
+    question: "question"
+    answer: "answer"
+    cot: "cot"
+    id: "id"
+
+# Assessment Settings
+[assessment]
+
+# Mode: "test" or "validate"
+mode: "test"
+
+# Scoring configuration
+scoring:
+  type: "numeric"
+  tolerance: 0.05
+  partial_credit: true
+
+# Answer types supported
+answer_types:
+  - numeric_with_units     # e.g., "16 kbit/s", "44.8 kHz"
+  - scientific_notation    # e.g., "5.42e-6"
+  - mathematical_formula   # e.g., "(A^2 T)/3"
+  - text_conceptual        # e.g., "Shannon-Hartley theorem"
+
+# Evaluation metrics
+metrics:
+  primary: "accuracy"
+  secondary:
+    - "partial_score"
+    - "category_accuracy"
+
+# Agent Configuration
+[agent]
+
+# A2A Protocol Settings
+host: "0.0.0.0"
+port: 9009
+
+# Agent Card
+agent_card:
+  name: "WirelessAgent"
+  description: "Green Agent for WCHW Benchmark Assessment"
+  version: "1.0.0"
+  url: "http://localhost:9009"
+  capabilities:
+    streaming: false
+    pushNotifications: false
+  skills:
+    - id: "wchw-assessment"
+      name: "WCHW Assessment"
+      description: "Evaluates agents on wireless communication problems"
+      inputModes: ["text"]
+      outputModes: ["text"]
+
+# Leaderboard Queries (for AgentBeats registration)
+[leaderboard]
+
+# Query format for AgentBeats platform
+queries:
+  - question: "Shannon capacity. B=50 MHz, SNR=0.1 (linear). Compute C (Mbps)."
+    expected_answer: "6.87 Mbps"
+    category: "Information Theory"
+    
+  - question: "Two-ray critical distance. f_c=900 MHz, h_t=10 m, h_r=2 m. Compute d_c=4h_t h_r/λ."
+    expected_answer: "240 m"
+    category: "Channel Modeling"
+    
+  - question: "For a telephone band 300–3400 Hz, what is the bandwidth?"
+    expected_answer: "3100 Hz"
+    category: "Signal Processing"
+
+# Problem Categories
+[categories]
+
+categories:
+  - name: "Information Theory"
+    description: "Shannon capacity, entropy, mutual information"
+    weight: 0.25
+    
+  - name: "Channel Modeling"
+    description: "Path loss, fading, MIMO channels"
+    weight: 0.25
+    
+  - name: "Signal Processing"
+    description: "Modulation, detection, filtering"
+    weight: 0.25
+    
+  - name: "System Design"
+    description: "Link budget, network planning"
+    weight: 0.25
+
+# Runtime Settings
+[runtime]
+
+# Timeout settings (in seconds)
+timeouts:
+  problem_timeout: 30
+  session_timeout: 3600
+  total_timeout: 7200
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/assessment.log"
+
+# Environment variables required
+environment:
+  - OPENAI_API_KEY  # For LLM-based evaluation if needed

@@ -1,0 +1,124 @@
+{
+  "name": "WirelessAgent",
+  "version": "1.0.0",
+  "description": "Green Agent for WCHW Benchmark Assessment - UC Berkeley AgentX Competition",
+  "author": "Jingwen Tong",
+  
+  "assessment": {
+    "name": "WCHW Benchmark",
+    "description": "Wireless Communication Homework benchmark with 100 test problems covering information theory, channel modeling, signal processing, and system design",
+    "category": "Telecommunications",
+    "difficulty": "Advanced"
+  },
+  
+  "datasets": {
+    "test": {
+      "name": "wchw_test",
+      "path": "data/datasets/wchw_test.jsonl",
+      "format": "jsonl",
+      "count": 100,
+      "description": "100 wireless communication problems for final evaluation"
+    },
+    "validate": {
+      "name": "wchw_validate", 
+      "path": "data/datasets/wchw_validate.jsonl",
+      "format": "jsonl",
+      "count": 349,
+      "description": "349 wireless communication problems for development"
+    }
+  },
+  
+  "scoring": {
+    "primary_metric": "accuracy",
+    "scoring_type": "numeric",
+    "tolerance": 0.05,
+    "partial_credit": true,
+    "answer_types": [
+      "numeric_with_units",
+      "scientific_notation",
+      "mathematical_formula",
+      "text_conceptual"
+    ]
+  },
+  
+  "agent": {
+    "protocol": "A2A",
+    "host": "0.0.0.0",
+    "port": 9009,
+    "health_endpoint": "/health",
+    "tasks_endpoint": "/tasks",
+    "submit_endpoint": "/submit",
+    "results_endpoint": "/results"
+  },
+  
+  "docker": {
+    "image": "ghcr.io/jwentong/wirelessagent-r2:latest",
+    "port": 9009
+  },
+  
+  "leaderboard_queries": [
+    {
+      "id": "sample_1",
+      "question": "Shannon capacity. B=50 MHz, SNR=0.1 (linear). Compute C (Mbps).",
+      "expected_answer": "6.87 Mbps",
+      "category": "Information Theory"
+    },
+    {
+      "id": "sample_2",
+      "question": "Two-ray critical distance. f_c=900 MHz, h_t=10 m, h_r=2 m. Compute d_c=4h_t h_r/λ.",
+      "expected_answer": "240 m",
+      "category": "Channel Modeling"
+    },
+    {
+      "id": "sample_3",
+      "question": "For a telephone band 300–3400 Hz, what is the bandwidth?",
+      "expected_answer": "3100 Hz",
+      "category": "Signal Processing"
+    },
+    {
+      "id": "sample_4",
+      "question": "Required SNR from target spectral efficiency. Need C/B=4 bit/s/Hz. Find SNR (linear and dB).",
+      "expected_answer": "SNR=15 (11.8 dB)",
+      "category": "Information Theory"
+    },
+    {
+      "id": "sample_5",
+      "question": "Compute Eb/N0 for coherent BPSK given received power P_r=1e-6 W, bit rate R_b=50 kbit/s, N0=2e-10 W/Hz. Find Eb/N0 (linear).",
+      "expected_answer": "0.100",
+      "category": "Digital Communications"
+    }
+  ],
+  
+  "categories": [
+    {
+      "id": "information_theory",
+      "name": "Information Theory",
+      "description": "Shannon capacity, entropy, mutual information, channel coding",
+      "weight": 0.25
+    },
+    {
+      "id": "channel_modeling",
+      "name": "Channel Modeling",
+      "description": "Path loss, fading models, MIMO channels, propagation",
+      "weight": 0.25
+    },
+    {
+      "id": "signal_processing",
+      "name": "Signal Processing",
+      "description": "Modulation, detection, filtering, sampling",
+      "weight": 0.25
+    },
+    {
+      "id": "system_design",
+      "name": "System Design",
+      "description": "Link budget, network planning, resource allocation",
+      "weight": 0.25
+    }
+  ],
+  
+  "timeouts": {
+    "problem_timeout_seconds": 30,
+    "session_timeout_seconds": 3600,
+    "total_timeout_seconds": 7200
+  }
+}

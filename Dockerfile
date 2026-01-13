@@ -20,6 +20,10 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONPATH=/app/src:/app
 
+# Assessment mode: "test" (100 problems) or "validate" (349 problems)
+# Can be overridden at runtime: docker run -e ASSESSMENT_MODE=validate ...
+ENV ASSESSMENT_MODE=test
+
 # Set working directory
 WORKDIR /app
 
@@ -40,6 +44,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ ./src/
 COPY data/datasets/ ./data/datasets/
 COPY benchmarks/ ./benchmarks/
+COPY config/ ./config/
 
 # Create necessary directories
 RUN mkdir -p /app/logs

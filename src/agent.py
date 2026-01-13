@@ -178,11 +178,36 @@ class WCHWAgent:
     WCHW Benchmark Agent
     
     Loads the test dataset and provides evaluation capabilities.
+    
+    Supports two modes:
+    - "test": 100 test problems for final evaluation
+    - "validate": 349 validation problems for development
     """
     
-    def __init__(self, dataset_path: str = None):
+    # Dataset paths by mode
+    DATASETS = {
+        "test": "data/datasets/wchw_test.jsonl",
+        "validate": "data/datasets/wchw_validate.jsonl"
+    }
+    
+    def __init__(self, dataset_path: str = None, mode: str = None):
+        """
+        Initialize WCHW Agent.
+        
+        Args:
+            dataset_path: Direct path to dataset file (overrides mode)
+            mode: "test" or "validate" (default: from ASSESSMENT_MODE env var or "test")
+        """
+        # Determine mode from environment variable or parameter
+        if mode is None:
+            mode = os.environ.get("ASSESSMENT_MODE", "test")
+        
+        self.mode = mode
+        
         if dataset_path is None:
-            dataset_path = PROJECT_ROOT / "data" / "datasets" / "wchw_test.jsonl"
+            # Use mode-based path
+            dataset_file = self.DATASETS.get(mode, self.DATASETS["test"])
+            dataset_path = PROJECT_ROOT / dataset_file
         
         self.dataset_path = Path(dataset_path)
         self.evaluator = WCHWEvaluator()
@@ -190,6 +215,7 @@ class WCHWAgent:
         self.results: Dict[str, Dict] = {}
         
         self._load_dataset()
+        logger.info(f"WCHWAgent initialized in '{self.mode}' mode with {len(self.problems)} problems")
     
     def _load_dataset(self):
         """Load WCHW test problems"""
