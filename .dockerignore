@@ -1,0 +1,50 @@
+# WirelessAgent - Docker Ignore File
+# Exclude files not needed in Docker image
+
+# Git
+.git
+.gitignore
+
+# Python cache
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs (will be mounted as volume)
+logs/*.log
+
+# Large files
+*.pdf
+data/Textbooks/*.pdf
+data/Textbooks/.cache/
+
+# Workspace results (will be mounted as volume)
+workspace/WCHW/workflows/round_*/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+*.test.py
+tests/
+
+# Documentation
+docs/
+*.md
+!README.md

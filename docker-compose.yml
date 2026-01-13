@@ -1,0 +1,63 @@
+# WirelessAgent - Docker Compose Configuration
+# UC Berkeley AgentX Competition Submission
+# Author: Jingwen
+# Date: 1/13/2026
+
+version: '3.8'
+
+services:
+  # Green Agent - Evaluation Server
+  green-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wirelessagent-green
+    ports:
+      - "8080:8080"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - ./data:/app/data:ro
+      - ./logs:/app/logs
+      - ./workspace:/app/workspace
+    command: ["python", "agents/green_agent.py", "--port", "8080"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - wirelessagent-network
+
+  # Purple Agent - Baseline Competition Agent
+  purple-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wirelessagent-purple
+    ports:
+      - "8081:8081"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GREEN_AGENT_URL=http://green-agent:8080
+    volumes:
+      - ./config:/app/config:ro
+      - ./logs:/app/logs
+    command: ["python", "agents/purple_agent.py", "--port", "8081"]
+    depends_on:
+      green-agent:
+        condition: service_healthy
+    networks:
+      - wirelessagent-network
+
+networks:
+  wirelessagent-network:
+    driver: bridge
+
+volumes:
+  logs:
+  workspace:
