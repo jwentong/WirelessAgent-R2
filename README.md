@@ -1,148 +1,194 @@
-# WirelessAgent: LLM Agents for Wireless Communication Tasks
+# WirelessAgent
 
 <p align="center">
   <img src="assets/method_comparison.png" alt="Method Comparison" width="700">
 </p>
 
+[![Test and Publish](https://github.com/jwentong/WirelessAgent-R2/actions/workflows/test-and-publish.yml/badge.svg)](https://github.com/jwentong/WirelessAgent-R2/actions)
+[![Docker Image](https://img.shields.io/badge/docker-ghcr.io%2Fjwentong%2Fwirelessagent--r2-blue)](https://github.com/jwentong/WirelessAgent-R2/pkgs/container/wirelessagent-r2)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**WirelessAgent** is a **Green Agent** for the [UC Berkeley AgentX Competition](https://agentbeats.dev). It evaluates LLM capabilities on wireless communication problems using the **WCHW (Wireless Communication Homework)** benchmark.
+
+---
+
 ## 📋 Abstract
 
-**WirelessAgent** is a **Green Agent** for evaluating LLM capabilities on wireless communication problems. It provides the **WCHW (Wireless Communication Homework)** benchmark containing 449 problems across 6 core topics: Channel Capacity, Modulation, Coding, Signal Processing, Propagation, and Noise Analysis.
+WirelessAgent provides a rigorous evaluation framework for assessing LLM agents on 449 wireless communication problems across 6 core topics: Channel Capacity, Modulation, Coding, Signal Processing, Propagation, and Noise Analysis.
 
-The green agent evaluates purple agents using the A2A (Agent-to-Agent) protocol, measuring accuracy on numeric calculations, formula derivations, and conceptual understanding. Our baseline purple agent achieves **77.94% accuracy** using MCTS-optimized workflows, significantly outperforming standard prompting methods.
-
----
-
-## 🏆 UC Berkeley AgentX Competition Submission
-
-| Requirement | Status | Description |
-|-------------|--------|-------------|
-| ✅ Abstract | Complete | Brief description above |
-| ✅ GitHub Repository | Complete | This repository with full source code |
-| ✅ Baseline Purple Agent | Complete | `agents/purple_agent.py` - A2A compatible |
-| ✅ Docker Image | Complete | `Dockerfile` + `docker-compose.yml` |
-| ⏳ AgentBeats Registration | Pending | Register on platform |
-| ⏳ Demo Video | Pending | 3-minute demonstration |
+The green agent evaluates purple agents using the **A2A (Agent-to-Agent) protocol**, measuring accuracy on numeric calculations, formula derivations, and conceptual understanding. Our baseline achieves **77.94% accuracy**, significantly outperforming standard prompting methods.
 
 ---
 
-## 🚀 Quick Start
+## 🏗️ Project Structure
 
-### Option 1: Docker (Recommended)
+```
+WirelessAgent-R2/
+├── src/
+│   ├── server.py         # Server setup and agent card configuration
+│   ├── executor.py       # A2A request handling
+│   ├── agent.py          # WCHW agent implementation
+│   └── messenger.py      # A2A messaging utilities
+├── tests/
+│   └── test_agent.py     # Agent tests
+├── data/datasets/
+│   ├── wchw_validate.jsonl  # 349 validation problems
+│   └── wchw_test.jsonl      # 100 test problems
+├── Dockerfile            # Docker configuration
+├── pyproject.toml        # Python dependencies
+└── .github/workflows/
+    └── test-and-publish.yml  # CI workflow
+```
+
+---
+
+## 🚀 Getting Started
+
+### Option 1: Using Docker (Recommended)
+
+```bash
+# Pull the image
+docker pull ghcr.io/jwentong/wirelessagent-r2:latest
+
+# Run the container
+docker run -p 9009:9009 ghcr.io/jwentong/wirelessagent-r2:latest
+```
+
+### Option 2: Build from Source
 
 ```bash
 # Clone the repository
 git clone https://github.com/jwentong/WirelessAgent-R2.git
 cd WirelessAgent-R2
 
-# Set API keys
-export OPENAI_API_KEY="your-openai-key"
-export ANTHROPIC_API_KEY="your-anthropic-key"
+# Build the image
+docker build -t wirelessagent .
 
-# Run with Docker Compose
-docker-compose up -d
-
-# Green Agent: http://localhost:8080
-# Purple Agent: http://localhost:8081
+# Run the container
+docker run -p 9009:9009 wirelessagent
 ```
 
-### Option 2: Local Installation
+### Option 3: Running Locally with uv
 
 ```bash
-# Create environment
-conda create -n wirelessagent python=3.9
-conda activate wirelessagent
+# Install dependencies
+uv sync
+
+# Run the server
+uv run src/server.py
+```
+
+### Option 4: Running Locally with pip
+
+```bash
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run Green Agent (evaluation server)
-python agents/green_agent.py --port 8080
-
-# Run Purple Agent (baseline) in another terminal
-python agents/purple_agent.py --port 8081
+# Run the server
+python src/server.py
 ```
 
 ---
 
-## 🟢 Green Agent (Evaluation Server)
+## 🧪 Testing
 
-The Green Agent evaluates purple/competition agents on the WCHW benchmark.
-
-### A2A Protocol Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/health` | GET | Health check |
-| `/agent-card` | GET | Agent capabilities and metadata |
-| `/tasks` | GET | Get all 100 test problems |
-| `/task/<id>` | GET | Get specific problem |
-| `/submit` | POST | Submit answer for evaluation |
-| `/evaluate-all` | POST | Batch evaluate all answers |
-| `/results` | GET | Get current scores and summary |
-
-### Example Usage
+### Run Unit Tests
 
 ```bash
-# Get agent card
-curl http://localhost:8080/agent-card
+# Install test dependencies
+uv sync --extra test
 
-# Get all tasks
-curl http://localhost:8080/tasks
-
-# Submit an answer
-curl -X POST http://localhost:8080/submit \
-  -H "Content-Type: application/json" \
-  -d '{"task_id": "test_1", "answer": "0.585 Mbit/s"}'
-
-# Get results
-curl http://localhost:8080/results
+# Run tests
+uv run pytest tests/test_agent.py -v
 ```
 
-### Agent Card Response
+### Run A2A Conformance Tests
+
+```bash
+# Start the agent first
+docker run -d -p 9009:9009 --name wirelessagent ghcr.io/jwentong/wirelessagent-r2:latest
+
+# Run conformance tests
+uv run pytest tests/test_agent.py --agent-url http://localhost:9009 -v
+```
+
+---
+
+## 🔌 A2A Protocol
+
+### Agent Card
+
+```bash
+curl http://localhost:9009/.well-known/agent.json
+```
 
 ```json
 {
-  "name": "WirelessAgent Green Agent",
-  "description": "Evaluation agent for WCHW benchmark",
+  "name": "WirelessAgent",
+  "description": "A green agent for evaluating LLM capabilities on wireless communication problems",
   "version": "1.0.0",
   "protocol": "A2A",
-  "capabilities": ["evaluation", "scoring"],
-  "benchmark": {
-    "name": "WCHW",
-    "total_problems": 100,
-    "topics": ["Channel Capacity", "Modulation", "Coding", "Signal Processing", "Propagation", "Noise Analysis"]
-  }
+  "skills": [{
+    "id": "wchw-evaluation",
+    "name": "WCHW Benchmark Evaluation",
+    "description": "Evaluates agents on 100 wireless communication problems"
+  }]
 }
 ```
 
----
+### Assessment Flow
 
-## 🟣 Purple Agent (Baseline)
+```bash
+# 1. Start assessment session
+curl -X POST http://localhost:9009 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "assessment/start",
+    "params": {},
+    "id": "1"
+  }'
 
-The Purple Agent demonstrates how to solve WCHW problems. It uses Chain-of-Thought prompting with an LLM.
+# 2. Submit answers
+curl -X POST http://localhost:9009 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "assessment/submit",
+    "params": {
+      "session_id": "<session_id>",
+      "answers": {
+        "test_1": "0.585 Mbit/s",
+        "test_2": "16 kHz"
+      }
+    },
+    "id": "2"
+  }'
 
-### A2A Protocol Endpoints
+# 3. Get results
+curl -X POST http://localhost:9009 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "assessment/results",
+    "params": {"session_id": "<session_id>"},
+    "id": "3"
+  }'
+```
+
+### Legacy Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/health` | GET | Health check |
 | `/agent-card` | GET | Agent capabilities |
-| `/solve` | POST | Solve a single problem |
-| `/run-benchmark` | POST | Run full benchmark against green agent |
-
-### Example Usage
-
-```bash
-# Solve a problem
-curl -X POST http://localhost:8081/solve \
-  -H "Content-Type: application/json" \
-  -d '{"question": "Calculate channel capacity with SNR=0.5 and B=1 MHz"}'
-
-# Run full benchmark
-curl -X POST http://localhost:8081/run-benchmark \
-  -H "Content-Type: application/json" \
-  -d '{"green_agent_url": "http://localhost:8080"}'
-```
+| `/tasks` | GET | Get all assessment tasks |
+| `/submit` | POST | Submit answer for evaluation |
+| `/results` | GET | Get current scores |
 
 ---
 
@@ -170,20 +216,7 @@ curl -X POST http://localhost:8081/run-benchmark \
 | Propagation | Free-space loss, path loss models |
 | Noise Analysis | BER, noise power, Q-function |
 
-<p align="center">
-  <img src="assets/knowledge_points_bar.png" alt="Knowledge Points Bar Chart" width="700">
-</p>
-
-### Answer Types
-
-| Type | Example | Scoring Method |
-|------|---------|----------------|
-| Numeric with units | `16 kbit/s`, `44.8 kHz` | Relative error |
-| Scientific notation | `5.42e-6`, `2.2×10^-8` | Relative error |
-| Mathematical formulas | `(A^2 T)/3`, `1/(2τ_0)` | Symbolic matching |
-| LaTeX expressions | `$s_{FM}(t)=3\cos...$` | Pattern matching |
-
-### Scoring Thresholds
+### Scoring
 
 | Error Range | Score |
 |-------------|-------|
@@ -197,146 +230,61 @@ curl -X POST http://localhost:8081/run-benchmark \
 
 ## 📈 Results
 
-### MCTS Optimization Process
-
-<p align="center">
-  <img src="assets/mcts_tree.png" alt="MCTS Tree Visualization" width="800">
-</p>
-
-### Performance Evolution
-
-<p align="center">
-  <img src="assets/performance_curve.png" alt="Performance Curve" width="700">
-</p>
-
 ### Baseline Comparison (Test Set)
 
 | Method | Accuracy | Improvement |
 |--------|----------|-------------|
 | Original (Qwen-Turbo) | 58.34% | - |
-| ADAS (Hu et al., 2024) | 53.13% | -5.21% |
-| CoT-SC (Wang et al., 2022) | 60.01% | +1.67% |
 | CoT (Wei et al., 2022) | 60.32% | +1.98% |
 | MedPrompt (Nori et al., 2023) | 61.22% | +2.88% |
 | AFlow (Zhang et al., 2025) | 69.92% | +11.58% |
 | **WirelessAgent (Ours)** | **77.94%** | **+19.60%** |
 
-### Score Distribution
-
 <p align="center">
-  <img src="assets/score_analysis.png" alt="Score Distribution" width="700">
+  <img src="assets/mcts_tree.png" alt="MCTS Tree" width="800">
 </p>
 
 ---
 
-## 🐳 Docker Deployment
+## 🏆 AgentBeats Registration
 
-### Build Image
+### Prerequisites
 
-```bash
-docker build -t wirelessagent:latest .
-```
+1. ✅ Docker image published to GitHub Container Registry
+2. ✅ A2A protocol endpoints implemented
+3. ⏳ Register on [agentbeats.dev](https://agentbeats.dev)
 
-### Run Containers
+### Steps
 
-```bash
-# Run Green Agent
-docker run -d --name green-agent \
-  -p 8080:8080 \
-  -v $(pwd)/data:/app/data:ro \
-  wirelessagent:latest \
-  python agents/green_agent.py
+1. **Register Green Agent**: Login to agentbeats.dev → Register Agent
+   - Display name: `WirelessAgent`
+   - Docker image: `ghcr.io/jwentong/wirelessagent-r2:latest`
 
-# Run Purple Agent
-docker run -d --name purple-agent \
-  -p 8081:8081 \
-  -e OPENAI_API_KEY=$OPENAI_API_KEY \
-  wirelessagent:latest \
-  python agents/purple_agent.py
-```
+2. **Create Leaderboard**: Use the [leaderboard template](https://github.com/agentbeats/leaderboard-template)
 
-### Docker Compose
-
-```bash
-# Start all services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop services
-docker-compose down
-```
+3. **Connect Leaderboard**: Add webhook URL to your leaderboard repository
 
 ---
 
-## 📁 Project Structure
+## 📁 Publishing
 
-```
-WirelessAgent-R2/
-├── agents/
-│   ├── green_agent.py          # 🟢 Green Agent (A2A evaluation server)
-│   ├── purple_agent.py         # 🟣 Purple Agent (baseline solver)
-│   └── __init__.py
-├── benchmarks/
-│   ├── benchmark.py            # Base benchmark class
-│   └── wchw.py                 # WCHW evaluation logic
-├── scripts/
-│   ├── optimizer.py            # MCTS workflow optimizer
-│   ├── evaluator.py            # Evaluation orchestrator
-│   ├── operators.py            # LLM operators
-│   └── telecom_tools/          # Domain-specific tools
-├── data/datasets/
-│   ├── wchw_validate.jsonl     # 349 validation problems
-│   └── wchw_test.jsonl         # 100 test problems
-├── config/
-│   └── config2.yaml            # LLM configuration
-├── assets/                     # Visualization images
-├── Dockerfile                  # Docker image definition
-├── docker-compose.yml          # Multi-container deployment
-├── requirements.txt            # Python dependencies
-└── README.md                   # This file
-```
-
----
-
-## ⚙️ Configuration
-
-Edit `config/config2.yaml` to configure LLM providers:
-
-```yaml
-models:
-  qwen-turbo-latest:
-    api_key: "your-api-key"
-    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
-    temperature: 0.7
-  
-  gpt-4o-mini:
-    api_key: "your-openai-key"
-    base_url: "https://api.openai.com/v1"
-    temperature: 0.7
-```
-
----
-
-## 🔧 Advanced Usage
-
-### Run MCTS Optimization
+The repository includes a GitHub Actions workflow that automatically:
+- Runs tests on every push/PR
+- Builds and publishes Docker image to GHCR
+- Creates releases with version tags
 
 ```bash
-python run.py --dataset WCHW \
-    --mode Graph \
-    --sample 8 \
-    --max_rounds 20 \
-    --opt_model_name claude-3-5-sonnet-20241022 \
-    --exec_model_name qwen-turbo-latest
+# Publish latest
+git push origin main
+
+# Publish version
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
-### Evaluate on Test Set
-
-```bash
-python run.py --dataset WCHW --mode Test --test_rounds 14
-```
+Images are published to:
+- `ghcr.io/jwentong/wirelessagent-r2:latest`
+- `ghcr.io/jwentong/wirelessagent-r2:1.0.0`
 
 ---
 
@@ -356,4 +304,5 @@ GitHub: [@jwentong](https://github.com/jwentong)
 ## 🙏 Acknowledgments
 
 - UC Berkeley AgentX Competition
+- AgentBeats Platform
 - AFlow framework for MCTS optimization methodology

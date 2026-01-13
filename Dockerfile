@@ -1,14 +1,15 @@
 # WirelessAgent - Green Agent Docker Image
 # UC Berkeley AgentX Competition Submission
+# AgentBeats Compatible
 # Author: Jingwen
 # Date: 1/13/2026
 
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV WORKSPACE_DIR=/app
+ENV PYTHONPATH=/app/src:/app
 
 # Set working directory
 WORKDIR /app
@@ -20,24 +21,31 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better caching
+# Install uv for fast package management
+RUN pip install --no-cache-dir uv
+
+# Copy dependency files
+COPY pyproject.toml .
 COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN uv pip install --system -r requirements.txt
 
 # Copy application code
-COPY . .
+COPY src/ ./src/
+COPY data/ ./data/
+COPY benchmarks/ ./benchmarks/
+COPY config/ ./config/
 
 # Create necessary directories
-RUN mkdir -p /app/logs /app/workspace/WCHW/workflows
+RUN mkdir -p /app/logs
 
-# Expose port for A2A protocol
-EXPOSE 8080
+# Expose port for A2A protocol (AgentBeats default: 9009)
+EXPOSE 9009
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8080/health || exit 1
+    CMD curl -f http://localhost:9009/health || exit 1
 
 # Default command - run the green agent server
-CMD ["python", "agents/green_agent.py"]
+CMD ["python", "src/server.py"]
