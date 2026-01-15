@@ -71,8 +71,10 @@ class LLMConfig:
         self.model = config.get("model", "gpt-4o-mini")
         self.temperature = config.get("temperature", 1)
         self.key = config.get("key", None)
-        self.base_url = config.get("base_url", "https://oneapi.deepwisdom.ai/v1")
+        # Use provided base_url, only fall back if explicitly None or missing
+        self.base_url = config.get("base_url") or "https://oneapi.deepwisdom.ai/v1"
         self.top_p = config.get("top_p", 1)
+        logger.info(f"LLMConfig initialized: model={self.model}, base_url={self.base_url}")
 
 class LLMsConfig:
     """Configuration manager for multiple LLM configurations"""
@@ -92,16 +94,19 @@ class LLMsConfig:
             config_paths = [
                 Path("config/config2.yaml"),
                 Path("config2.yaml"),
-                Path("./config/config2.yaml")
+                Path("./config/config2.yaml"),
+                Path("/app/config/config2.yaml"),  # Docker path
             ]
             
             config_file = None
             for path in config_paths:
+                logger.debug(f"Checking config path: {path} (exists: {path.exists()})")
                 if path.exists():
                     config_file = path
                     break
             
             if config_file is None:
+                logger.error(f"No default configuration file found. Tried: {config_paths}")
                 raise FileNotFoundError("No default configuration file found in the expected locations")
             
             # Load the YAML file
@@ -119,6 +124,7 @@ class LLMsConfig:
     def get(self, llm_name: str) -> LLMConfig:
         """Get the configuration for a specific LLM by name"""
         if llm_name not in self.configs:
+            logger.error(f"Configuration for {llm_name} not found. Available: {list(self.configs.keys())}")
             raise ValueError(f"Configuration for {llm_name} not found")
         
         config = self.configs[llm_name]
@@ -128,9 +134,11 @@ class LLMsConfig:
             "model": llm_name,  # Use the key as the model name
             "temperature": config.get("temperature", 1),
             "key": config.get("api_key"),  # Map api_key to key
-            "base_url": config.get("base_url", "https://oneapi.deepwisdom.ai/v1"),
+            "base_url": config.get("base_url"),
             "top_p": config.get("top_p", 1)  # Add top_p parameter
         }
+        
+        logger.info(f"Loaded LLM config for {llm_name}: base_url={llm_config['base_url']}")
         
         # Create and return an LLMConfig instance with the specified configuration
         return LLMConfig(llm_config)

@@ -130,12 +130,9 @@ class WCHWPurpleAgent:
         if self._initialized:
             return
             
-        # Create LLM instance
-        llm_config = {
-            "model_name": self.config.model_name,
-            "temperature": self.config.temperature
-        }
-        self.llm = create_llm_instance(llm_config)
+        # Create LLM instance using model name directly
+        # This will load the correct API key and base_url from config2.yaml
+        self.llm = create_llm_instance(self.config.model_name)
         logger.info(f"Initialized LLM: {self.config.model_name}")
         
         if self.config.use_workflow:
