@@ -1,0 +1,7 @@
+{
+    "father node": 3,
+    "modification": "Minor prompt improvement: Added explicit unit conversion table with examples showing the conversion factors (e.g., μs → multiply by 1e-6 to get seconds), and emphasized that the final answer must be in base SI units with the conversion already applied to the number.",
+    "before": 0.7959770114942529,
+    "after": 0.667528735632184,
+    "succeed": false
+}

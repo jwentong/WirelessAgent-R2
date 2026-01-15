@@ -1,0 +1,14 @@
+{
+    "Custom": {
+        "description": "Primary operator for WCHW. Generates solutions based on input and instruction prompt. Best for straightforward problems where LLM reasoning is sufficient.",
+        "interface": "custom(input: str, instruction: str) -> dict with key 'response' of type str"
+    },
+    "ScEnsemble": {
+        "description": "Self-consistency voting. Generates multiple solutions and picks the most common answer. Use when you need higher accuracy at 3-5x cost. Works best with Custom operator.",
+        "interface": "sc_ensemble(solutions: List[str], problem: str) -> dict with key 'response' of type str"
+    },
+    "ToolAgent": {
+        "description": "**CODE EXECUTION ONLY** - Use for complex calculations that LLM often gets wrong. Runs Python code via Programmer tool. Best for: unit conversions, complex formulas, numerical verification. Do NOT use for simple problems.",
+        "interface": "tool_agent(problem: str, max_steps: int = 3) -> dict with 'answer', 'steps', 'used_tools'"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "father node": 3,
+    "modification": "Modified the SOLVE_PROMPT to add specific guidance for ratio calculations (ensuring correct dB sign), threshold calculations (output actual value not normalized), and multi-value problems (output the most relevant single value). Also added explicit instruction about ratio direction in dB calculations.",
+    "before": 0.7959770114942529,
+    "after": 0.781896551724138,
+    "succeed": null
+}

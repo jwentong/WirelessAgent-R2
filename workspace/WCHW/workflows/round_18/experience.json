@@ -1,0 +1,7 @@
+{
+    "father node": 14,
+    "modification": "Added specific formulas for AM detection gain ratio, log-normal outage probability (with correct z-score calculation), and clarified water-filling to only include active states where γ_i > γ0. Also added explicit sign handling for dB ratio calculations.",
+    "before": 0.817816091954023,
+    "after": 0.8014367816091953,
+    "succeed": null
+}

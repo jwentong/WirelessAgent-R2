@@ -1,0 +1,7 @@
+{
+    "father node": 6,
+    "modification": "Added specific formulas for Shannon capacity calculation, Q-function computation, and spectral efficiency for NRZ signaling to the SOLVE_PROMPT. Also clarified that for binary NRZ with 2PSK, spectral efficiency η = Rb/(2B) = 0.5 when Rb = B (Nyquist rate). These are minor prompt additions to address the specific calculation errors observed.",
+    "before": 0.781896551724138,
+    "after": 0.7793103448275863,
+    "succeed": null
+}

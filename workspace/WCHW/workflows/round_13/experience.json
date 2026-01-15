@@ -1,0 +1,7 @@
+{
+    "father node": 11,
+    "modification": "Minor prompt improvement: Added outage capacity formula, clarified NOMA uplink capacity formula, and added explicit dB-to-linear conversion reminder for BER calculations. No structural changes to workflow.",
+    "before": 0.8120689655172414,
+    "after": 0.7658045977011494,
+    "succeed": false
+}

@@ -1,0 +1,33 @@
+# WCHW Round 1 - Simplified Aflow Workflow
+# Based on experimental evidence: Simple Custom-only workflow performs best
+
+from typing import Literal
+import workspace.WCHW.workflows.template.operator_simple as operator
+import workspace.WCHW.workflows.template.prompt_optimized as prompt_custom
+from scripts.async_llm import create_llm_instance
+
+from scripts.evaluator import DatasetType
+
+
+class Workflow:
+    def __init__(
+        self,
+        name: str,
+        llm_config,
+        dataset: DatasetType,
+    ) -> None:
+        self.name = name
+        self.dataset = dataset
+        self.llm = create_llm_instance(llm_config)
+        self.custom = operator.Custom(self.llm)
+
+    async def __call__(self, problem: str):
+        """
+        Simplified Aflow workflow: Single Custom call with optimized prompt.
+        No RAG, no ToolAgent - proven to be optimal for WCHW.
+        """
+        solution = await self.custom(
+            input=problem, 
+            instruction=prompt_custom.SOLVE_PROMPT
+        )
+        return solution['response'], self.llm.get_usage_summary()["total_cost"]

@@ -1,0 +1,140 @@
+{
+    "8": {
+        "score": 0.7910919540229884,
+        "success": {},
+        "failure": {},
+        "neutral": {
+            "10": {
+                "modification": "Added specific formulas for coherent OOK optimal threshold (V_T), IM3 compression point, and NOMA/SIC uplink capacity calculation to address the three error cases. Only prompt modifications, no structural changes.",
+                "score": 0.7864942528735632
+            },
+            "15": {
+                "modification": "Added specific formulas for delay spread (T_m = max_delay - min_delay when synchronized to a path), convolutional code rate throughput relationship (throughput = code_rate × coded_bit_rate), and clarified Q function calculation precision. Only prompt modifications, no structural changes.",
+                "score": 0.803448275862069
+            }
+        }
+    },
+    "2": {
+        "score": 0.8086206896551725,
+        "success": {},
+        "failure": {
+            "19": {
+                "modification": "Added MAP threshold formula for 2PSK detection, reinforced unit conversion with explicit examples (GHz→Hz), and added instruction to output decimal/ratio values when multiple answers are asked (e.g., code rate instead of parity bits count).",
+                "score": 0.7408045977011495
+            }
+        },
+        "neutral": {
+            "11": {
+                "modification": "Added spectral efficiency formula clarification for NRZ-based 2PSK (η = Rb/B where B is the channel bandwidth, and for binary NRZ, Rb = B/2 for first-null bandwidth matching), and clarified 2ASK energy calculation with explicit formula E_b = A²T/4 = A²/(4Rs). Also added average fade duration formula explicitly.",
+                "score": 0.8120689655172414
+            },
+            "3": {
+                "modification": "Minor prompt improvement: Added explicit erfc calculation steps for BPSK BER, clarified Q-function to erfc relationship (Q(x) = 0.5*erfc(x/√2)), and added step-by-step dB to linear conversion reminder for Eb/N0 calculations.",
+                "score": 0.7959770114942529
+            },
+            "8": {
+                "modification": "Added IIP3 formula for amplifier calculations, clarified 2ASK/OOK BER formula with explicit energy calculation, and reinforced that Shannon capacity must be output in bps (not Mbps). These are minor prompt additions targeting specific error cases.",
+                "score": 0.7910919540229884
+            }
+        }
+    },
+    "11": {
+        "score": 0.8120689655172414,
+        "success": {},
+        "failure": {
+            "12": {
+                "modification": "Added three missing formulas to SOLVE_PROMPT: (1) Water-filling cutoff equation with iterative solution guidance, (2) 8PSK nearest-neighbor union bound formula, (3) Modulation order calculation with ceiling to power-of-2 requirement. No structural changes to workflow.",
+                "score": 0.7850574712643678
+            },
+            "13": {
+                "modification": "Minor prompt improvement: Added outage capacity formula, clarified NOMA uplink capacity formula, and added explicit dB-to-linear conversion reminder for BER calculations. No structural changes to workflow.",
+                "score": 0.7658045977011494
+            },
+            "17": {
+                "modification": "Added clarification in SOLVE_PROMPT for path loss calculation (convert all to same unit before subtraction) and water-filling capacity (only sum over states where γ_i > γ0). Also added explicit reminder to double-check unit conversions in final answer.",
+                "score": 0.7706896551724137
+            }
+        },
+        "neutral": {}
+    },
+    "10": {
+        "score": 0.7864942528735632,
+        "success": {
+            "14": {
+                "modification": "Minor prompt improvement: Added water-filling cutoff formula, matched filter formula guidance, and clarified BPSK BER calculation with erfc. Also improved the ToolAgent verification prompt to be more specific about formula-based answers.",
+                "score": 0.817816091954023
+            }
+        },
+        "failure": {},
+        "neutral": {}
+    },
+    "14": {
+        "score": 0.817816091954023,
+        "success": {},
+        "failure": {
+            "16": {
+                "modification": "Minor prompt improvement: Added specific formulas for Q-function calculation, IIP3 formula clarification, and Rayleigh clipping model to address the three error cases. Also clarified that for exp(-A0^2)=p, solve A0=sqrt(-ln(p)), not A0=-ln(p).",
+                "score": 0.7885057471264367
+            }
+        },
+        "neutral": {
+            "18": {
+                "modification": "Added specific formulas for AM detection gain ratio, log-normal outage probability (with correct z-score calculation), and clarified water-filling to only include active states where γ_i > γ0. Also added explicit sign handling for dB ratio calculations.",
+                "score": 0.8014367816091953
+            }
+        }
+    },
+    "1": {
+        "score": 0.6244252873563219,
+        "success": {
+            "2": {
+                "modification": "Added ToolAgent for calculation verification after Custom reasoning. Modified prompt to emphasize outputting only the final numerical answer in base units. The workflow now: 1) Custom solves with reasoning, 2) ToolAgent verifies calculation with Python code, 3) Returns verified answer.",
+                "score": 0.8086206896551725
+            }
+        },
+        "failure": {},
+        "neutral": {}
+    },
+    "3": {
+        "score": 0.7959770114942529,
+        "success": {},
+        "failure": {
+            "4": {
+                "modification": "Minor prompt improvement: Added explicit unit conversion table with examples showing the conversion factors (e.g., μs → multiply by 1e-6 to get seconds), and emphasized that the final answer must be in base SI units with the conversion already applied to the number.",
+                "score": 0.667528735632184
+            }
+        },
+        "neutral": {
+            "6": {
+                "modification": "Modified the SOLVE_PROMPT to add specific guidance for ratio calculations (ensuring correct dB sign), threshold calculations (output actual value not normalized), and multi-value problems (output the most relevant single value). Also added explicit instruction about ratio direction in dB calculations.",
+                "score": 0.781896551724138
+            },
+            "7": {
+                "modification": "Modified the SOLVE_PROMPT to add explicit unit conversion reminders at the start of calculations, specifically emphasizing that mW must be converted to W (divide by 1000) before any dB calculations. Also added a specific example for path loss calculation showing the correct unit conversion.",
+                "score": 0.7787356321839081
+            }
+        }
+    },
+    "4": {
+        "score": 0.667528735632184,
+        "success": {},
+        "failure": {
+            "5": {
+                "modification": "Minor prompt improvement: Added spectral efficiency formula, clarified dB/dBm output rules (keep dBm when asked for power in dBm), and added path loss distance formula. No structural changes to workflow.",
+                "score": 0.6310344827586207
+            }
+        },
+        "neutral": {}
+    },
+    "6": {
+        "score": 0.781896551724138,
+        "success": {},
+        "failure": {},
+        "neutral": {
+            "9": {
+                "modification": "Added specific formulas for Shannon capacity calculation, Q-function computation, and spectral efficiency for NRZ signaling to the SOLVE_PROMPT. Also clarified that for binary NRZ with 2PSK, spectral efficiency η = Rb/(2B) = 0.5 when Rb = B (Nyquist rate). These are minor prompt additions to address the specific calculation errors observed.",
+                "score": 0.7793103448275863
+            }
+        }
+    }
+}

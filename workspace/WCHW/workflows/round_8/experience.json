@@ -1,0 +1,7 @@
+{
+    "father node": 2,
+    "modification": "Added IIP3 formula for amplifier calculations, clarified 2ASK/OOK BER formula with explicit energy calculation, and reinforced that Shannon capacity must be output in bps (not Mbps). These are minor prompt additions targeting specific error cases.",
+    "before": 0.8086206896551725,
+    "after": 0.7910919540229884,
+    "succeed": null
+}

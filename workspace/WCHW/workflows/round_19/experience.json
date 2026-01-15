@@ -1,0 +1,7 @@
+{
+    "father node": 2,
+    "modification": "Added MAP threshold formula for 2PSK detection, reinforced unit conversion with explicit examples (GHz→Hz), and added instruction to output decimal/ratio values when multiple answers are asked (e.g., code rate instead of parity bits count).",
+    "before": 0.8086206896551725,
+    "after": 0.7408045977011495,
+    "succeed": false
+}

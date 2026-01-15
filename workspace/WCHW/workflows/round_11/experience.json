@@ -1,0 +1,7 @@
+{
+    "father node": 2,
+    "modification": "Added spectral efficiency formula clarification for NRZ-based 2PSK (η = Rb/B where B is the channel bandwidth, and for binary NRZ, Rb = B/2 for first-null bandwidth matching), and clarified 2ASK energy calculation with explicit formula E_b = A²T/4 = A²/(4Rs). Also added average fade duration formula explicitly.",
+    "before": 0.8086206896551725,
+    "after": 0.8120689655172414,
+    "succeed": null
+}

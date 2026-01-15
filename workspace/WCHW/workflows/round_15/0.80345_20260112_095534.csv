@@ -1,0 +1,351 @@
+question,prediction,expected_output,score,cost
+Channel capacity with SNR=0.5 (linear) and bandwidth B=1 MHz. Compute C in Mbit/s.,0.585,585000.0,1.0,0.2219373
+Free-space constant K=(λ/(4πd0))^2 with d0=1 m. For f_c=1 GHz compute K.,5.703e-04,0.0005700000000000001,1.0,0.2542269
+"A (15,11) linear block code: how many parity bits are added?",4,4.0,1.0,0.07157765
+"For coherent OOK with A=1, N0=0.5, P1=0.2, P2=0.8, compute V_T.",-0.34657359027997264,0.361,0.0,0.1258615
+"Coherent OOK inversion. For equal priors and P_b=10^{-2}, find required E_b/N_0 in dB for P_b=Q(\sqrt{E_b/N_0}).",7.35,8.29,0.0,0.11257435000000005
+"SSB coherent demodulation: message bandwidth 2.5 kHz, noise PSD n0=1e-6 W/Hz. Find input noise power N_i.",0.0025,0.0025,1.0,0.10317315000000005
+"For RC shaping with α=0.3 and bandwidth 41.6 kHz, find max QPSK bit rate.",128000,128000.0,1.0,0.08420295000000001
+Energy of s(t)=A[U(t)-U(t-T/3)]. Compute E.,\frac{A^2 T}{3},(A^2 T)/3,1.0,0.06912465
+"A 2ASK (coherent) system has symbol rate R_s=2×10^6 baud, received amplitude A=2 mV, and double-sided noise PSD n0=1×10^{-10} W/Hz. Estimate BER using P_b=Q(\sqrt{E_b/N0}) and E_b=A^2/(4R_s), N0=n0/2.",0.4602,0.489,0.7,0.13073859999999998
+A PM signal is s(t)=5 cos(2π·2 MHz·t + 3 cos(2π·5 kHz·t)). Find the maximum phase deviation.,3,3.0,1.0,0.0776803
+DBPSK over AWGN. Find required E_b/N_0 (in dB) for BER P_b=10^{-6}.,11.18,11.18,1.0,0.17478455
+"For a bipolar (polar) NRZ system, Pb=Q(\sqrt{2S/N}). If S/N=20 (linear), estimate Pb.",1.5e-10,2.09e-10,0.0,0.173689
+"For M-ary orthogonal, Eb/N0 limit is 2 ln2. Express required Eb/N0 in dB.",1.418,1.42,1.0,0.04775065000000002
+"A PM signal is s(t)=A_c cos(ω_c t + k_p m(t)). If k_p=2 rad/V and max m(t)=1.5 V, find max phase deviation.",3,3.0,1.0,0.00264045
+An m-sequence has degree n=8. Find period.,255,255.0,1.0,0.010143049999999997
+"TDM-PCM. 20 channels, each sampled at 8 kHz and encoded with 8 bits. Find multiplexed rate R_b.",1280000,1280000.0,1.0,0.014192949999999998
+Convert 30 dBm to watts.,1,1.0,1.0,0.010290099999999996
+A QPSK system uses raised-cosine with α=1 and must fit B=100 kHz. Find maximum bit rate.,200000,200000.0,1.0,0.0782378
+Compute RTT for LEO altitude 1200 km with c=3×10^8 m/s. Use one-way distance 1.2×10^6 m.,0.008,0.008,1.0,0.014031149999999997
+"Shannon capacity. B=50 MHz, SNR=0.1 (linear). Compute C (Mbps).",6.875,6870000.0,0.5,0.05206250000000002
+Chip rate is 2 Mcps and m-sequence period is 31 chips. Find period time.,1.55e-5,1.55e-05,1.0,0.009090449999999998
+TDM multiplexing. A TDM link supports symbol rate R_s=9.6×10^6 baud (assume 1 bit/symbol). Each of l analog channels has f_H=3 kHz and is PCM encoded with n=8 bits/sample at Nyquist. How many channels l can be multiplexed?,200,200.0,1.0,0.018707349999999998
+"Spectral efficiency η=0.5 log2(M). If η=2, find M.",16,16.0,1.0,0.018544299999999996
+"If Eb/N0=1.42 dB, what is Eb/N0 in linear?",1.384,1.39,1.0,0.04172245000000001
+Log-normal shadowing with μ= -70 dBm and σ=7 dB. Find outage probability for threshold -80 dBm.,0.0764,0.076,1.0,0.052688900000000025
+"For OFDM Rayleigh model Pr(r>A0)=exp(-A0^2), find A0 for clipping probability 5%.",1.731,1.731,1.0,0.04738850000000002
+"OOK coherent BER with matched filter (equal priors). If E_b/N_0=12 (linear) and P_b=Q(\sqrt{E_b/N_0}), compute P_b.",0.000285,0.00024500000000000005,0.0,0.06378265000000001
+"Two-user uplink: P1=10 mW, P2=5 mW, noise N=1 mW, B=20 MHz. User 1 decoded first. Compute capacity C1.",28300000,25300000.0,0.0,0.05783365000000003
+"Timing error constraint: |ε|/T=0.33/√(10K·E_b/N0). For K=2 and E_b/N0=12 dB, compute |ε|/T.",0.0586,0.0208,0.0,0.0022067
+"Matched filter output peak time. For p(t)=A[U(t)-U(t-T)] passed through its matched filter, at what time does the output reach maximum?",T,t = T,0.8,0.05038925000000001
+"For the sync in previous problem (n=22) with channel BER p=10^{-4} and m=0, compute miss probability P_miss≈1-(1-p)^n.",0.0021997,0.0022,1.0,0.05195415000000002
+"Compute mean received power needed for outage 0.5%. Threshold 15 dBm, σ=4 dB.",25.304,25.2,1.0,0.026818849999999995
+"AM synchronous detection gain factor. For modulation index μ=0.6, compute G_AM=μ^2/(2+μ^2) (envelope) and compare to coherent DSB-SC gain 2. Give ratio in dB.",11.18,10.6,0.7,0.047512450000000025
+"For the A-law PCM primary group (E1) with sampling rate 8 kHz, find the frame duration.",3.90625e-6,0.000125,0.0,0.01912405
+"Compute noise spectral density from measured SNR. A coherent DSB-SC link has transmitted signal power S_i=5 kW at demod input, message bandwidth f_m=4 kHz. Output SNR is 500. For coherent DSB-SC, S_o/N_o=2(S_i/N_i). Assume ideal BPF passing both sidebands so N_i=2 P_n f_m with flat two-sided PSD P_n. Find P_n (W/Hz).",0.0025,0.00025,0.0,0.013024949999999997
+Gray-coded QPSK required E_b/N_0. Target BER P_b=2×10^{-6}. Find E_b/N_0 in dB (use Q^{-1}(2e-6)≈4.61).,10.26,10.27,1.0,0.0648484
+"AM efficiency. If μ=0.5, compute η=μ^2/(2+μ^2).",0.1111,0.111,1.0,0.051467600000000016
+"AM spectrum line magnitudes. s(t)=A_c(1+\mu\cos(2\pi f_m t))\cos(2\pi f_c t) with A_c=4 V, \mu=0.6. Find the magnitudes of the impulses in S(f) at ±f_c and at ±(f_c±f_m) (impulse representation in Hz).",2,|line at ±f_c|=2; |each sideband line|=0.6,0.8,0.0250693
+Convert 20 dBm to watts.,0.1,0.1,1.0,0.04086755000000001
+"Two-ray critical distance: h_t=20 m, h_r=2 m, f=2.4 GHz. Compute d_c=4h_th_r/λ.",1280,1280.0,1.0,0.2653276499999998
+Matched filter output time for pulse s(t)=A[U(t)-U(t-3T/4)]. Matched filter uses h(t)=s(T-t). At what time does output peak?,T,t = T,0.8,0.24309804999999995
+Rayleigh clipping model exp(-A0^2). Find A0 for clipping probability 0.5%.,2.302,2.302,1.0,0.24167559999999993
+"Compute Laplacian noise MAP threshold. Noiseless outputs are 0 or A with equal priors, noise Laplacian with parameter λ. Find threshold and P_e in terms of A and λ.",\frac{1}{2} e^{-A/(2\lambda)},V_T=A/2; P_e=0.5 e^{-A/(2λ)},1.0,0.2645338999999998
+"A 2-user uplink has P1=4 mW, P2=1 mW, N=1 mW, B=5 MHz. If user 1 decoded first, compute C1=B log2(1+P1/(P2+N)).",7924800,6610000.0,0.0,0.22885995
+"For a unipolar NRZ system, use Pb=Q(\sqrt{S/N}) with received S/N=20 (linear). Estimate Pb.",4.0e-06,3.87e-06,0.9,0.2651382999999998
+Log-normal shadowing with σ=8 dB. Required threshold is 10 dBm. Find mean μ needed for outage 5%.,23.16,23.2,1.0,0.26358254999999986
+"If required received power is -80 dBm and transmitter power is 1 W, what maximum path loss (dB) is allowed?",110,50.0,0.0,0.26581044999999986
+"For a 3000 Hz channel, compute spectral efficiency of 16PSK using η = 0.5 log2(M).",2.0,2 bit/(s·Hz),1.0,0.25461909999999993
+"Given bandwidth B=41.6 kHz and α=0.3 for binary raised cosine, find R_b.",64000,64000.0,1.0,0.25446109999999994
+A PCM system samples at 20 kHz and uses n=8 bits/sample. Find bit rate.,160000,160000.0,1.0,0.2619828999999999
+Compute coherent OOK threshold for equal priors when A=0.2 V.,0.1,0.1,1.0,0.2621857999999999
+"Compute miss probability for sync word allowing up to 1 error (m=1). Sync length n=40, channel BER p=10^{-5}. Approximate P_miss≈C(n,2)p^2.",7.8e-08,7.8e-08,1.0,0.2632948999999999
+Capacity of a 3.4 kHz telephone channel at output SNR 20 dB. Compute C (kbit/s).,22640,22600.0,1.0,0.2725780999999998
+Union-bound term threshold for QPSK. Want Q(\sqrt{4E_b/N_0})<10^{-6}. Find E_b/N_0 (dB).,7.51,7.52,1.0,0.25249375
+"If Shannon spectral efficiency required is 5 bps/Hz, find required SNR (dB).",14.91,14.9,1.0,0.19537885
+"Compute amplitude from power in 50 Ω. If carrier power is 5 W and P=A^2/(2R), find A.",22.36,22.4,1.0,0.2099571
+"Water-filling cutoff. Active states γ={10, 2, 1} with probabilities p={0.2,0.5,0.3}. Use p_total/γ0 = 1 + Σ p_i/γ_i. Compute γ0.",0.6369426751592357,0.655,0.9,0.24082609999999993
+Binary data at R_b=96 kbit/s uses raised-cosine roll-off α=0.3. Find required baseband bandwidth B.,62400,62400.0,1.0,0.21736940000000002
+"Quantizer SQNR using 20log10(M). If M=32 levels, compute SQNR (dB).",30.1,30.1,1.0,0.2528202
+"Uniform quantizer: given step Δ=0.1 V, compute number of bits needed if full-scale range is -6.3 V to +6.3 V and endpoints included.",7,7.0,1.0,0.21211620000000003
+Compute required S/N ratios for bipolar and unipolar NRZ to get BER 10^{-6}. Use Q^{-1}(1e-6)=4.753. Bipolar: Pb=Q(\sqrt{2S/N}); Unipolar: Pb=Q(\sqrt{S/N}).,11.295 and 22.59,22.6,1.0,0.22608684999999998
+"AWGN channel: given received power P=1 mW, bandwidth B=200 kHz, and SNR=P/(N0 B)=5. Find N0 (W/Hz).",1e-9,1e-11,0.0,0.2347958
+Convert received power 6.88×10^{-13} W to dBm.,-91.625,-91.6,1.0,0.2219837
+PCM rate. An audio signal f_H=7 kHz is sampled at Nyquist and quantized with 12 bits/sample. Find R_b.,168000,168000.0,1.0,0.20348789999999997
+NRZ first-null bandwidth for R_b=1.63 Mbit/s.,1630000,1630000.0,1.0,0.20879359999999994
+"Compute PM bandwidth. For φ_max=2 rad and f_m=10 kHz, use Δf=φ_max f_m. Find B.",60000,60000.0,1.0,0.24232599999999993
+"Minimum mean power for 1% outage. Threshold 10 dBm, σ=12 dB. Find μ.",37.912,37.9,1.0,0.24187204999999995
+"Single-slope path loss. Pr=Pt K (d0/d)^γ with Pt=10 mW, K=5.70e-4, γ=4, d0=1 m. Find Pr at d=100 m.",5.7e-14,5.7e-14,1.0,0.24066389999999993
+"Gray-coded QPSK over AWGN. For BER P_b=3×10^{-5}, find E_b/N_0 in dB (use Q^{-1}).",9.58,9.3,0.9,0.26549134999999985
+"Minimum baseband bandwidth for binary NRZ rectangular pulses. If bit rate R_b=100 kbit/s, what is first-null bandwidth B (kHz)?",100000,100000.0,1.0,0.20929109999999998
+Noise power is -100 dBm. Convert to watts.,1e-13,1e-13,1.0,0.21693810000000002
+An SSB-SC signal uses carrier f_c=120 kHz and message bandwidth 6 kHz (upper sideband). Specify the ideal BPF magnitude response passband.,120000 to 126000,|H(f)|=K for 120–126 kHz (and mirror); 0 otherwise,0.0,0.24645809999999996
+"A baseband system must transmit R_b=4000 bit/s through a telephone channel with B_avail=3100 Hz. Using raised-cosine shaping, what maximum roll-off α is allowable for QPSK?",1,0.55,0.0,0.21952755000000002
+Spectral efficiency for binary signaling with roll-off α=0.5. Compute η=2/(1+α).,1.333,1.33,1.0,0.19448055
+"Inserted-pilot carrier recovery: LPF output is S_LPF(t)=A/2[m(t)+1]. If the measured DC is 1 V and m(t) is zero-mean, find A.",2,2.0,1.0,0.1888387
+"For coherent BPSK, required Pb=10^-3. Find E_b/N0 (dB).",8.64,6.8,0.0,0.21814415
+"Compute DSB-SC BPF passband. Carrier 250 kHz, message bandwidth 12 kHz. Specify |H(f)|.",24000,|H(f)|=K for 238–262 kHz (and mirror); 0 otherwise,0.0,0.2176316
+"Average info rate. If the source entropy is 1.85 bits/symbol and symbol rate is 5 ksymbols/s, compute rate.",9250,9230.0,1.0,0.24199719999999994
+"Coherent BPSK over AWGN. Given E_b/N_0 = 2 dB, estimate BER P_b.",0.0374,0.0375,1.0,0.2690047999999999
+"If IM3 equals desired at output 35 dBm, what is the input third-order intercept (IIP3) approximately, given 2-tone test at -6 dBm input produced Δ=30 dB between desired (20 dBm) and IM3 (-10 dBm)?",9,9.0,1.0,0.20762839999999996
+Convert noise -174 dBm/Hz to W/Hz.,3.981071705534972e-21,3.98e-21,1.0,0.26911694999999985
+"Doppler shift. f_c=1.8 GHz, v=20 m/s, θ=30°. Find f_D=v cosθ/λ.",104,104.0,1.0,0.24627984999999997
+"A uniform PCM system has amplitude range from -1 V to 1 V, uses Δ=1/64 V and sampling rate 16 kHz. Using L=range/Δ, find bits/sample and bit rate.",112000,"n=7 bits/sample, R_b=112 kbit/s",1.0,0.24276979999999992
+"Coherent OOK with equal priors. If E_b/N_0=8 dB and P_b=Q(\sqrt{E_b/N_0}), compute P_b.",0.005998,0.006030000000000001,1.0,0.23299409999999998
+"Noncoherent orthogonal 2FSK over AWGN. Given E_b/N_0 = 10 dB, estimate P_b using P_b = 0.5 exp(-\gamma_b/2). Output numeric value.",0.003368952176584307,0.00337,1.0,0.26078759999999995
+"Aggregate PCM bit rate. There are 24 channels, each sampled at 8 kHz and encoded with 8 bits/sample. Find aggregate rate.",1536000,1536000.0,1.0,0.1884697
+"Compute reduction factor r for beamforming spread. If ideal capacity is 80.9 users and reduction factor is 0.70, find reduced users.",56.63,56.6,1.0,0.23240485
+Laplacian noise detector: noiseless outputs 0 or A with equal priors and noise pdf f(n)=(1/(2λ))exp(-|n|/λ). Find optimal threshold V_d.,A/2,2.0,1.0,0.20897954999999996
+A DSB-SC signal is centered at f_c=1 MHz and message bandwidth is 12 kHz. Specify positive-frequency passband.,988000 to 1012000,1012000.0,1.0,0.20334189999999996
+"In E1, how many time slots are in one frame?",32,32.0,1.0,0.24262689999999992
+Compute required modulation order to fit R_b=240 kbit/s into baseband bandwidth B=120 kHz with α=0.25. Use R_b=2B log2(M)/(1+α). Find minimum power-of-2 M.,4,8.0,0.3,0.27192364999999985
+A bandpass channel has bandwidth 3000 Hz and uses binary NRZ for 2PSK. Compute spectral efficiency η.,1,0.5,0.3,0.24216499999999994
+"Coherence bandwidth threshold. If coherence bandwidth B_c=30 kHz, what minimum spacing Δf_th should exceed to be approximately uncorrelated?",30000,30000.0,1.0,0.20913344999999997
+"AM synchronous detection gain factor. For modulation index μ=0.6, compute G_AM=μ^2/(2+μ^2) (envelope) and compare to coherent DSB-SC gain 2. Give ratio in dB.",-11.18,10.6,0.0,0.23498354999999999
+A bandpass channel has bandwidth 3000 Hz and uses binary NRZ for 2PSK. Compute spectral efficiency η.,0.5,0.5,1.0,0.2345111
+"A QPSK link needs R_b=9600 bit/s in a 3100 Hz channel. Using raised-cosine α=1, does it fit?",4800,No,0.0,0.2652732499999998
+"Synchronization word design (m=0). Bit rate R=200 bit/s, equiprobable bits, false sync at most once per month (30 days). Find minimum sync length n using P_f=2^{-n} and expected trials RT.",29,29.0,1.0,0.2643135999999998
+"Coherent BPSK with phase offset φ=60°. If ideal (φ=0) requires E_b/N_0=8 dB for a target BER, what additional SNR penalty (dB) is needed due to phase offset, assuming decision variable scales by cosφ?",6.02,6.02,1.0,0.21915600000000002
+"Coherent OOK with equal priors. If E_b/N_0=8 dB and P_b=Q(\sqrt{E_b/N_0}), compute P_b.",0.00599,0.006030000000000001,1.0,0.2220416
+"Coherent BPSK over AWGN. Given E_b/N_0 = 3 dB, estimate BER P_b. Output numeric value.",0.0218,0.0229,0.9,0.2654141999999998
+"For a bipolar (polar) NRZ system, Pb=Q(\sqrt{2S/N}). If S/N=20 (linear), estimate Pb.",1.3e-10,2.09e-10,0.0,0.2652099499999998
+"Antipodal NRZ. If BER requirement is 5×10^{-4} and P_b=Q(\sqrt{2E_b/N_0}), find E_b/N_0 (dB).",7.333,7.27,1.0,0.27075619999999984
+"Given required E_b=9.10×10^{-7} J and bit rate R_b=20 kbit/s, find required received power P_r.",0.0182,0.0182,1.0,0.18787645
+A transmitter has P_t=10 mW and required received power is 10^{-12} W. Find allowable path loss in dB.,100,70.0,0.0,0.1338634
+Compute BER for coherent orthogonal BFSK at E_b/N0=12 dB.,3.29e-5,0.000261,0.0,0.23294094999999998
+"If spectral efficiency for 2PSK is 0.5 bit/(s·Hz) in a 3 kHz channel, what is the maximum bit rate?",1500,1500.0,1.0,0.14960735000000003
+"Compute MAP threshold for 2PSK with P1=0.9, P2=0.1, A=0.5, N0=0.2.",2.7465,0.1099,0.0,0.1867117
+Carson’s rule: FM bandwidth is 40 kHz with f_m=5 kHz. Find modulation index β.,3,3.0,1.0,0.14574580000000006
+Compute NRZ bandwidth for R_b=240 kbit/s (first null).,240000,240000.0,1.0,0.14813165000000003
+Spectral efficiency of binary RC signaling at α=0.25. Compute η=2/(1+α).,1.6,1.6,1.0,0.14679585000000003
+A bandlimited signal is sampled at 10 kHz and quantized into L=64 levels. Find bits/sample and bit rate.,60000,"n=6, R_b=60 kbit/s",1.0,0.15237975
+"In coherent demodulation of an SSB signal, message bandwidth is 3 kHz and one-sided noise PSD is n_0=2×10^{-6} W/Hz. If received signal power is S_i=1 mW, compute input SNR S_i/N_i.",0.1667,0.167,1.0,0.1618044
+"Compute mean received power needed for outage 0.5%. Threshold 15 dBm, σ=4 dB.",0.339,25.2,0.0,0.17472565
+"A path loss model uses d0=1 m, exponent γ=4, and K=(λ/(4πd0))^2 at f_c=2 GHz. Compute K.",1.426e-4,0.000143,1.0,0.18316755
+"QPSK spectral efficiency with α=0.25. Using η=2/(1+α), compute η.",1.6,1.6,1.0,0.14428290000000005
+"Information content: if symbol probability is 0.05, compute I=-log2 P.",4.321928094887362,4.32,1.0,0.16330665
+"FM input power required. Required output SNR=30 dB, n_0=1×10^{-10} W/Hz, f_m=5 kHz, Δf=15 kHz. Use discriminator with G_FM=3β^2(1+β), B_FM=2(Δf+f_m). Find S_i.",2.962962962962963e-04,3.7000000000000005e-05,0.0,0.18685295000000002
+"AM sideband amplitudes. s(t)=A_c(1+\mu\cos2πf_m t)\cos2πf_c t with A_c=10 V, μ=0.4. Give impulse magnitudes at ±f_c and ±(f_c±f_m) in S(f).",1,1.0,1.0,0.1716589
+"Coherent BPSK over AWGN. Given E_b/N_0 = 12 dB, estimate BER P_b.",4.33e-7,9.010000000000001e-09,0.0,0.1802599
+"Shannon capacity. AWGN channel B=10 MHz, SNR=8 dB. Compute C (Mbit/s).",28.697,28700000.0,0.5,0.19238910000000004
+"Compute required received power for SNR=15 dB in that band. If N=3.75×10^{-5} W, find P_s.",1.185855e-3,0.0011899999999999999,1.0,0.1676199
+"Outage strategy. SNR states γ={10, 3.162, 1, 0.1} with probabilities {0.25,0.25,0.25,0.25}. Choose γ_min=1. Compute outage capacity C/B=(1-p_out)log2(1+γ_min).",0.75,0.75,1.0,0.14010775000000003
+"Compute symbol rate from bandwidth. RF bandwidth B=1.2 MHz and roll-off α=0.2 for QPSK. Using B=(1+α)R_s, find R_s.",2000000,1.0,0.0,0.13539435
+Antenna series inductor impedance transform. Z_in=50 - j60 Ω at f=100 MHz. Add series inductor L=120 nH. Find new input impedance.,50 + j15.4,15.4,1.0,0.14697835000000004
+Compute 2ASK coherent BER using P_b=Q(\sqrt{E_b/N0}) at E_b/N0=10.,0.00078,0.0007830000000000001,1.0,0.18330145
+"For an allocated band 1.8–2.0 GHz, compute center frequency.",1900000000,1900000000.0,1.0,0.14657005000000004
+"Given city area 225 km^2 and 150 users per cell, what cell area is needed to support 100,000 users?",337500,0.338 km^2,0.0,0.24769404999999994
+"Compute AM bandwidth. Message bandwidth W=7 kHz. For standard AM (DSB with carrier), what is RF bandwidth?",14000,14000.0,1.0,0.20408685
+"Noise power in band. Two-sided PSD N0/2=2×10^{-12} W/Hz, bandpass filter equivalent noise bandwidth B=50 kHz (one-sided around carrier). Compute total noise power passed (assume both sidebands, total bandwidth 2B).",4e-7,2e-07,0.3,0.20436035
+"For Gray-coded 16-QAM, require p_b≈10^{-3} using p_b≈(3/4)Q(\sqrt{4γ_b/5}). Find E_b/N_0 in dB.",10.5,10.5,1.0,0.27265334999999985
+"In E1, if 32 time slots exist and TS0 and TS16 are overhead, how many voice channels are carried?",30,30.0,1.0,0.2228106
+"Compute Eb/N0 for coherent BPSK given received power P_r=1e-6 W, bit rate R_b=50 kbit/s, N0=2e-10 W/Hz. Find Eb/N0 (linear).",0.1,0.1,1.0,0.21247200000000002
+"Given K=0.5 and E_b/N_0=10 dB, compute |ε|/T using |ε|/T=0.33/\sqrt(10K·E_b/N_0).",0.0467,0.0467,1.0,0.2688968999999999
+"Compute group sync length n for false sync ≤ once per day. Bit rate R=50 bit/s, equiprobable bits, no errors allowed (m=0). Use P_f=2^{-n} ≤ 1/(RT).",23,22.0,0.9,0.27081589999999983
+"A cubic amplifier: desired tone output changes 1 dB per 1 dB input, IM3 changes 3 dB per 1 dB input. If at input -6 dBm desired output is 20 dBm and IM3 is -10 dBm, find input where IM3 equals desired.",9,9.0,1.0,0.24689094999999994
+"In E1, if the frame duration is 125 μs and there are 32 time slots, what is the duration of one time slot?",3.90625e-06,3.90625e-06,1.0,0.24181464999999994
+"Compute DSB-SC output SNR. If demod input S_i/N_i=30, coherent DSB-SC has S_o/N_o=2(S_i/N_i). Compute S_o/N_o in dB.",17.78,17.8,1.0,0.26083404999999993
+A unipolar NRZ system has S/N=10. Compute Pb=Q(√(S/N)).,0.000794,0.0007830000000000001,0.9,0.26073234999999995
+"Log-normal shadowing: σ=10 dB, outage threshold 5 dBm, mean received power 15 dBm. Compute outage probability.",0.1587,0.159,1.0,0.2690617499999999
+Compute BER for noncoherent BFSK at E_b/N0=8 dB.,0.0214,0.0213,1.0,0.1874702
+"For the same Laplacian-noise binary system, if A=2 and λ=0.5, compute bit error probability P_e=0.5 exp(-A/(2λ)).",0.0677,0.0677,1.0,0.22286245
+"A (7,4) code can correct 1 error. What is its minimum distance d_min?",3,3.0,1.0,0.1525289
+"Convert power to carrier amplitude. For a 1-Ω reference, P=A^2/2. If P=5 mW, find amplitude A (V).",0.1,0.1,1.0,0.14594575000000004
+"CDMA capacity. Spreading factor M_c=64, SIR threshold 4 dB, N_r=4 ideal antennas. Estimate users N≈M_c N_r/γ_th.",102,101.8,1.0,0.17619515000000002
+A channel has capacity per Hz C/B=2 bit/s/Hz. Find SNR in dB.,4.771212547200236,4.77,1.0,0.18676025000000002
+"M-ary requirement. Bandwidth fixed, roll-off α=0.25. Compared to binary (M=2), information rate must triple. What M is needed assuming η∝log2 M?",8,8.0,1.0,0.17492315
+"Outage strategy. SNR states γ={10, 3.162, 1, 0.1} with probabilities {0.25,0.25,0.25,0.25}. Choose γ_min=1. Compute outage capacity C/B=(1-p_out)log2(1+γ_min).",0.75,0.75,1.0,0.16966829999999997
+Uniform quantization step size. Signal range is from -3 V to +3 V. A uniform quantizer uses L=256 levels including endpoints. Find step size Δ (V).,0.0234375,0.02353,1.0,0.17015489999999997
+Compute path gain (linear) for path loss 80 dB.,0.00000001,1e-08,1.0,0.16497085
+"A (7,4) codeword is received as r=1101101 and the syndrome is s=[0 0 1]. If the syndrome corresponds to column 7 in H, which bit position is in error?",7,7.0,1.0,0.18393639999999997
+"In E1, if the frame duration is 125 μs and there are 32 time slots, what is the duration of one time slot?",3.90625e-6,3.90625e-06,1.0,0.20748009999999997
+"AM modulation index from efficiency. Standard AM efficiency η=μ^2/(2+μ^2). Given η=0.20, find μ.",0.7071,0.707,1.0,0.18344135
+An SSB message bandwidth is 3 kHz and noise PSD is 2e-6 W/Hz. Find noise power at input.,0.006,0.006,1.0,0.1693226
+"Water-filling capacity. Using γ0=0.637 and states γ={10,2,1} with p={0.2,0.5,0.3}, compute C/B=Σ p_i log2(γ_i/γ0).",1.8143,1.37,0.0,0.21671055000000003
+Binary raised-cosine shaping with α=0.25 has spectral efficiency η_b=2/(1+α). Compute η_b.,1.6,1.6,1.0,0.11448370000000001
+"If Eb/N0=1.42 dB, what is Eb/N0 in linear?",1.385,1.39,1.0,0.14493425000000007
+"Given N0=1.59×10^{-20} W/Hz and required E_b/N0=10 (linear), bit rate R_b=5 Mbit/s. Find required received power P_r=E_b R_b.",7.95e-13,7.95e-13,1.0,0.1593906
+"FM SNR improvement. For β=4.5, compute G_FM=3β^2(1+β).",334.125,333.0,1.0,0.12436970000000001
+"Compute capacity loss due to overhead. If 5 preamble symbols accompany every 20 data symbols, what is percentage efficiency loss?",20,20.0,1.0,0.11420945000000002
+"Coherent BPSK over AWGN. Given E_b/N_0 = 12 dB, estimate BER P_b.",1.8e-07,9.010000000000001e-09,0.0,0.1738073
+"Average information rate. If a source has entropy H=1.75 bits/symbol and emits 2000 symbols/s, compute average information rate (bit/s).",3500,3500.0,1.0,0.08870525000000001
+"For OFDM Rayleigh model Pr(r>A0)=exp(-A0^2), find A0 for clipping probability 5%.",1.731,1.731,1.0,0.11805280000000003
+"A squaring-loop SSB carrier recovery: LPF output after squaring is 0.5[m^2(t)+mhat^2(t)]. If m(t)=cosω_mt, what is time-average of LPF output?",0.5,0.5,1.0,0.10746680000000004
+"Coherent BPSK with phase offset φ=60°. If ideal (φ=0) requires E_b/N_0=8 dB for a target BER, what additional SNR penalty (dB) is needed due to phase offset, assuming decision variable scales by cosφ?",6.02,6.02,1.0,0.13058789999999998
+A binary raised-cosine link fits into B=100 kHz with α=1. Find max bit rate.,100000,100000.0,1.0,0.11092305000000005
+A 900 MHz two-ray channel has h_t=h_r=10 m and excess delay Δτ=0.02 μs. Approximate the TX-RX separation d (meters) using Δτ≈2h^2/(cd).,33.33,33.3,1.0,0.1830354
+Compute spectral efficiency of 8PSK with roll-off α=0.5 using η=log2(M)/(1+α) (baseband shaped).,2,2.0,1.0,0.1883155
+"Compute required transmit power for SSB-SC. Output SNR=30 dB, output noise power N_o=1e-9 W, coherent SSB-SC has S_o/N_o=S_i/N_i and N_i=4N_o. Channel attenuation α=10^{-8}. Find transmit power S_t=S_i/α.",400,40.0,0.0,0.011804799999999999
+A system uses M=64 levels. Compute SQNR under SQNR(dB)=20log10(M).,36.12,36.1,1.0,0.05163230000000002
+Matched filter for pulse s(t)=A[U(t)-U(t-T/3)]. Find h(t)=s(T-t).,1,h(t)=A[U(t-2T/3)-U(t-T)],0.0,0.027146549999999995
+A channel allocation is 10–14 kHz. Find the carrier frequency if centered in the band.,12000,12000.0,1.0,0.012843699999999998
+"Given E_s=10 for 16-QAM and k=4 bits/symbol, compute E_b.",2.5,2.5,1.0,0.008954899999999998
+"BSC mutual information rate. If channel uses per second is 1e6 and BSC capacity is 0.919 bits/use, compute info rate.",919000,919000.0,1.0,0.011511899999999999
+"Compute symbol rate from bit rate for 8PSK. If R_b=9 Mbit/s, find R_s.",3000000,3.0,0.5,0.022149199999999997
+Compute required SNR for C/B=1 bit/s/Hz.,0,0.0,1.0,0.05157700000000002
+PCM multiplexing. 12 analog channels each with f_H=3.3 kHz are sampled at Nyquist and encoded with 8 bits/sample. Find total multiplexed bit rate.,633600,633600.0,1.0,0.020635399999999998
+"Compute SSB-SC output SNR. If input S_i/N_i=30 and coherent SSB-SC has S_o/N_o= (S_i/N_i) (gain 1), compute output SNR in dB.",14.771212547200236,14.8,1.0,0.04120705000000001
+"Compute required mean power for 0.1% outage. Threshold 10 dBm, σ=6 dB, P_out=0.001. Find μ.",28.54,28.5,1.0,0.028231499999999993
+"If average fade duration is 0.05 s and you set R_s=1/T_f, find symbol rate.",20,20.0,1.0,0.04090205000000001
+A uniform PCM system uses n=10 bits/sample over amplitude range 5 V. Find quantization step Δ.,0.0048828125,0.0048828,1.0,0.04769155000000002
+Laplacian noise detector: noiseless outputs 0 or A with equal priors and noise pdf f(n)=(1/(2λ))exp(-|n|/λ). Find optimal threshold V_d.,A/2,2.0,1.0,0.029839349999999994
+"Raised-cosine bandwidth. For R_b=100 kbit/s and roll-off α=0.5, find minimum baseband bandwidth B (kHz).",75000,75000.0,1.0,0.04733760000000002
+An m-sequence LFSR of degree 4 generates a maximal length sequence. What is the period length?,15,15.0,1.0,0.07846325
+QPSK RC system has B=20 kHz and α=0.5. Find max bit rate.,53333.33,53300.0,1.0,0.11819935000000002
+"Telephone band 300–3400 Hz. Using QPSK with RRC roll-off α=0.35, available RF bandwidth is 3100 Hz. What maximum bit rate fits (ignore guard bands)?",9185,4590.0,0.3,0.06646265000000001
+OFDM clipping. Pr(r>A0)=exp(-A0^2). Find A0 for Pr=0.05.,1.731,1.731,1.0,0.11195095000000005
+"Water-filling normalized power allocation. Cutoff γ_0=0.8. For state γ=0.5, compute S(γ)/S.",0,0.0,1.0,0.07238975
+Noncoherent orthogonal BFSK. Target BER 10^{-2}. Find required E_b/N_0 in dB using P_b=0.5 e^{-\gamma_b/2}.,8.94,10.8,0.0,0.07171745
+"If chip rate is 5 Mcps and m-sequence length is 1023, find sequence period time.",2.046e-4,0.00020459999999999999,1.0,0.12285920000000003
+"A uniform quantizer has M=512 levels. Using SQNR(dB)=20log10(M), compute SQNR.",54.18,54.2,1.0,0.12576384999999998
+Coherent BPSK over AWGN. Find the minimum E_b/N_0 (in dB) required to achieve P_b = 10^{-5}.,11.8,9.59,0.0,0.12248800000000004
+Compute FM bandwidth given Δf=1 kHz and f_m=10 kHz using Carson.,22000,22000.0,1.0,0.0808569
+An antenna has radiation resistance R_rad=5 Ω and ohmic loss R_ohmic=15 Ω. Compute radiation efficiency.,0.25,25.0,0.0,0.07581755
+"Outage capacity. SNR states γ={5,2,1,0.5} with probs {0.1,0.2,0.4,0.3}. Choose γ_min=1. Compute C/B.",0.9755,0.758,0.0,0.1306568
+"Nyquist maximum bit rate. Lowpass channel cutoff B=12 kHz, binary PAM with ideal Nyquist signaling. Find maximum bit rate.",24000,24000.0,1.0,0.07912264999999999
+A QPSK system transmits R_b=120 kbit/s. Find symbol rate R_s.,60000,60.0,0.5,0.07188415000000001
+"Two-ray: h=5 m, excess delay Δτ=2 ns. Find separation d≈2h^2/(cΔτ).",83.33333333333333,83.3,1.0,0.10641660000000003
+"For an allocated band 30–50 MHz, select the carrier frequency centered in the band.",40000000,40000000.0,1.0,0.0721249
+"A (63,57) code: find parity bits and code rate.",0.9048,0.905,1.0,0.09276780000000003
+"Uniform quantizer. If Δ=0.5 V and range is 0 to 20 V with endpoints included, find L.",40,41.0,0.9,0.09143770000000002
+Compute received power needed for DBPSK BER 10^{-5} at R_b=2 Mbit/s with N0=3.18×10^{-20} W/Hz. Use γ_b=ln(1/(2P_b)).,6.8814e-13,6.88e-13,1.0,0.15604345000000003
+"For the 192 kbit/s stream with NRZ, what is first-null bandwidth?",192000,192000.0,1.0,0.08434890000000002
+"Water-filling power allocation. γ0=0.6742, γ=0.2. Find S(γ)/S.",3.5164,0.0,0.0,0.15566580000000002
+"For an AM/SSB squaring method: If s_SSB(t)=m(t)cosω_ct+\hat m(t)sinω_ct, compute the LPF output after squaring.",\frac{m^2(t) + \hat{m}^2(t)}{2},0.5[m^2(t)+\hat m^2(t)],1.0,0.10221110000000004
+DBPSK over AWGN. Find required E_b/N_0 (in dB) for BER P_b=10^{-6}.,11.18,11.18,1.0,0.07929769999999998
+"Minimum mean power for 10% outage. Threshold -20 dBm, σ=6 dB. Find μ for P_out=0.1.",5.863e-05,-12.3,0.0,0.13101699999999997
+"Carson bandwidth for FM. f_m=10 kHz, Δf=75 kHz. Find B_FM.",170000,170000.0,1.0,0.07566105
+"Convolutional code rate selection. Need to halve bit rate overhead while keeping same coded bit rate; if current code rate is 1/2, what code rate would double throughput (ignoring other changes)?",1,1.0,1.0,0.1624212
+QPSK with raised-cosine roll-off α=0.4 must fit within B=60 kHz (baseband). Find maximum bit rate.,171429,171400.0,1.0,0.19350575
+"Information content: if symbol probability is 0.05, compute I=-log2 P.",5.643856189774724,4.32,0.0,0.20882759999999995
+"If chip rate is 5 Mcps and m-sequence length is 1023, find sequence period time.","$$
+\boxed{2.046 \times 10^{-4}}
+$$",0.00020459999999999999,0.0,0.21721390000000002
+"Given noise power -121 dBm and required SNR 18 dB, find required received power.",5.012e-14,-103.0,0.0,0.19859795
+"Given that a symbol has information content I=4 bits, what is its probability P?",0.0625,0.0625,1.0,0.1591039
+"Two-ray critical distance. f_c=1.8 GHz, h_t=30 m, h_r=3 m. Compute d_c=4h_t h_r/λ.",2160,2160.0,1.0,0.16811905000000002
+"FM required input power. Post-detection SNR requirement is 40 dB. One-sided noise PSD n_0=2×10^{-11} W/Hz. Single-tone FM has f_m=5 kHz, Δf=20 kHz. Assume discriminator with G_FM=3β^2(1+β), β=Δf/f_m, and B_FM≈2(Δf+f_m). Find required demodulator input signal power S_i (W).",4.1667e-06,4.1700000000000004e-05,0.0,0.20386384999999999
+"In E1, how many time slots are in one frame?",32,32.0,1.0,0.16979199999999997
+"If IM3 equals desired at output 35 dBm, what is the input third-order intercept (IIP3) approximately, given 2-tone test at -6 dBm input produced Δ=30 dB between desired (20 dBm) and IM3 (-10 dBm)?",9,9.0,1.0,0.1752047
+Compute required carrier frequency for allocation 200–260 kHz.,230000,230000.0,1.0,0.16949599999999998
+"BSC mutual information rate. If channel uses per second is 1e6 and BSC capacity is 0.919 bits/use, compute info rate.",919000,919000.0,1.0,0.1679796
+"MAP threshold for coherent OOK: V_T = A/2 + (N0/(2A)) ln(P1/P2). For A=1, N0=0.2, P1=0.8, P2=0.2, compute V_T.",0.6386,0.639,1.0,0.16993214999999998
+"Angle modulation: given s(t)=cos(ω_c t + 40 cos ω_m t). If it is FM with sensitivity K_FM=4 (rad/(V·s)), find modulating signal f(t).",10,f(t)=-10ω_m sin(ω_m t),0.8,0.24345544999999996
+Convert linear SNR=31 to dB.,14.91,14.9,1.0,0.18626025
+"Water-filling cutoff. Active states γ={10, 2, 1} with probabilities p={0.2,0.5,0.3}. Use p_total/γ0 = 1 + Σ p_i/γ_i. Compute γ0.",0.63694,0.655,0.9,0.15274245
+"For coherent OOK with equal priors, show the optimal threshold in terms of E_s.",\frac{E_s}{2},2.0,1.0,0.1890165
+"Average fade duration: T̄=(e^{ρ^2}-1)/(√(2π) f_D ρ). For ρ=0.316 and f_D=50 Hz, compute T̄.",0.002651,0.004,0.0,0.20858409999999994
+OFDM clipping. Pr=0.001. Find A0 from exp(-A0^2)=0.001.,2.628,2.63,1.0,0.21675405000000003
+"Shannon capacity. B=8 MHz, SNR=6 dB. Compute C (Mbit/s).",18.528,18600000.0,0.5,0.20852739999999995
+"Required M for target spectral efficiency. With α=0.5, need η=3 bit/s/Hz using η=log2(M)/(1+α). Find M.",32,32.0,1.0,0.17586675000000002
+"(Extra) Shannon spectral efficiency. If SNR=15 dB, compute C/B in bit/s/Hz.",5.026,5.03,1.0,0.1632726
+Compute 2ASK coherent BER using P_b=Q(\sqrt{E_b/N0}) at E_b/N0=10.,0.000953,0.0007830000000000001,0.0,0.24076524999999993
+Required SNR from target spectral efficiency. Need C/B=4 bit/s/Hz. Find SNR (linear and dB).,11.76,11.8,1.0,0.20021009999999997
+"Compute correlation coefficient using Jakes. f_D=200 Hz, Δt=0.5 ms. Compute x=2π f_D Δt.",0.6283185307179586,0.628,1.0,0.17544415
+"Compute required distance for SNR=20 dB in same single-slope model. Pt=10 mW, K=5.70e-4, γ=4, noise N=1e-20 W. Find d (m) such that Pr/N=100.",1545,870.0,0.0,0.20175759999999998
+An AWGN channel has capacity C=1 Mbit/s and bandwidth B=200 kHz. Find required SNR (dB).,14.914,14.0,0.7,0.1825704
+"Noncoherent orthogonal 2FSK required E_b/N_0. Using P_b=0.5 exp(-\gamma_b/2), find \gamma_b (dB) for P_b=10^{-4}.",12.31,12.3,1.0,0.21706905
+"64-QAM union-bound BER. Using p_b≈(4/\log2 64)(1-1/\sqrt{64})Q(\sqrt{(3\log2 64/(64-1))E_b/N_0}) (approx). For E_b/N_0=18 dB, estimate p_b (use dominant Q term).",6.83e-6,1.39e-05,0.3,0.25432744999999995
+"Two-user uplink: P1=P2=5 mW, noise N=1 mW, bandwidth B=10 MHz. If user 1 decoded first, compute C1=B log2(1+P1/(P2+N)).",8741000,5850000.0,0.0,0.2290136
+"Compute FM peak deviation from phase term. s(t)=A_c cos(2πf_c t + β sin(2πf_m t)). Given β=6 and f_m=4 kHz, find Δf.",24000,24000.0,1.0,0.008825599999999998
+"Two-user uplink: If C1=18.66 Mbps in B=20 MHz, what is the corresponding spectral efficiency C1/B?",0.933,0.933,1.0,0.042061000000000015
+Convert received power -45 dBm to watts.,3.1622776601683795e-08,3.1600000000000005e-08,1.0,0.05880955000000003
+"Two antennas: TX has radiation resistance 60 Ω, RX has radiation resistance 3 Ω. Each has ohmic loss 12 Ω. Find their radiation efficiencies.","0.8333, 0.2",20.0,0.0,0.0672837
+E1: bits/frame=256 and frame rate=8 kHz. Confirm line rate.,2048000,2048000.0,1.0,0.07550989999999999
+An AWGN channel has bandwidth 1 MHz and SNR=0 dB. Compute capacity.,1000000,1000000.0,1.0,0.07072865
+"Given IIP3=10 dBm and small-signal gain is 25 dB, estimate OIP3.",3.162,35.0,0.0,0.05097090000000001
+"For coherent 2ASK, measured BER is 0.45. Using small-x approximation Q(x)≈0.5-x/\sqrt{2\pi}, estimate x=\sqrt{E_b/N0}.",0.12533146792828347,0.125,1.0,0.06453065000000001
+"Convert required signal power S=2.77×10^{-3} W to amplitude A (1 Ω, S=A^2/2).",0.0744,0.0744,1.0,0.07078335000000001
+"AM total power. If carrier power P_c=10 W and μ=0.5, compute total power P_T.",11.25,11.25,1.0,0.042287100000000015
+"Information entropy. A source emits 3 symbols with probabilities {0.6,0.3,0.1}. Compute H (bits/symbol).",1.2954,1.295,1.0,0.07638379999999999
+Convert S_i=1.19×10^{-3} W to amplitude A on 1 Ω (P=A^2/2).,0.0488,0.0488,1.0,0.08271585000000001
+"For two-ray with h_t=h_r=8 m at f_c=900 MHz, compute critical distance d_c.",768,768.0,1.0,0.01887255
+A fading link requires 7 dB extra transmit power relative to AWGN. Find linear factor.,5.0119,5.01,1.0,0.05745050000000002
+"A channel has loss L=90 dB. If transmit power is 1 W, what received power is obtained (W)?",1e-9,1e-09,1.0,0.013691449999999997
+"For a unipolar NRZ system, require Pb ≤ 10^{-6}. Find minimum S/N (linear) using Pb=Q(\sqrt{S/N}).",22.5625,22.6,1.0,0.1289831
+"Doppler shift. f_c=900 MHz, v=15 m/s, θ=0°. Compute f_D=v/λ.",45,45.0,1.0,0.09977160000000004
+"For an allocated band 30–50 MHz, select the carrier frequency centered in the band.",40000000,40000000.0,1.0,0.08939750000000002
+Carson bandwidth. FM with f_m=3 kHz and Δf=12 kHz. Find B_FM.,30000,30000.0,1.0,0.11476800000000001
+A system uses R_s=250 symbols/s. What average fade duration does this correspond to if R_s=1/T_f?,0.004,0.004,1.0,0.08969020000000003
+"Given average received power 0 dBm and threshold -10 dBm, compute ρ=√(P0/Pr) in linear.",0.316,0.316,1.0,0.09613770000000005
+"For a (7,4) code, how many codewords exist?",16,16.0,1.0,0.11779515000000003
+"Information entropy. A source emits 3 symbols with probabilities {0.6,0.3,0.1}. Compute H (bits/symbol).",1.2955,1.295,1.0,0.13839125000000002
+"Carson’s rule: f_m=3 kHz, β=2. Find FM bandwidth.",18000,18000.0,1.0,0.12804569999999998
+An FM system has peak deviation Δf=12 kHz and message frequency f_m=3 kHz. Find β.,4,4.0,1.0,0.11434490000000001
+"Inserted-pilot carrier recovery: LPF output is S_LPF(t)=A/2[m(t)+1]. If m(t) has mean 0.2, find the DC component.",0.6A,0.6,1.0,0.1345872
+An m-sequence has degree n=6. Find its period.,63,63.0,1.0,0.11407735000000002
+Union-bound term threshold for QPSK. Want Q(\sqrt{4E_b/N_0})<10^{-6}. Find E_b/N_0 (dB).,7.51,7.52,1.0,0.14188540000000002
+Compute orthogonal Δf for R_b=1200 bit/s.,600,600.0,1.0,0.11463515
+Two-ray excess delay. Excess delay Δτ=0.03 μs. Convert to seconds.,3e-8,3.0000000000000004e-08,1.0,0.08481590000000001
+A channel allocation is 150–170 kHz. Find carrier frequency.,160000,160000.0,1.0,0.12880904999999998
+Convert 16PSK spectral efficiency in this setting (α=1) using η=log2(M)/(1+α).,2,2.0,1.0,0.08924950000000002
+"Compute 8PSK nearest-neighbor union bound. Use p_b≈(2/3)Q(\sqrt{6(E_b/N0)} sin(π/8)). For E_b/N0=10 dB, compute p_b.",0.00103,0.007,0.0,0.18693955
+An SSB-USB signal has f_c=455 kHz and message bandwidth 5 kHz. Specify positive-frequency passband.,455000 to 460000,460000.0,1.0,0.1376412
+"An (n,k)=(31,26) block code: find number of parity bits and code rate.",5,0.839,0.0,0.10762155000000004
+Outage strategy optimization (discrete). Same states as previous. Compare outage capacity for γ_min=3.162 vs γ_min=1 and pick larger. Provide both values.,2.056,0.75,0.0,0.14747755000000004
+A raised-cosine shaped QPSK system must fit into B=25 kHz with roll-off α=0.25. Find maximum bit rate.,80000,80000.0,1.0,0.12458190000000001
+A channel allocation is 10–14 kHz. Find the carrier frequency if centered in the band.,12000,12000.0,1.0,0.11693210000000002
+"Coherent OOK (equal priors) optimum threshold. If correlator output means are 0 and A with equal priors, what is optimal threshold V_T?",A/2,2.0,1.0,0.12716165000000001
+"Compute AM sideband power. Carrier power P_c=2 W, modulation index μ=0.8 (single tone). Find total sideband power P_sb,total.",0.64,0.64,1.0,0.12378055000000003
+"Minimum mean power for 1% outage. Threshold 10 dBm, σ=12 dB. Find μ.",37.912,37.9,1.0,0.14124760000000003
+"Free-space path loss. Isotropic antennas, f=2 GHz, d=50 m. Required P_r=-60 dBm. Find required transmit power P_t (W) using P_r=P_t(λ/(4πd))^2.",0.01754,0.0176,1.0,0.11172110000000006
+Compute center frequency for allocated band 470–476 MHz.,473000000,473000000.0,1.0,0.09194910000000002
+"Log-normal outage. Mean μ=15 dBm, σ=8 dB, threshold 5 dBm. Compute outage probability.",0.1056,0.106,1.0,0.138272
+A maximal-length LFSR has period 1023. Find degree n.,10,10.0,1.0,0.25483529999999993
+"For coherent OOK MAP threshold V_T=A/2 + (N0/(2A)) ln(P1/P2). If A=2, N0=1, P1=P2, compute V_T.",1,1.0,1.0,0.2613130499999999
+"Coherent 16-QAM union-bound inversion. For p_b=10^{-3}, estimate required E_b/N_0 in dB using p_b≈(3/4)Q(\sqrt{(4/5)\gamma_b}).",10.52,10.6,1.0,0.2694237999999998
+"For BPSK, if Pb=0.01, estimate required E_b/N0 (dB).",7.01,4.3,0.0,0.2733040499999998
+"False sync probability with 1-error tolerance. For random bits, using n=40 and allowing up to 1 mismatch, approximate P_f≈(1+n)2^{-n}. Compute P_f.",3.7289e-11,3.7299999999999997e-11,1.0,0.2706829499999998
+A system uses M=64 levels. Compute SQNR under SQNR(dB)=20log10(M).,36.12,36.1,1.0,0.27198954999999986
+A channel has bandwidth 3.4 kHz and output SNR 20 dB. Compute Shannon capacity C in kbit/s.,22.637,22600.0,1.0,0.27185094999999987
+"(Extra) Coherent 16-QAM union-bound BER. Using p_b≈(3/4)Q(\sqrt{(4/5)E_b/N_0}), compute p_b for E_b/N_0=14 dB.",2.775e-06,1.1299999999999998e-07,0.0,0.2731277999999998
+"NRZ first-null bandwidth. If a multiplexed line has bit rate R_b=1.544 Mbit/s with NRZ pulses, what is first-null bandwidth?",1544000,1544000.0,1.0,0.25507744999999993
+Compute Shannon capacity per unit bandwidth for SNR=0 dB.,1,1.0,1.0,0.2627892999999999
+A 6 kHz bandpass channel uses 8PSK under η=0.5 log2(M). Find max bit rate.,9000,9000.0,1.0,0.07621085
+"AM required input power with synchronous detection. Required output SNR is 30 dB, one-sided noise PSD n_0=2×10^{-10} W/Hz, modulating tone f_m=4 kHz, efficiency η=0.25. Use N_i=n_0·2f_m and S_i=(SNR_o)·N_i/G_AM where β^2=2η/(1-η) and G_AM=2β^2/(2+β^2). Find S_i.",0.0032,0.0032,1.0,0.05868585000000003
+A unipolar NRZ system has S/N=10. Compute Pb=Q(√(S/N)).,0.000784,0.0007830000000000001,1.0,0.08815640000000001
+"A uniform quantizer has M=1024 levels. Using SQNR(dB)=20log10(M), compute SQNR.",60.2,60.2,1.0,0.10636230000000003
+"A 2PSK system experiences carrier phase offset φ=45°. Assuming SNR penalty factor is 1/cos^2φ, compute the penalty in dB.",3.01,3.01,1.0,0.053017850000000026
+"Given excess delay Δτ=0.03 μs in a two-ray channel, convert it to seconds.",3e-8,3.0000000000000004e-08,1.0,0.013161899999999997
+"MAP threshold for coherent OOK with priors. Signal levels 0 and A, variance N0/2. Priors P(A)=0.2, P(0)=0.8. Given A=0.4 and N0=0.08, compute V_T=A/2+(N0/(2A))ln(P(0)/P(A)).",0.3386,0.3386,1.0,0.05201500000000002
+PCM frame duration. Sampling frequency is 10 kHz. What is frame duration?,0.0001,9.999999999999999e-05,1.0,0.04259305000000002
+"QPSK in same bandwidth. If baseband B=44.8 kHz and α=0.4, find maximum QPSK bit rate (use B=(1+α)R_s/2, R_b=2R_s).",128000,128000.0,1.0,0.07244235
+"An information source emits symbols with probabilities P = {1/2, 1/4, 1/8, 1/8}. Find the information content (bits) of each symbol.","1,2,3,3",3.0,1.0,0.067564
+"AM sideband power. Same parameters (P_c=10 W, μ=0.5). Compute total sideband power.",1.25,1.25,1.0,0.036478350000000014
+Coherent BPSK with carrier phase offset φ. Decision statistic means are ±A cosφ. What is optimal decision threshold (equal priors)?,0,0.0,1.0,0.050199700000000014
+"For coherent 2ASK, if \sqrt{E_b/N0}=0.02, approximate BER using Q(x)≈0.5-x/\sqrt{2\pi}.",0.492,0.492,1.0,0.05959395000000002
+"A 2ASK (coherent) system has symbol rate R_s=2×10^6 baud, received amplitude A=2 mV, and double-sided noise PSD n0=1×10^{-10} W/Hz. Estimate BER using P_b=Q(\sqrt{E_b/N0}) and E_b=A^2/(4R_s), N0=n0/2.",0.4602,0.489,0.7,0.11294290000000004
+Raised-cosine pulse shaping. A binary stream has R_b=128 kbit/s and roll-off α=0.4. Find required minimum baseband bandwidth B (kHz) for zero-ISI.,89600,89600.0,1.0,0.05279165000000003
+"Water-filling normalized power allocation. Cutoff γ_0=0.8. For state γ=0.5, compute S(γ)/S.",0,0.0,1.0,0.06669835
+"Compute required modulation order. In same channel (B=4 kHz, α=0.5), need R_b=16 kbit/s. What minimum M (power of 2) is needed?",8,64.0,0.0,0.04814980000000002
+"FSK modem Eb/N0 from SNR. Bit rate R_b=600 bit/s, channel bandwidth B=3000 Hz, input SNR=3 dB. Compute E_b/N_0=(S/N)*(B/R_b).",10,10.0,1.0,0.04957735000000001
+"Compute correlation threshold spacing. For exponential PDP with τ_rms=1 μs, find Δf such that |R(Δf)|<0.3 using |R|=1/\sqrt{1+(2πΔf τ_rms)^2}.",506000,101000.0,0.0,0.14606145000000004
+"A cubic amplifier two-tone test: at input -10 dBm, desired output 15 dBm and IM3 output -25 dBm. Estimate IIP3.",10,10.0,1.0,0.03366190000000001
+"Given IIP3=10 dBm and small-signal gain is 25 dB, estimate OIP3.",35,35.0,1.0,0.02047545
+"For OFDM with Pr(r>A0)=exp(-A0^2), find clipping probability when A0=2.",0.0183,0.0183,1.0,0.09222310000000003
+"Uniform quantizer: range -2 to +2 V, n=8 bits, endpoints included. Find step size Δ.",0.015625,0.0157,1.0,0.06632345
+"For η=1.5 bit/(s·Hz) under η=0.5 log2(M), find M.",8,8.0,1.0,0.06799565
+"Coherent BPSK over AWGN. Given E_b/N_0 = 6 dB, estimate the bit error rate P_b. Output numeric value.",0.00235,0.0024,0.9,0.11251760000000005
+Compute spectral efficiency of 16PSK with α=0 (ideal Nyquist). Use η=0.5 log2(M) for passband PSK. Find η for M=16.,2,2.0,1.0,0.049819250000000016
+Convert S_i=1.19×10^{-3} W to amplitude A on 1 Ω (P=A^2/2).,0.04878,0.0488,1.0,0.057410050000000025
+"BSC capacity. For crossover probability p=0.08, compute capacity C=1-H2(p) (bits/use).",0.59846,0.598,1.0,0.05152510000000002
+"E1: if TS0 is framing and TS16 is signaling, how many user voice channels remain?",22,30.0,0.0,0.06527809999999999
+Noise power is −150 dBm. Convert to watts.,1e-18,1e-18,1.0,0.059290300000000025
+"QPSK spectral efficiency with α=0.25. Using η=2/(1+α), compute η.",1.6,1.6,1.0,0.05363445000000003
+"If required power increase relative to AWGN is 8.5 dB, what is the linear factor?",7.079457843841379,7.08,1.0,0.07117655
+"False sync probability with 1-error tolerance. For random bits, using n=40 and allowing up to 1 mismatch, approximate P_f≈(1+n)2^{-n}. Compute P_f.",3.7296e-11,3.7299999999999997e-11,1.0,0.0763232
+"OFDM clipping model exp(-A0^2): If clipping probability is 2%, find A0.",1.978,1.978,1.0,0.057365650000000025
+"For a syndrome decoder, if syndrome is all zeros, what is the inferred error pattern?",0,no error,0.0,0.020863849999999996
+"Two antennas: TX has radiation resistance 60 Ω, RX has radiation resistance 3 Ω. Each has ohmic loss 12 Ω. Find their radiation efficiencies.",0.833 and 0.200,20.0,0.0,0.03556320000000001
+"If average fade duration is \(\bar T_r=0.02\,s\), and symbol rate is chosen as R_s=1/\bar T_r, find R_s.",50,50.0,1.0,0.011658199999999999
+"Antipodal (bipolar) signaling BER. For antipodal signaling, P_b=Q(\sqrt{2E_b/N_0}). If E_b/N_0=7 (linear), compute P_b.",1.107e-4,9.1e-05,0.0,0.07112600000000001
+"Free-space + shadowing: σ=6 dB, reliability 90%, so margin M=1.282σ. Compute margin M.",7.692,7.69,1.0,0.07248665
+Matched filter for pulse s(t)=A[U(t)-U(t-T/3)]. Find h(t)=s(T-t).,h(t) = A [U(t - 2T/3) - U(t - T)],h(t)=A[U(t-2T/3)-U(t-T)],1.0,0.14289780000000002
+"In SSB coherent demodulation, if input SNR is 0.05 and received signal power is 2 mW, find noise PSD n_0 assuming message bandwidth 4 kHz and N_i=n_0 B.",0.00001,1e-05,1.0,0.12008610000000002
+"Write the FM signal expression for A_c=6 V, f_c=1 MHz, f_m=5 kHz, A_m=2 V, K_FM=4 kHz/V.",6*cos(2*pi*1000000*t + 1.6*sin(2*pi*5000*t)),"s(t)=6\cos\left[2\pi(10^6)t+1.6\,\sin(2\pi\,5\times10^3 t)\right]",0.5,0.142051
+"If synchronized to the second path (50 ns) for same delays {0,50,120} ns, find T_m.",4e-8,7e-08,0.0,0.09547835000000005
+"OOK coherent inversion. For coherent OOK with equal priors, P_b=Q(\sqrt{E_b/N_0}). Find required E_b/N_0 (dB) for P_b=10^{-3}.",9.80,9.8,1.0,0.13833030000000002
+"Compute required received power for DBPSK. Target BER=10^{-4}, bit rate R_b=1 Mbit/s, one-sided noise PSD N_0=2×10^{-20} W/Hz. Use DBPSK: P_b=0.5e^{-E_b/N_0}. Find required received power P_r.",1.70346e-13,1.7e-13,1.0,0.10729865000000004
+"Compute required SNR for capacity. If B=3.4 kHz and desired C=20 kbit/s, find required SNR (dB).",17.62,17.6,1.0,0.14500165000000007
+"For the same amplifier, what is the output power when IM3 equals desired?",0,35.0,0.0,0.1635899
+Compute total attenuation. Attenuation is 0.8 dB/km over 60 km. Find total dB loss.,48,48.0,1.0,0.12624944999999999
+A system has spectral efficiency η=1.5 bit/(s·Hz) under η=0.5 log2(M). Find M.,8,8.0,1.0,0.10569850000000004
+DBPSK over AWGN. E_b/N_0=3 dB. Compute P_b=0.5 e^{-\gamma_b}.,0.068,0.068,1.0,0.1308055
+Compute PCM bits per sample given L=128 levels.,7,7.0,1.0,0.12150590000000003
+"For baseband bandwidth W, what is the RF bandwidth of DSB-SC?",2W,2.0,1.0,0.11134910000000006
+"Two-user uplink: If C1=18.66 Mbps in B=20 MHz, what is the corresponding spectral efficiency C1/B?",0.933,0.933,1.0,0.10082990000000004
+"A 20 MHz Wi-Fi-like OFDM uses 64-QAM (6 bits/subcarrier) with coding rate 3/4. Ignoring overhead, find net bits per subcarrier symbol.",4.5,4.5,1.0,0.08954325000000002
+"Free-space path loss. Isotropic antennas, f=2 GHz, d=50 m. Required P_r=-60 dBm. Find required transmit power P_t (W) using P_r=P_t(λ/(4πd))^2.",0.01756,0.0176,1.0,0.12136935000000003
+"FM SNR improvement. For β=4.5, compute G_FM=3β^2(1+β).",334.125,333.0,1.0,0.16755335
+Chip rate is 2 Mcps and m-sequence period is 31 chips. Find period time.,1.55e-05,1.55e-05,1.0,0.1324434

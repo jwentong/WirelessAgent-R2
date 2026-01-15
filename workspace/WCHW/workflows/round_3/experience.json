@@ -1,0 +1,7 @@
+{
+    "father node": 2,
+    "modification": "Minor prompt improvement: Added explicit erfc calculation steps for BPSK BER, clarified Q-function to erfc relationship (Q(x) = 0.5*erfc(x/√2)), and added step-by-step dB to linear conversion reminder for Eb/N0 calculations.",
+    "before": 0.8086206896551725,
+    "after": 0.7959770114942529,
+    "succeed": null
+}

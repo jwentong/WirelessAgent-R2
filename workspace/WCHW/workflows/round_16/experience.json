@@ -1,0 +1,7 @@
+{
+    "father node": 14,
+    "modification": "Minor prompt improvement: Added specific formulas for Q-function calculation, IIP3 formula clarification, and Rayleigh clipping model to address the three error cases. Also clarified that for exp(-A0^2)=p, solve A0=sqrt(-ln(p)), not A0=-ln(p).",
+    "before": 0.817816091954023,
+    "after": 0.7885057471264367,
+    "succeed": false
+}

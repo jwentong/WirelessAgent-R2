@@ -1,0 +1,730 @@
+[
+    {
+        "question": "An antenna has radiation resistance R_rad=5 Ω and ohmic loss R_ohmic=15 Ω. Compute radiation efficiency.",
+        "right_answer": 25.0,
+        "model_output": "0.25",
+        "extracted_output": 0.25,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=25%"
+    },
+    {
+        "question": "Given city area 225 km^2 and 150 users per cell, what cell area is needed to support 100,000 users?",
+        "right_answer": "0.338 km^2",
+        "model_output": "0.337",
+        "extracted_output": "0.337",
+        "extract_answer_code": "type=formula, exp_method=formula, pred_method=formula, raw_answer=0.338 km^2"
+    },
+    {
+        "question": "Noncoherent orthogonal BFSK. Target BER 10^{-2}. Find required E_b/N_0 in dB using P_b=0.5 e^{-\\gamma_b/2}.",
+        "right_answer": 10.8,
+        "model_output": "8.94",
+        "extracted_output": 8.94,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=10.8 dB"
+    },
+    {
+        "question": "For coherent 2ASK, measured BER is 0.45. Using small-x approximation Q(x)≈0.5-x/\\sqrt{2\\pi}, estimate x=\\sqrt{E_b/N0}.",
+        "right_answer": 0.125,
+        "model_output": "0.0886",
+        "extracted_output": 0.0886,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.125"
+    },
+    {
+        "question": "Outage capacity. SNR states γ={5,2,1,0.5} with probs {0.1,0.2,0.4,0.3}. Choose γ_min=1. Compute C/B.",
+        "right_answer": 0.758,
+        "model_output": "0.975",
+        "extracted_output": 0.975,
+        "extract_answer_code": "type=numeric, exp_method=extracted_bps/hz, pred_method=raw_number, raw_answer=0.758 bps/Hz"
+    },
+    {
+        "question": "Minimum mean power for 1% outage. Threshold 10 dBm, σ=12 dB. Find μ.",
+        "right_answer": 37.9,
+        "model_output": "-17.912",
+        "extracted_output": -17.912,
+        "extract_answer_code": "type=numeric, exp_method=extracted_dbm, pred_method=raw_number, raw_answer=37.9 dBm"
+    },
+    {
+        "question": "Compute symbol rate from bandwidth. RF bandwidth B=1.2 MHz and roll-off α=0.2 for QPSK. Using B=(1+α)R_s, find R_s.",
+        "right_answer": 1.0,
+        "model_output": "1000000",
+        "extracted_output": 1000000.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_s, pred_method=raw_number, raw_answer=1.00 Msym/s"
+    },
+    {
+        "question": "QPSK RC system has B=20 kHz and α=0.5. Find max bit rate.",
+        "right_answer": 53300.0,
+        "model_output": "26667",
+        "extracted_output": 26667.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_kbit/s, pred_method=raw_number, raw_answer=53.3 kbit/s"
+    },
+    {
+        "question": "Compute NRZ bandwidth for R_b=240 kbit/s (first null).",
+        "right_answer": 240000.0,
+        "model_output": "120000",
+        "extracted_output": 120000.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_khz, pred_method=raw_number, raw_answer=240 kHz"
+    },
+    {
+        "question": "Outage strategy optimization (discrete). Same states as previous. Compare outage capacity for γ_min=3.162 vs γ_min=1 and pick larger. Provide both values.",
+        "right_answer": 0.75,
+        "model_output": "1.515",
+        "extracted_output": 1.515,
+        "extract_answer_code": "type=numeric, exp_method=extracted_bps/hz, pred_method=raw_number, raw_answer=γ_min=3.162 gives 0.580 bps/Hz; γ_min=1 gives 0.750 bps/Hz (better)"
+    },
+    {
+        "question": "An AWGN channel has capacity C=1 Mbit/s and bandwidth B=200 kHz. Find required SNR (dB).",
+        "right_answer": 14.0,
+        "model_output": "14.91",
+        "extracted_output": 14.91,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=14.0 dB"
+    },
+    {
+        "question": "Two antennas: TX has radiation resistance 60 Ω, RX has radiation resistance 3 Ω. Each has ohmic loss 12 Ω. Find their radiation efficiencies.",
+        "right_answer": 20.0,
+        "model_output": "0.8333333333333334 0.2",
+        "extracted_output": 0.2,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=η_TX=83.3%, η_RX=20.0%"
+    },
+    {
+        "question": "Compute group sync length n for false sync ≤ once per day. Bit rate R=50 bit/s, equiprobable bits, no errors allowed (m=0). Use P_f=2^{-n} ≤ 1/(RT).",
+        "right_answer": 22.0,
+        "model_output": "23",
+        "extracted_output": 23.0,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=n=22"
+    },
+    {
+        "question": "Two-user uplink: P1=P2=5 mW, noise N=1 mW, bandwidth B=10 MHz. If user 1 decoded first, compute C1=B log2(1+P1/(P2+N)).",
+        "right_answer": 5850000.0,
+        "model_output": "8.737",
+        "extracted_output": 8.737,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mbps, pred_method=raw_number, raw_answer=5.85 Mbps"
+    },
+    {
+        "question": "Coherent BPSK over AWGN. Given E_b/N_0 = 12 dB, estimate BER P_b.",
+        "right_answer": 9.010000000000001e-09,
+        "model_output": "1.65e-7",
+        "extracted_output": 1.6499999999999998e-07,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=9.01e-9"
+    },
+    {
+        "question": "Compute mean received power needed for outage 0.5%. Threshold 15 dBm, σ=4 dB.",
+        "right_answer": 25.2,
+        "model_output": "4.696",
+        "extracted_output": 4.696,
+        "extract_answer_code": "type=numeric, exp_method=extracted_dbm, pred_method=raw_number, raw_answer=25.2 dBm"
+    },
+    {
+        "question": "Shannon capacity. AWGN channel B=10 MHz, SNR=8 dB. Compute C (Mbit/s).",
+        "right_answer": 28700000.0,
+        "model_output": "28.69",
+        "extracted_output": 28.69,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mbit/s, pred_method=raw_number, raw_answer=28.70 Mbit/s"
+    },
+    {
+        "question": "Coherent BPSK over AWGN. Find the minimum E_b/N_0 (in dB) required to achieve P_b = 10^{-5}.",
+        "right_answer": 9.59,
+        "model_output": "11.79",
+        "extracted_output": 11.79,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=9.59 dB"
+    },
+    {
+        "question": "64-QAM union-bound BER. Using p_b≈(4/\\log2 64)(1-1/\\sqrt{64})Q(\\sqrt{(3\\log2 64/(64-1))E_b/N_0}) (approx). For E_b/N_0=18 dB, estimate p_b (use dominant Q term).",
+        "right_answer": 1.39e-05,
+        "model_output": "7e-06",
+        "extracted_output": 7e-06,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=1.39e-5"
+    },
+    {
+        "question": "In E1, if the frame duration is 125 μs and there are 32 time slots, what is the duration of one time slot?",
+        "right_answer": 3.90625e-06,
+        "model_output": "3.90625",
+        "extracted_output": 3.90625,
+        "extract_answer_code": "type=numeric, exp_method=extracted_μs, pred_method=raw_number, raw_answer=3.90625 μs"
+    },
+    {
+        "question": "For the 192 kbit/s stream with NRZ, what is first-null bandwidth?",
+        "right_answer": 192000.0,
+        "model_output": "96000",
+        "extracted_output": 96000.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_khz, pred_method=raw_number, raw_answer=192 kHz"
+    },
+    {
+        "question": "For the same Laplacian-noise binary system, if A=2 and λ=0.5, compute bit error probability P_e=0.5 exp(-A/(2λ)).",
+        "right_answer": 0.0677,
+        "model_output": "0.1353352832366127",
+        "extracted_output": 0.1353352832366127,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.0677"
+    },
+    {
+        "question": "A QPSK system transmits R_b=120 kbit/s. Find symbol rate R_s.",
+        "right_answer": 60.0,
+        "model_output": "60000",
+        "extracted_output": 60000.0,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=60 ksps"
+    },
+    {
+        "question": "A transmitter has P_t=10 mW and required received power is 10^{-12} W. Find allowable path loss in dB.",
+        "right_answer": 70.0,
+        "model_output": "100",
+        "extracted_output": 100.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=70 dB"
+    },
+    {
+        "question": "Compute center frequency for allocated band 470–476 MHz.",
+        "right_answer": 473000000.0,
+        "model_output": "473",
+        "extracted_output": 473.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mhz, pred_method=raw_number, raw_answer=473 MHz"
+    },
+    {
+        "question": "For an allocated band 30–50 MHz, select the carrier frequency centered in the band.",
+        "right_answer": 40000000.0,
+        "model_output": "40",
+        "extracted_output": 40.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mhz, pred_method=raw_number, raw_answer=40 MHz"
+    },
+    {
+        "question": "Compute required modulation order. In same channel (B=4 kHz, α=0.5), need R_b=16 kbit/s. What minimum M (power of 2) is needed?",
+        "right_answer": 64.0,
+        "model_output": "8",
+        "extracted_output": 8.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_m, pred_method=raw_number, raw_answer=M = 64"
+    },
+    {
+        "question": "Compute 2ASK coherent BER using P_b=Q(\\sqrt{E_b/N0}) at E_b/N0=10.",
+        "right_answer": 0.0007830000000000001,
+        "model_output": "3.989476521451285e-06",
+        "extracted_output": 3.989476521451285e-06,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=7.83e-4"
+    },
+    {
+        "question": "Compute BER for coherent orthogonal BFSK at E_b/N0=12 dB.",
+        "right_answer": 0.000261,
+        "model_output": "3.18e-5",
+        "extracted_output": 3.180000000000001e-05,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=2.61e-4"
+    },
+    {
+        "question": "Coherent BPSK over AWGN. Given E_b/N_0 = 6 dB, estimate the bit error rate P_b. Output numeric value.",
+        "right_answer": 0.0024,
+        "model_output": "0.00245",
+        "extracted_output": 0.00245,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=2.40e-3"
+    },
+    {
+        "question": "If IM3 equals desired at output 35 dBm, what is the input third-order intercept (IIP3) approximately, given 2-tone test at -6 dBm input produced Δ=30 dB between desired (20 dBm) and IM3 (-10 dBm)?",
+        "right_answer": 9.0,
+        "model_output": "4",
+        "extracted_output": 4.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_dbm, pred_method=raw_number, raw_answer=9 dBm"
+    },
+    {
+        "question": "For BPSK, if Pb=0.01, estimate required E_b/N0 (dB).",
+        "right_answer": 4.3,
+        "model_output": "4.86",
+        "extracted_output": 4.86,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=4.3 dB"
+    },
+    {
+        "question": "FM required input power. Post-detection SNR requirement is 40 dB. One-sided noise PSD n_0=2×10^{-11} W/Hz. Single-tone FM has f_m=5 kHz, Δf=20 kHz. Assume discriminator with G_FM=3β^2(1+β), β=Δf/f_m, and B_FM≈2(Δf+f_m). Find required demodulator input signal power S_i (W).",
+        "right_answer": 4.1700000000000004e-05,
+        "model_output": "8.33e-5",
+        "extracted_output": 8.33e-05,
+        "extract_answer_code": "type=scientific, exp_method=extracted_w, pred_method=raw_number, raw_answer=4.17e-5 W"
+    },
+    {
+        "question": "NRZ first-null bandwidth. If a multiplexed line has bit rate R_b=1.544 Mbit/s with NRZ pulses, what is first-null bandwidth?",
+        "right_answer": 1544000.0,
+        "model_output": "772000",
+        "extracted_output": 772000.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mhz, pred_method=raw_number, raw_answer=1.544 MHz"
+    },
+    {
+        "question": "A cubic amplifier two-tone test: at input -10 dBm, desired output 15 dBm and IM3 output -25 dBm. Estimate IIP3.",
+        "right_answer": 10.0,
+        "model_output": "3.33",
+        "extracted_output": 3.33,
+        "extract_answer_code": "type=numeric, exp_method=extracted_dbm, pred_method=raw_number, raw_answer=10 dBm"
+    },
+    {
+        "question": "Water-filling cutoff. Active states γ={10, 2, 1} with probabilities p={0.2,0.5,0.3}. Use p_total/γ0 = 1 + Σ p_i/γ_i. Compute γ0.",
+        "right_answer": 0.655,
+        "model_output": "0.637",
+        "extracted_output": 0.637,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.655"
+    },
+    {
+        "question": "Compute correlation threshold spacing. For exponential PDP with τ_rms=1 μs, find Δf such that |R(Δf)|<0.3 using |R|=1/\\sqrt{1+(2πΔf τ_rms)^2}.",
+        "right_answer": 101000.0,
+        "model_output": "506100",
+        "extracted_output": 506100.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_khz, pred_method=raw_number, raw_answer=~101 kHz"
+    },
+    {
+        "question": "QPSK with raised-cosine roll-off α=0.4 must fit within B=60 kHz (baseband). Find maximum bit rate.",
+        "right_answer": 171400.0,
+        "model_output": "85714",
+        "extracted_output": 85714.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_kbit/s, pred_method=raw_number, raw_answer=171.4 kbit/s"
+    },
+    {
+        "question": "Given required E_b=9.10×10^{-7} J and bit rate R_b=20 kbit/s, find required received power P_r.",
+        "right_answer": 0.0182,
+        "model_output": "12.6",
+        "extracted_output": 12.6,
+        "extract_answer_code": "type=numeric, exp_method=extracted_w, pred_method=raw_number, raw_answer=0.0182 W"
+    },
+    {
+        "question": "E1: if TS0 is framing and TS16 is signaling, how many user voice channels remain?",
+        "right_answer": 30.0,
+        "model_output": "22",
+        "extracted_output": 22.0,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=30"
+    },
+    {
+        "question": "Convolutional code rate selection. Need to halve bit rate overhead while keeping same coded bit rate; if current code rate is 1/2, what code rate would double throughput (ignoring other changes)?",
+        "right_answer": 1.0,
+        "model_output": "3/4",
+        "extracted_output": 4.0,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=1"
+    },
+    {
+        "question": "For a bipolar (polar) NRZ system, Pb=Q(\\sqrt{2S/N}). If S/N=20 (linear), estimate Pb.",
+        "right_answer": 2.09e-10,
+        "model_output": "1.3e-10",
+        "extracted_output": 1.3000000000000002e-10,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=2.09e-10"
+    },
+    {
+        "question": "Coherent BPSK over AWGN. Given E_b/N_0 = 3 dB, estimate BER P_b. Output numeric value.",
+        "right_answer": 0.0229,
+        "model_output": "0.0393",
+        "extracted_output": 0.0393,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=2.29e-2"
+    },
+    {
+        "question": "A QPSK link needs R_b=9600 bit/s in a 3100 Hz channel. Using raised-cosine α=1, does it fit?",
+        "right_answer": "No",
+        "model_output": "9600",
+        "extracted_output": "9600",
+        "extract_answer_code": "type=text, exp_method=text, pred_method=text, raw_answer=No"
+    },
+    {
+        "question": "AWGN channel: given received power P=1 mW, bandwidth B=200 kHz, and SNR=P/(N0 B)=5. Find N0 (W/Hz).",
+        "right_answer": 1e-11,
+        "model_output": "1e-9",
+        "extracted_output": 1e-09,
+        "extract_answer_code": "type=scientific, exp_method=extracted_hz, pred_method=raw_number, raw_answer=1.00e-11 W/Hz"
+    },
+    {
+        "question": "Water-filling cutoff. Active states γ={10, 2, 1} with probabilities p={0.2,0.5,0.3}. Use p_total/γ0 = 1 + Σ p_i/γ_i. Compute γ0.",
+        "right_answer": 0.655,
+        "model_output": "0.637",
+        "extracted_output": 0.637,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.655"
+    },
+    {
+        "question": "Write the FM signal expression for A_c=6 V, f_c=1 MHz, f_m=5 kHz, A_m=2 V, K_FM=4 kHz/V.",
+        "right_answer": "s(t)=6\\cos\\left[2\\pi(10^6)t+1.6\\,\\sin(2\\pi\\,5\\times10^3 t)\\right]",
+        "model_output": "s(t) = 6 \\cos\\left(2\\pi \\times 10^6 t + 1.6 \\sin(2\\pi \\times 5000 t)\\right)",
+        "extracted_output": "s(t) = 6 \\cos\\left(2\\pi \\times 10^6 t + 1.6 \\sin(2\\pi \\times 5000 t)\\right)",
+        "extract_answer_code": "type=formula, exp_method=formula, pred_method=formula, raw_answer=s(t)=6\\cos\\left[2\\pi(10^6)t+1.6\\,\\sin(2\\pi\\,5\\times10^3 t)\\right]"
+    },
+    {
+        "question": "Two antennas: TX has radiation resistance 60 Ω, RX has radiation resistance 3 Ω. Each has ohmic loss 12 Ω. Find their radiation efficiencies.",
+        "right_answer": 20.0,
+        "model_output": "0.833, 0.2",
+        "extracted_output": 0.2,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=η_TX=83.3%, η_RX=20.0%"
+    },
+    {
+        "question": "Matched filter for pulse s(t)=A[U(t)-U(t-T/3)]. Find h(t)=s(T-t).",
+        "right_answer": "h(t)=A[U(t-2T/3)-U(t-T)]",
+        "model_output": "1",
+        "extracted_output": "1",
+        "extract_answer_code": "type=formula, exp_method=formula, pred_method=formula, raw_answer=h(t)=A[U(t-2T/3)-U(t-T)]"
+    },
+    {
+        "question": "(Extra) Coherent 16-QAM union-bound BER. Using p_b≈(3/4)Q(\\sqrt{(4/5)E_b/N_0}), compute p_b for E_b/N_0=14 dB.",
+        "right_answer": 1.1299999999999998e-07,
+        "model_output": "2.79e-6",
+        "extracted_output": 2.79e-06,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=1.13e-7"
+    },
+    {
+        "question": "For a syndrome decoder, if syndrome is all zeros, what is the inferred error pattern?",
+        "right_answer": "no error",
+        "model_output": "0",
+        "extracted_output": "0",
+        "extract_answer_code": "type=text, exp_method=text, pred_method=text, raw_answer=no error"
+    },
+    {
+        "question": "Synchronization word design (m=0). Bit rate R=200 bit/s, equiprobable bits, false sync at most once per month (30 days). Find minimum sync length n using P_f=2^{-n} and expected trials RT.",
+        "right_answer": 29.0,
+        "model_output": "25",
+        "extracted_output": 25.0,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=29"
+    },
+    {
+        "question": "If required received power is -80 dBm and transmitter power is 1 W, what maximum path loss (dB) is allowed?",
+        "right_answer": 50.0,
+        "model_output": "110",
+        "extracted_output": 110.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=50 dB"
+    },
+    {
+        "question": "Coherent 16-QAM union-bound inversion. For p_b=10^{-3}, estimate required E_b/N_0 in dB using p_b≈(3/4)Q(\\sqrt{(4/5)\\gamma_b}).",
+        "right_answer": 10.6,
+        "model_output": "10.43",
+        "extracted_output": 10.43,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=10.6 dB"
+    },
+    {
+        "question": "A binary raised-cosine link fits into B=100 kHz with α=1. Find max bit rate.",
+        "right_answer": 100000.0,
+        "model_output": "50000",
+        "extracted_output": 50000.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_kbit/s, pred_method=raw_number, raw_answer=100 kbit/s"
+    },
+    {
+        "question": "If synchronized to the second path (50 ns) for same delays {0,50,120} ns, find T_m.",
+        "right_answer": 7e-08,
+        "model_output": "6.67e-9",
+        "extracted_output": 6.67e-09,
+        "extract_answer_code": "type=numeric, exp_method=extracted_ns, pred_method=raw_number, raw_answer=70 ns"
+    },
+    {
+        "question": "Compute 8PSK nearest-neighbor union bound. Use p_b≈(2/3)Q(\\sqrt{6(E_b/N0)} sin(π/8)). For E_b/N0=10 dB, compute p_b.",
+        "right_answer": 0.007,
+        "model_output": "0.00101",
+        "extracted_output": 0.00101,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=7.0e-3"
+    },
+    {
+        "question": "Antipodal (bipolar) signaling BER. For antipodal signaling, P_b=Q(\\sqrt{2E_b/N_0}). If E_b/N_0=7 (linear), compute P_b.",
+        "right_answer": 9.1e-05,
+        "model_output": "9.3e-05",
+        "extracted_output": 9.300000000000001e-05,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=9.1e-5"
+    },
+    {
+        "question": "Compute symbol rate from bit rate for 8PSK. If R_b=9 Mbit/s, find R_s.",
+        "right_answer": 3.0,
+        "model_output": "3000000",
+        "extracted_output": 3000000.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_s, pred_method=raw_number, raw_answer=3.00 Msym/s"
+    },
+    {
+        "question": "In E1, if the frame duration is 125 μs and there are 32 time slots, what is the duration of one time slot?",
+        "right_answer": 3.90625e-06,
+        "model_output": "3.90625",
+        "extracted_output": 3.90625,
+        "extract_answer_code": "type=numeric, exp_method=extracted_μs, pred_method=raw_number, raw_answer=3.90625 μs"
+    },
+    {
+        "question": "Capacity of a 3.4 kHz telephone channel at output SNR 20 dB. Compute C (kbit/s).",
+        "right_answer": 22600.0,
+        "model_output": "22.637",
+        "extracted_output": 22.637,
+        "extract_answer_code": "type=numeric, exp_method=extracted_kbit/s, pred_method=raw_number, raw_answer=22.6 kbit/s"
+    },
+    {
+        "question": "A DSB-SC signal is centered at f_c=1 MHz and message bandwidth is 12 kHz. Specify positive-frequency passband.",
+        "right_answer": 1012000.0,
+        "model_output": "988000",
+        "extracted_output": 988000.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mhz, pred_method=raw_number, raw_answer=0.988–1.012 MHz"
+    },
+    {
+        "question": "A 2-user uplink has P1=4 mW, P2=1 mW, N=1 mW, B=5 MHz. If user 1 decoded first, compute C1=B log2(1+P1/(P2+N)).",
+        "right_answer": 6610000.0,
+        "model_output": "7.9248",
+        "extracted_output": 7.9248,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mbps, pred_method=raw_number, raw_answer=6.61 Mbps"
+    },
+    {
+        "question": "A bandpass channel has bandwidth 3000 Hz and uses binary NRZ for 2PSK. Compute spectral efficiency η.",
+        "right_answer": 0.5,
+        "model_output": "1",
+        "extracted_output": 1.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_hz, pred_method=raw_number, raw_answer=0.5 bit/(s·Hz)"
+    },
+    {
+        "question": "Union-bound term threshold for QPSK. Want Q(\\sqrt{4E_b/N_0})<10^{-6}. Find E_b/N_0 (dB).",
+        "right_answer": 7.52,
+        "model_output": "11.28",
+        "extracted_output": 11.28,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=7.52 dB"
+    },
+    {
+        "question": "For the same amplifier, what is the output power when IM3 equals desired?",
+        "right_answer": 35.0,
+        "model_output": "0",
+        "extracted_output": 0.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_dbm, pred_method=raw_number, raw_answer=35 dBm"
+    },
+    {
+        "question": "Water-filling capacity. Using γ0=0.637 and states γ={10,2,1} with p={0.2,0.5,0.3}, compute C/B=Σ p_i log2(γ_i/γ0).",
+        "right_answer": 1.37,
+        "model_output": "1.81",
+        "extracted_output": 1.81,
+        "extract_answer_code": "type=numeric, exp_method=extracted_bps/hz, pred_method=raw_number, raw_answer=1.37 bps/Hz"
+    },
+    {
+        "question": "A bandpass channel has bandwidth 3000 Hz and uses binary NRZ for 2PSK. Compute spectral efficiency η.",
+        "right_answer": 0.5,
+        "model_output": "1",
+        "extracted_output": 1.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_hz, pred_method=raw_number, raw_answer=0.5 bit/(s·Hz)"
+    },
+    {
+        "question": "AM synchronous detection gain factor. For modulation index μ=0.6, compute G_AM=μ^2/(2+μ^2) (envelope) and compare to coherent DSB-SC gain 2. Give ratio in dB.",
+        "right_answer": 10.6,
+        "model_output": "-11.18",
+        "extracted_output": -11.18,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=10.6 dB"
+    },
+    {
+        "question": "Compute required received power for DBPSK. Target BER=10^{-4}, bit rate R_b=1 Mbit/s, one-sided noise PSD N_0=2×10^{-20} W/Hz. Use DBPSK: P_b=0.5e^{-E_b/N_0}. Find required received power P_r.",
+        "right_answer": 1.7e-13,
+        "model_output": "-97.69",
+        "extracted_output": -97.69,
+        "extract_answer_code": "type=scientific, exp_method=extracted_w, pred_method=raw_number, raw_answer=1.70e-13 W"
+    },
+    {
+        "question": "Coherent BPSK over AWGN. Given E_b/N_0 = 12 dB, estimate BER P_b.",
+        "right_answer": 9.010000000000001e-09,
+        "model_output": "1.865e-7",
+        "extracted_output": 1.8649999999999998e-07,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=9.01e-9"
+    },
+    {
+        "question": "Compute required transmit power for SSB-SC. Output SNR=30 dB, output noise power N_o=1e-9 W, coherent SSB-SC has S_o/N_o=S_i/N_i and N_i=4N_o. Channel attenuation α=10^{-8}. Find transmit power S_t=S_i/α.",
+        "right_answer": 40.0,
+        "model_output": "400",
+        "extracted_output": 400.0,
+        "extract_answer_code": "type=scientific, exp_method=extracted_w, pred_method=raw_number, raw_answer=4.00e1 W"
+    },
+    {
+        "question": "Matched filter output peak time. For p(t)=A[U(t)-U(t-T)] passed through its matched filter, at what time does the output reach maximum?",
+        "right_answer": "t = T",
+        "model_output": "T",
+        "extracted_output": "T",
+        "extract_answer_code": "type=formula, exp_method=formula, pred_method=formula, raw_answer=t = T"
+    },
+    {
+        "question": "Timing error constraint: |ε|/T=0.33/√(10K·E_b/N0). For K=2 and E_b/N0=12 dB, compute |ε|/T.",
+        "right_answer": 0.0208,
+        "model_output": "0.0586",
+        "extracted_output": 0.0586,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.0208"
+    },
+    {
+        "question": "Compute required modulation order to fit R_b=240 kbit/s into baseband bandwidth B=120 kHz with α=0.25. Use R_b=2B log2(M)/(1+α). Find minimum power-of-2 M.",
+        "right_answer": 8.0,
+        "model_output": "4",
+        "extracted_output": 4.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_m, pred_method=raw_number, raw_answer=M=8"
+    },
+    {
+        "question": "Compute required S/N ratios for bipolar and unipolar NRZ to get BER 10^{-6}. Use Q^{-1}(1e-6)=4.753. Bipolar: Pb=Q(\\sqrt{2S/N}); Unipolar: Pb=Q(\\sqrt{S/N}).",
+        "right_answer": 22.6,
+        "model_output": "10.53",
+        "extracted_output": 10.53,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=11.3; 22.6"
+    },
+    {
+        "question": "If IM3 equals desired at output 35 dBm, what is the input third-order intercept (IIP3) approximately, given 2-tone test at -6 dBm input produced Δ=30 dB between desired (20 dBm) and IM3 (-10 dBm)?",
+        "right_answer": 9.0,
+        "model_output": "-16",
+        "extracted_output": -16.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_dbm, pred_method=raw_number, raw_answer=9 dBm"
+    },
+    {
+        "question": "Compute noise spectral density from measured SNR. A coherent DSB-SC link has transmitted signal power S_i=5 kW at demod input, message bandwidth f_m=4 kHz. Output SNR is 500. For coherent DSB-SC, S_o/N_o=2(S_i/N_i). Assume ideal BPF passing both sidebands so N_i=2 P_n f_m with flat two-sided PSD P_n. Find P_n (W/Hz).",
+        "right_answer": 0.00025,
+        "model_output": "0.0025",
+        "extracted_output": 0.0025,
+        "extract_answer_code": "type=scientific, exp_method=extracted_hz, pred_method=raw_number, raw_answer=2.50e-4 W/Hz"
+    },
+    {
+        "question": "AM synchronous detection gain factor. For modulation index μ=0.6, compute G_AM=μ^2/(2+μ^2) (envelope) and compare to coherent DSB-SC gain 2. Give ratio in dB.",
+        "right_answer": 10.6,
+        "model_output": "-11.18",
+        "extracted_output": -11.18,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=10.6 dB"
+    },
+    {
+        "question": "An SSB-SC signal uses carrier f_c=120 kHz and message bandwidth 6 kHz (upper sideband). Specify the ideal BPF magnitude response passband.",
+        "right_answer": "|H(f)|=K for 120–126 kHz (and mirror); 0 otherwise",
+        "model_output": "120000 to 126000",
+        "extracted_output": "120000 to 126000",
+        "extract_answer_code": "type=formula, exp_method=formula, pred_method=formula, raw_answer=|H(f)|=K for 120–126 kHz (and mirror); 0 otherwise"
+    },
+    {
+        "question": "OOK coherent BER with matched filter (equal priors). If E_b/N_0=12 (linear) and P_b=Q(\\sqrt{E_b/N_0}), compute P_b.",
+        "right_answer": 0.00024500000000000005,
+        "model_output": "0.000265",
+        "extracted_output": 0.000265,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=2.45e-4"
+    },
+    {
+        "question": "Matched filter output time for pulse s(t)=A[U(t)-U(t-3T/4)]. Matched filter uses h(t)=s(T-t). At what time does output peak?",
+        "right_answer": "t = T",
+        "model_output": "T",
+        "extracted_output": "T",
+        "extract_answer_code": "type=formula, exp_method=formula, pred_method=formula, raw_answer=t = T"
+    },
+    {
+        "question": "Two-user uplink: P1=10 mW, P2=5 mW, noise N=1 mW, B=20 MHz. User 1 decoded first. Compute capacity C1.",
+        "right_answer": 25300000.0,
+        "model_output": "28300800",
+        "extracted_output": 28300800.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mbps, pred_method=raw_number, raw_answer=25.3 Mbps"
+    },
+    {
+        "question": "Shannon capacity. B=50 MHz, SNR=0.1 (linear). Compute C (Mbps).",
+        "right_answer": 6870000.0,
+        "model_output": "6.875",
+        "extracted_output": 6.875,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mbps, pred_method=raw_number, raw_answer=6.87 Mbps"
+    },
+    {
+        "question": "Compute MAP threshold for 2PSK with P1=0.9, P2=0.1, A=0.5, N0=0.2.",
+        "right_answer": 0.1099,
+        "model_output": "-2.7465",
+        "extracted_output": -2.7465,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.1099"
+    },
+    {
+        "question": "For coherent OOK with A=1, N0=0.5, P1=0.2, P2=0.8, compute V_T.",
+        "right_answer": 0.361,
+        "model_output": "0.693",
+        "extracted_output": 0.693,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.361"
+    },
+    {
+        "question": "Chip rate is 2 Mcps and m-sequence period is 31 chips. Find period time.",
+        "right_answer": 1.55e-05,
+        "model_output": "15.5",
+        "extracted_output": 15.5,
+        "extract_answer_code": "type=numeric, exp_method=extracted_μs, pred_method=raw_number, raw_answer=15.5 μs"
+    },
+    {
+        "question": "Compute DSB-SC BPF passband. Carrier 250 kHz, message bandwidth 12 kHz. Specify |H(f)|.",
+        "right_answer": "|H(f)|=K for 238–262 kHz (and mirror); 0 otherwise",
+        "model_output": "24000",
+        "extracted_output": "24000",
+        "extract_answer_code": "type=formula, exp_method=formula, pred_method=formula, raw_answer=|H(f)|=K for 238–262 kHz (and mirror); 0 otherwise"
+    },
+    {
+        "question": "Coherent OOK inversion. For equal priors and P_b=10^{-2}, find required E_b/N_0 in dB for P_b=Q(\\sqrt{E_b/N_0}).",
+        "right_answer": 8.29,
+        "model_output": "7.33",
+        "extracted_output": 7.33,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=8.29 dB"
+    },
+    {
+        "question": "Coherent BPSK over AWGN. Given E_b/N_0 = 2 dB, estimate BER P_b.",
+        "right_answer": 0.0375,
+        "model_output": "0.03065",
+        "extracted_output": 0.03065,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=3.75e-2"
+    },
+    {
+        "question": "Required SNR from target spectral efficiency. Need C/B=4 bit/s/Hz. Find SNR (linear and dB).",
+        "right_answer": 11.8,
+        "model_output": "15",
+        "extracted_output": 15.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=SNR=15 (11.8 dB)"
+    },
+    {
+        "question": "For a bipolar (polar) NRZ system, Pb=Q(\\sqrt{2S/N}). If S/N=20 (linear), estimate Pb.",
+        "right_answer": 2.09e-10,
+        "model_output": "1.3e-10",
+        "extracted_output": 1.3000000000000002e-10,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=2.09e-10"
+    },
+    {
+        "question": "For coherent BPSK, required Pb=10^-3. Find E_b/N0 (dB).",
+        "right_answer": 6.8,
+        "model_output": "7.78",
+        "extracted_output": 7.78,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=6.8 dB"
+    },
+    {
+        "question": "Chip rate is 2 Mcps and m-sequence period is 31 chips. Find period time.",
+        "right_answer": 1.55e-05,
+        "model_output": "15.5",
+        "extracted_output": 15.5,
+        "extract_answer_code": "type=numeric, exp_method=extracted_μs, pred_method=raw_number, raw_answer=15.5 μs"
+    },
+    {
+        "question": "Shannon capacity. B=8 MHz, SNR=6 dB. Compute C (Mbit/s).",
+        "right_answer": 18600000.0,
+        "model_output": "18.52",
+        "extracted_output": 18.52,
+        "extract_answer_code": "type=numeric, exp_method=extracted_mbit/s, pred_method=raw_number, raw_answer=18.6 Mbit/s"
+    },
+    {
+        "question": "Single-slope path loss. Pr=Pt K (d0/d)^γ with Pt=10 mW, K=5.70e-4, γ=4, d0=1 m. Find Pr at d=100 m.",
+        "right_answer": 5.7e-14,
+        "model_output": "5.7e-11",
+        "extracted_output": 5.7e-11,
+        "extract_answer_code": "type=scientific, exp_method=extracted_w, pred_method=raw_number, raw_answer=5.70e-14 W"
+    },
+    {
+        "question": "Gray-coded QPSK over AWGN. For BER P_b=3×10^{-5}, find E_b/N_0 in dB (use Q^{-1}).",
+        "right_answer": 9.3,
+        "model_output": "9.14",
+        "extracted_output": 9.14,
+        "extract_answer_code": "type=numeric, exp_method=extracted_db, pred_method=raw_number, raw_answer=9.30 dB"
+    },
+    {
+        "question": "Compute mean received power needed for outage 0.5%. Threshold 15 dBm, σ=4 dB.",
+        "right_answer": 25.2,
+        "model_output": "4.696",
+        "extracted_output": 4.696,
+        "extract_answer_code": "type=numeric, exp_method=extracted_dbm, pred_method=raw_number, raw_answer=25.2 dBm"
+    },
+    {
+        "question": "Average fade duration: T̄=(e^{ρ^2}-1)/(√(2π) f_D ρ). For ρ=0.316 and f_D=50 Hz, compute T̄.",
+        "right_answer": 0.004,
+        "model_output": "0.00266",
+        "extracted_output": 0.00266,
+        "extract_answer_code": "type=numeric, exp_method=extracted_s, pred_method=raw_number, raw_answer=0.0040 s"
+    },
+    {
+        "question": "A 2ASK (coherent) system has symbol rate R_s=2×10^6 baud, received amplitude A=2 mV, and double-sided noise PSD n0=1×10^{-10} W/Hz. Estimate BER using P_b=Q(\\sqrt{E_b/N0}) and E_b=A^2/(4R_s), N0=n0/2.",
+        "right_answer": 0.489,
+        "model_output": "0.444",
+        "extracted_output": 0.444,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.489"
+    },
+    {
+        "question": "For coherent 2ASK, if \\sqrt{E_b/N0}=0.02, approximate BER using Q(x)≈0.5-x/\\sqrt{2\\pi}.",
+        "right_answer": 0.492,
+        "model_output": "0.24",
+        "extracted_output": 0.24,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.492"
+    },
+    {
+        "question": "Compute 2ASK coherent BER using P_b=Q(\\sqrt{E_b/N0}) at E_b/N0=10.",
+        "right_answer": 0.0007830000000000001,
+        "model_output": "4.0e-6",
+        "extracted_output": 4e-06,
+        "extract_answer_code": "type=scientific, exp_method=raw_number, pred_method=raw_number, raw_answer=7.83e-4"
+    },
+    {
+        "question": "Compute required distance for SNR=20 dB in same single-slope model. Pt=10 mW, K=5.70e-4, γ=4, noise N=1e-20 W. Find d (m) such that Pr/N=100.",
+        "right_answer": 870.0,
+        "model_output": "1545",
+        "extracted_output": 1545.0,
+        "extract_answer_code": "type=numeric, exp_method=extracted_m, pred_method=raw_number, raw_answer=870 m"
+    },
+    {
+        "question": "A 2ASK (coherent) system has symbol rate R_s=2×10^6 baud, received amplitude A=2 mV, and double-sided noise PSD n0=1×10^{-10} W/Hz. Estimate BER using P_b=Q(\\sqrt{E_b/N0}) and E_b=A^2/(4R_s), N0=n0/2.",
+        "right_answer": 0.489,
+        "model_output": "0.4602",
+        "extracted_output": 0.4602,
+        "extract_answer_code": "type=numeric, exp_method=raw_number, pred_method=raw_number, raw_answer=0.489"
+    }
+]

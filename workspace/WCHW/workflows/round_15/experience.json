@@ -1,0 +1,7 @@
+{
+    "father node": 8,
+    "modification": "Added specific formulas for delay spread (T_m = max_delay - min_delay when synchronized to a path), convolutional code rate throughput relationship (throughput = code_rate × coded_bit_rate), and clarified Q function calculation precision. Only prompt modifications, no structural changes.",
+    "before": 0.7910919540229884,
+    "after": 0.803448275862069,
+    "succeed": null
+}

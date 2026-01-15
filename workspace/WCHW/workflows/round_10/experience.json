@@ -1,0 +1,7 @@
+{
+    "father node": 8,
+    "modification": "Added specific formulas for coherent OOK optimal threshold (V_T), IM3 compression point, and NOMA/SIC uplink capacity calculation to address the three error cases. Only prompt modifications, no structural changes.",
+    "before": 0.7910919540229884,
+    "after": 0.7864942528735632,
+    "succeed": null
+}

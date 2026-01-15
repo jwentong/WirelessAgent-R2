@@ -1,0 +1,7 @@
+{
+    "father node": 11,
+    "modification": "Added three missing formulas to SOLVE_PROMPT: (1) Water-filling cutoff equation with iterative solution guidance, (2) 8PSK nearest-neighbor union bound formula, (3) Modulation order calculation with ceiling to power-of-2 requirement. No structural changes to workflow.",
+    "before": 0.8120689655172414,
+    "after": 0.7850574712643678,
+    "succeed": false
+}

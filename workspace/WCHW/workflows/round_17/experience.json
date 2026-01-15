@@ -1,0 +1,7 @@
+{
+    "father node": 11,
+    "modification": "Added clarification in SOLVE_PROMPT for path loss calculation (convert all to same unit before subtraction) and water-filling capacity (only sum over states where γ_i > γ0). Also added explicit reminder to double-check unit conversions in final answer.",
+    "before": 0.8120689655172414,
+    "after": 0.7706896551724137,
+    "succeed": false
+}

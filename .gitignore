@@ -4,6 +4,6 @@ logs
 optimized
 */__pycache__
 *.pyc
-/workspace
+# /workspace  # Needed for Purple Agent Docker build
 data/Textbooks/*.pdf
 data/Textbooks/.cache/
