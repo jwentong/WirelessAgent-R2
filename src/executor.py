@@ -33,10 +33,15 @@ class Message:
     """A2A Message"""
     role: str  # "user" or "agent"
     parts: List[Dict[str, Any]]
+    messageId: str = None
+    
+    def __post_init__(self):
+        if self.messageId is None:
+            self.messageId = str(uuid.uuid4())
     
     @classmethod
     def text(cls, role: str, content: str) -> "Message":
-        return cls(role=role, parts=[{"type": "text", "text": content}])
+        return cls(role=role, parts=[{"type": "text", "text": content}], messageId=str(uuid.uuid4()))
 
 
 @dataclass
@@ -45,10 +50,13 @@ class Task:
     id: str
     sessionId: str
     status: Dict[str, Any]
+    contextId: str = None
     history: List[Dict[str, Any]] = None
     artifacts: List[Dict[str, Any]] = None
     
     def __post_init__(self):
+        if self.contextId is None:
+            self.contextId = str(uuid.uuid4())
         if self.history is None:
             self.history = []
         if self.artifacts is None:
