@@ -78,11 +78,11 @@ class WCHWExecutor:
         request_id = request.get("id")
         
         try:
-            if method == "tasks/send":
+            if method == "tasks/send" or method == "message/send":
                 result = await self._handle_send(params)
-            elif method == "tasks/get":
+            elif method == "tasks/get" or method == "message/get":
                 result = await self._handle_get(params)
-            elif method == "tasks/cancel":
+            elif method == "tasks/cancel" or method == "message/cancel":
                 result = await self._handle_cancel(params)
             elif method == "assessment/start":
                 result = await self._handle_assessment_start(params)
