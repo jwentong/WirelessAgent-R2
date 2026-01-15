@@ -37,7 +37,8 @@ AGENT_CARD = {
             "name": "WCHW Benchmark Evaluation",
             "description": "Evaluates agents on 100 wireless communication problems covering Channel Capacity, Modulation, Coding, Signal Processing, Propagation, and Noise Analysis.",
             "inputModes": ["text"],
-            "outputModes": ["text"]
+            "outputModes": ["text"],
+            "tags": ["benchmark", "evaluation", "wireless", "telecommunications"]
         }
     ],
     "capabilities": {
