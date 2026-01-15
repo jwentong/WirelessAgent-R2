@@ -335,7 +335,7 @@ class PurpleAgentHandler(BaseHTTPRequestHandler):
                 "accuracy": "81.78%"
             })
         
-        elif self.path == "/.well-known/agent.json" or self.path == "/agent-card":
+        elif self.path == "/.well-known/agent.json" or self.path == "/.well-known/agent-card.json" or self.path == "/agent-card":
             # A2A Agent Card
             self._send_json({
                 "name": "WirelessAgent Purple Agent",
@@ -481,11 +481,12 @@ def run_server(host: str = "0.0.0.0", port: int = 8081, model: str = "qwen-turbo
     logger.info(f"Workflow: Round 14 Optimized (81.78% accuracy)")
     logger.info(f"")
     logger.info(f"A2A Endpoints:")
-    logger.info(f"  GET  /health              - Health check")
-    logger.info(f"  GET  /.well-known/agent.json - A2A Agent Card")
-    logger.info(f"  POST /solve               - Solve a single problem")
-    logger.info(f"  POST /tasks/send          - A2A task handling")
-    logger.info(f"  POST /run-benchmark       - Run full benchmark")
+    logger.info(f"  GET  /health                       - Health check")
+    logger.info(f"  GET  /.well-known/agent.json       - A2A Agent Card")
+    logger.info(f"  GET  /.well-known/agent-card.json  - A2A Agent Card (alternate)")
+    logger.info(f"  POST /solve                        - Solve a single problem")
+    logger.info(f"  POST /tasks/send                   - A2A task handling")
+    logger.info(f"  POST /run-benchmark                - Run full benchmark")
     logger.info(f"=" * 60)
     
     try:
