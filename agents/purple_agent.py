@@ -386,6 +386,13 @@ class PurpleAgentHandler(BaseHTTPRequestHandler):
             self._send_json({"error": "Invalid JSON"}, 400)
             return
         
+        # Handle A2A JSON-RPC at root path
+        if self.path == "/" or self.path == "":
+            # Check if it's a JSON-RPC request
+            if "jsonrpc" in data and "method" in data:
+                self._handle_jsonrpc(data)
+                return
+        
         if self.path == "/solve":
             # Solve a single problem
             question = data.get("question", "")
@@ -405,6 +412,7 @@ class PurpleAgentHandler(BaseHTTPRequestHandler):
         
         elif self.path == "/tasks/send":
             # A2A tasks/send - receive tasks and return answers
+            import uuid as uuid_mod
             message = data.get("message", {})
             parts = message.get("parts", [])
             
@@ -426,12 +434,13 @@ class PurpleAgentHandler(BaseHTTPRequestHandler):
                 self._send_json({
                     "id": data.get("id", "task-1"),
                     "sessionId": data.get("sessionId", "session-1"),
+                    "contextId": str(uuid_mod.uuid4()),
                     "status": {"state": "completed"},
                     "history": [
-                        {"role": "user", "parts": [{"type": "text", "text": question}]},
-                        {"role": "agent", "parts": [{"type": "text", "text": answer}]}
+                        {"role": "user", "messageId": str(uuid_mod.uuid4()), "parts": [{"type": "text", "text": question}]},
+                        {"role": "agent", "messageId": str(uuid_mod.uuid4()), "parts": [{"type": "text", "text": answer}]}
                     ],
-                    "artifacts": [{"type": "answer", "data": answer}]
+                    "artifacts": []
                 })
             except Exception as e:
                 self._send_json({
@@ -461,6 +470,89 @@ class PurpleAgentHandler(BaseHTTPRequestHandler):
         
         else:
             self._send_json({"error": "Not found"}, 404)
+    
+    def _handle_jsonrpc(self, data: Dict):
+        """Handle A2A JSON-RPC requests at root path"""
+        import uuid
+        method = data.get("method", "")
+        params = data.get("params", {})
+        request_id = data.get("id", str(uuid.uuid4()))
+        
+        if method in ["message/send", "tasks/send"]:
+            # Extract question from message
+            message = params.get("message", {})
+            parts = message.get("parts", [])
+            question = ""
+            for part in parts:
+                if part.get("type") == "text":
+                    question = part.get("text", "")
+                    break
+            
+            if not question:
+                self._send_json({
+                    "jsonrpc": "2.0",
+                    "id": request_id,
+                    "error": {"code": -32602, "message": "No question in message"}
+                })
+                return
+            
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                answer = loop.run_until_complete(self.purple_agent.solve_problem(question))
+                task_id = params.get("id", str(uuid.uuid4()))
+                session_id = params.get("sessionId", str(uuid.uuid4()))
+                msg_id = str(uuid.uuid4())
+                
+                self._send_json({
+                    "jsonrpc": "2.0",
+                    "id": request_id,
+                    "result": {
+                        "id": task_id,
+                        "sessionId": session_id,
+                        "contextId": str(uuid.uuid4()),
+                        "status": {"state": "completed"},
+                        "history": [
+                            {
+                                "role": "user",
+                                "messageId": str(uuid.uuid4()),
+                                "parts": [{"type": "text", "text": question}]
+                            },
+                            {
+                                "role": "agent",
+                                "messageId": msg_id,
+                                "parts": [{"type": "text", "text": answer}]
+                            }
+                        ],
+                        "artifacts": []
+                    }
+                })
+            except Exception as e:
+                self._send_json({
+                    "jsonrpc": "2.0",
+                    "id": request_id,
+                    "error": {"code": -32603, "message": str(e)}
+                })
+            finally:
+                loop.close()
+        
+        elif method in ["message/get", "tasks/get"]:
+            task_id = params.get("id", "")
+            self._send_json({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "result": {
+                    "id": task_id,
+                    "status": {"state": "completed"}
+                }
+            })
+        
+        else:
+            self._send_json({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "error": {"code": -32601, "message": f"Method not found: {method}"}
+            })
     
     def log_message(self, format, *args):
         logger.info("%s - %s" % (self.address_string(), format % args))

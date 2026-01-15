@@ -267,6 +267,7 @@ class WCHWExecutor:
             assessment_result = await self._run_assessment()
             
             # Create response task with assessment results
+            artifact_id = str(uuid.uuid4())
             task = Task(
                 id=task_id,
                 sessionId=session_id,
@@ -281,8 +282,13 @@ class WCHWExecutor:
                         f"Time Used: {assessment_result['time_used']:.2f}s"))
                 ],
                 artifacts=[{
-                    "type": "assessment_results",
-                    "data": assessment_result
+                    "artifactId": artifact_id,
+                    "name": "assessment_results",
+                    "parts": [{
+                        "type": "data",
+                        "mimeType": "application/json",
+                        "data": assessment_result
+                    }]
                 }]
             )
             
