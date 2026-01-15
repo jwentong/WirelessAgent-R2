@@ -1,0 +1,60 @@
+# WirelessAgent - Purple Agent (Baseline) Docker Image
+# UC Berkeley AgentX Competition Submission
+# AgentBeats Compatible
+# 
+# Docker Image: ghcr.io/jwentong/wirelessagent-purple:latest
+# Performance: 81.78% accuracy on WCHW validation set
+# Author: Jingwen
+# Date: 1/15/2026
+
+FROM python:3.11-slim
+
+# Metadata
+LABEL org.opencontainers.image.title="WirelessAgent Purple Agent"
+LABEL org.opencontainers.image.description="Baseline Purple Agent for WCHW Benchmark - UC Berkeley AgentX Competition"
+LABEL org.opencontainers.image.authors="Jingwen Tong <jwentong@foxmail.com>"
+LABEL org.opencontainers.image.source="https://github.com/jwentong/WirelessAgent-R2"
+LABEL org.opencontainers.image.licenses="MIT"
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONPATH=/app
+
+# Default model - can be overridden at runtime
+ENV MODEL_NAME=qwen-turbo-latest
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy dependency files first (for better layer caching)
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY agents/ ./agents/
+COPY scripts/ ./scripts/
+COPY workspace/ ./workspace/
+COPY config/ ./config/
+
+# Create necessary directories
+RUN mkdir -p /app/logs
+
+# Expose port
+EXPOSE 8081
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8081/health || exit 1
+
+# Default command
+CMD ["python", "agents/purple_agent.py", "--host", "0.0.0.0", "--port", "8081"]

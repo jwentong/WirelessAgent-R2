@@ -3,10 +3,12 @@ WirelessAgent Purple Agent - A2A Compatible Competition Agent
 UC Berkeley AgentX Competition Submission
 
 This is the PURPLE AGENT (baseline) that solves WCHW benchmark problems.
-It demonstrates how the benchmark should be evaluated.
+It uses the optimized Round 14 workflow with ToolAgent for best performance.
+
+Performance: 81.78% accuracy on WCHW validation set (Round 14 optimized workflow)
 
 Author: Jingwen
-Date: 1/13/2026
+Date: 1/15/2026
 """
 
 import json
@@ -14,15 +16,16 @@ import asyncio
 import logging
 import requests
 from typing import Dict, Any, List, Optional
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import sys
 import os
 
 # Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PROJECT_ROOT)
 
-from scripts.async_llm import AsyncLLM
+from scripts.async_llm import AsyncLLM, create_llm_instance
 
 # Configure logging
 logging.basicConfig(
@@ -32,92 +35,183 @@ logging.basicConfig(
 logger = logging.getLogger("PurpleAgent")
 
 
+# ============================================================================
+# ROUND 14 OPTIMIZED PROMPT (81.78% accuracy)
+# ============================================================================
+
+SOLVE_PROMPT = """You are a telecommunications expert. Solve this problem step by step.
+
+=== CRITICAL FORMULAS ===
+
+【WATER-FILLING ALGORITHM】
+- Cutoff threshold γ0 satisfies: p_total/γ0 = 1 + Σ p_i/γ_i (sum over active states)
+- Power allocation: P_i = (1/γ0 - 1/γ_i)^+ 
+
+【MATCHED FILTER】
+- For pulse s(t), matched filter impulse response: h(t) = s(T-t)
+- Peak output equals pulse energy: E = ∫ s²(t)dt
+
+【COHERENT OOK/2ASK OPTIMAL THRESHOLD】
+- With unequal priors P0, P1: V_T = A/2 + (N0/A)*ln(P0/P1)
+
+【AMPLIFIER IM3 & COMPRESSION】
+- IIP3 (dBm) = Pin + (Pfund - PIM3) / 2
+- OIP3 (dBm) = Pout + (Pfund - PIM3) / 2
+
+【DELTA MODULATION (DM)】
+- DM SNR (dB) = 10*log10(3/8 * (fs/fm)^3) = -13.6 + 30*log10(fs/fm)
+
+【PCM & QUANTIZATION】
+- SQNR (dB) = 6.02n + 1.76 (n-bit uniform quantization)
+
+【DIGITAL MODULATION BER】
+- Coherent BPSK/QPSK: BER = 0.5 * erfc(√(Eb/N0))
+- Coherent BFSK: BER = 0.5 * erfc(√(Eb/(2*N0)))
+- Non-coherent BFSK: BER = 0.5 * exp(-Eb/(2*N0))
+- DPSK: BER = 0.5 * exp(-Eb/N0)
+
+【FM MODULATION】
+- Carson's Rule: BW = 2(Δf + fm)
+- Modulation index: β = Δf/fm
+
+【BANDWIDTH】
+- NRZ first-null: B = Rb
+- Raised-cosine: B = Rs(1+α)/2, where Rs = Rb/log2(M)
+
+【SHANNON CAPACITY】
+- C = B * log2(1 + SNR_linear) in bit/s
+- SNR_linear = 10^(SNR_dB/10)
+
+=== SOLUTION APPROACH ===
+
+1. Identify given values and what is asked
+2. Select the correct formula
+3. Perform step-by-step calculations
+4. For numerical answers: Convert to BASE UNITS (Hz, W, s, bit/s)
+5. For formula answers: Write the formula clearly
+
+IMPORTANT: 
+- For numerical answers: End with a clear number in base units
+- For formula answers: Write the exact formula expression
+"""
+
+
 @dataclass
 class AgentConfig:
     """Purple Agent Configuration"""
     model_name: str = "qwen-turbo-latest"
     temperature: float = 0.7
     max_tokens: int = 2048
-    use_cot: bool = True  # Use Chain-of-Thought
+    use_workflow: bool = True  # Use Round 14 workflow (recommended)
+    use_tool_agent: bool = True  # Use ToolAgent for verification
 
 
 class WCHWPurpleAgent:
     """
     Purple Agent (Baseline) for WCHW Benchmark
     
-    This agent:
-    1. Receives problems from the green agent
-    2. Uses LLM to solve wireless communication problems
-    3. Returns answers for evaluation
+    This agent uses the Round 14 optimized workflow:
+    1. Step 1: LLM solves the problem with domain-specific prompts
+    2. Step 2: ToolAgent verifies calculations using Python code
+    
+    Performance: 81.78% accuracy on WCHW validation set
     """
     
     def __init__(self, config: AgentConfig = None):
         self.config = config or AgentConfig()
         self.llm = None
+        self.custom_operator = None
+        self.tool_agent = None
         self.green_agent_url: Optional[str] = None
+        self._initialized = False
         
     async def initialize(self):
-        """Initialize the LLM client"""
-        self.llm = AsyncLLM(
-            model_name=self.config.model_name,
-            temperature=self.config.temperature
-        )
+        """Initialize the LLM and operators"""
+        if self._initialized:
+            return
+            
+        # Create LLM instance
+        llm_config = {
+            "model_name": self.config.model_name,
+            "temperature": self.config.temperature
+        }
+        self.llm = create_llm_instance(llm_config)
         logger.info(f"Initialized LLM: {self.config.model_name}")
-    
-    def _build_prompt(self, question: str) -> str:
-        """Build the prompt for solving the problem"""
-        if self.config.use_cot:
-            return f"""You are an expert in wireless communications. Solve the following problem step by step.
-
-Problem:
-{question}
-
-Instructions:
-1. Identify the relevant wireless communication concepts
-2. List the known values and what needs to be calculated
-3. Apply the appropriate formulas
-4. Show your calculations step by step
-5. Provide the final answer with appropriate units
-
-Think through this carefully and provide your solution:"""
-        else:
-            return f"""Solve this wireless communication problem:
-
-{question}
-
-Provide your answer directly:"""
+        
+        if self.config.use_workflow:
+            # Import and initialize operators from Round 14 workflow
+            try:
+                from workspace.WCHW.workflows.template.operator import Custom, ToolAgent
+                self.custom_operator = Custom(self.llm)
+                if self.config.use_tool_agent:
+                    self.tool_agent = ToolAgent(self.llm)
+                logger.info("Initialized Round 14 workflow operators (Custom + ToolAgent)")
+            except ImportError as e:
+                logger.warning(f"Could not import workflow operators: {e}")
+                logger.info("Falling back to direct LLM mode")
+                self.config.use_workflow = False
+        
+        self._initialized = True
     
     async def solve_problem(self, question: str) -> str:
-        """Solve a single problem"""
-        if self.llm is None:
+        """
+        Solve a single problem using Round 14 workflow
+        
+        Workflow:
+        1. Custom operator: LLM solves with domain-specific prompt
+        2. ToolAgent: Verifies calculation using Python code
+        """
+        if not self._initialized:
             await self.initialize()
         
-        prompt = self._build_prompt(question)
-        
         try:
-            response = await self.llm.generate(
-                prompt=prompt,
-                max_tokens=self.config.max_tokens
-            )
-            
-            # Extract the answer from the response
-            answer = self._extract_answer(response)
-            return answer
-            
+            if self.config.use_workflow and self.custom_operator:
+                # Step 1: LLM solves the problem with reasoning
+                solution = await self.custom_operator(
+                    input=question, 
+                    instruction=SOLVE_PROMPT
+                )
+                solution_text = solution.get('response', str(solution))
+                
+                # Step 2: ToolAgent verifies and extracts final answer
+                if self.tool_agent and self.config.use_tool_agent:
+                    verification_prompt = f"""Problem: {question}
+
+Proposed solution: {solution_text}
+
+Verify the calculation using Python code. For formula answers, output the formula exactly. For numerical answers, output ONLY the final numerical answer as a pure number in base units (Hz not kHz, W not mW, s not ms, bit/s not Mbit/s). No units, no text, just the number or formula."""
+                    
+                    verification = await self.tool_agent(
+                        problem=verification_prompt,
+                        max_steps=2
+                    )
+                    answer = verification.get('answer', solution_text)
+                else:
+                    # Extract answer from solution
+                    answer = self._extract_answer(solution_text)
+                
+                return answer
+            else:
+                # Fallback: Direct LLM mode
+                prompt = SOLVE_PROMPT + question
+                response = await self.llm(prompt)
+                return self._extract_answer(response)
+                
         except Exception as e:
             logger.error(f"Error solving problem: {e}")
             return f"Error: {str(e)}"
     
     def _extract_answer(self, response: str) -> str:
         """Extract the final answer from LLM response"""
-        # Look for common answer patterns
+        if not response:
+            return ""
+            
         lines = response.strip().split('\n')
         
         # Try to find explicit answer markers
         for line in reversed(lines):
             line_lower = line.lower().strip()
             if any(marker in line_lower for marker in ['answer:', 'final answer:', 'result:', '=']):
-                # Extract the value after the marker
                 for marker in ['answer:', 'final answer:', 'result:']:
                     if marker in line_lower:
                         idx = line_lower.find(marker)
@@ -144,6 +238,8 @@ Provide your answer directly:"""
         
         # Solve each problem
         answers = {}
+        total_cost = 0.0
+        
         for i, task in enumerate(tasks):
             task_id = task["task_id"]
             question = task["question"]
@@ -158,12 +254,53 @@ Provide your answer directly:"""
                 json={"task_id": task_id, "answer": answer}
             )
             result = submit_response.json()
-            logger.info(f"Task {task_id}: score = {result.get('score', 'N/A')}")
+            score = result.get('score', 'N/A')
+            logger.info(f"Task {task_id}: score = {score}")
         
         # Get final results
         results_response = requests.get(f"{green_agent_url}/results")
-        return results_response.json()
+        final_results = results_response.json()
+        
+        # Add LLM cost if available
+        if self.llm:
+            try:
+                usage = self.llm.get_usage_summary()
+                final_results["llm_cost"] = usage.get("total_cost", 0)
+            except:
+                pass
+        
+        return final_results
+    
+    async def solve_via_a2a(self, session_id: str, tasks: List[Dict]) -> Dict[str, str]:
+        """
+        Solve problems via A2A protocol
+        
+        Args:
+            session_id: Assessment session ID
+            tasks: List of task dictionaries with 'task_id' and 'question'
+            
+        Returns:
+            Dictionary mapping task_id to answer
+        """
+        if not self._initialized:
+            await self.initialize()
+        
+        answers = {}
+        for task in tasks:
+            task_id = task.get("task_id")
+            question = task.get("question")
+            
+            if task_id and question:
+                answer = await self.solve_problem(question)
+                answers[task_id] = answer
+                logger.info(f"Solved {task_id}")
+        
+        return answers
 
+
+# ============================================================================
+# A2A PROTOCOL HANDLER
+# ============================================================================
 
 class PurpleAgentHandler(BaseHTTPRequestHandler):
     """HTTP Request Handler for Purple Agent A2A Protocol"""
@@ -180,21 +317,59 @@ class PurpleAgentHandler(BaseHTTPRequestHandler):
         self._set_headers(status_code)
         self.wfile.write(json.dumps(data, indent=2).encode())
     
+    def do_OPTIONS(self):
+        """Handle CORS preflight"""
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
+    
     def do_GET(self):
         if self.path == "/health":
-            self._send_json({"status": "healthy", "agent": "WirelessAgent Purple Agent"})
-        
-        elif self.path == "/agent-card":
             self._send_json({
-                "name": "WirelessAgent Purple Agent (Baseline)",
-                "description": "Baseline agent for solving WCHW benchmark problems",
+                "status": "healthy", 
+                "agent": "WirelessAgent Purple Agent (Baseline)",
+                "version": "1.0.0",
+                "workflow": "Round 14 Optimized",
+                "accuracy": "81.78%"
+            })
+        
+        elif self.path == "/.well-known/agent.json" or self.path == "/agent-card":
+            # A2A Agent Card
+            self._send_json({
+                "name": "WirelessAgent Purple Agent",
+                "description": "Baseline agent for solving WCHW wireless communication problems. Uses Round 14 optimized workflow with ToolAgent verification.",
                 "version": "1.0.0",
                 "protocol": "A2A",
-                "capabilities": ["problem-solving", "wireless-communication"],
+                "protocolVersion": "0.1",
+                "capabilities": {
+                    "streaming": False,
+                    "pushNotifications": False,
+                    "stateTransitionHistory": True
+                },
+                "skills": [
+                    {
+                        "id": "solve-wchw",
+                        "name": "Solve WCHW Problems",
+                        "description": "Solve wireless communication homework problems including Shannon capacity, modulation, coding, propagation, and signal processing.",
+                        "inputModes": ["text"],
+                        "outputModes": ["text"],
+                        "examples": [
+                            "Shannon capacity. B=50 MHz, SNR=0.1. Compute C (Mbps).",
+                            "Compute BER for coherent BPSK at Eb/N0=10 dB.",
+                            "Carson bandwidth. FM with f_m=3 kHz and Δf=12 kHz."
+                        ]
+                    }
+                ],
+                "defaultInputModes": ["text"],
+                "defaultOutputModes": ["text"],
+                "url": f"http://localhost:{self.server.server_port}",
                 "model": self.purple_agent.config.model_name,
-                "endpoints": {
-                    "solve": "/solve",
-                    "run-benchmark": "/run-benchmark"
+                "performance": {
+                    "accuracy": 0.8178,
+                    "benchmark": "WCHW validation set",
+                    "workflow": "Round 14 optimized"
                 }
             })
         
@@ -222,12 +397,53 @@ class PurpleAgentHandler(BaseHTTPRequestHandler):
             asyncio.set_event_loop(loop)
             try:
                 answer = loop.run_until_complete(self.purple_agent.solve_problem(question))
-                self._send_json({"answer": answer})
+                self._send_json({"answer": answer, "status": "success"})
+            except Exception as e:
+                self._send_json({"error": str(e), "status": "failed"}, 500)
+            finally:
+                loop.close()
+        
+        elif self.path == "/tasks/send":
+            # A2A tasks/send - receive tasks and return answers
+            message = data.get("message", {})
+            parts = message.get("parts", [])
+            
+            # Extract question from message
+            question = ""
+            for part in parts:
+                if part.get("type") == "text":
+                    question = part.get("text", "")
+                    break
+            
+            if not question:
+                self._send_json({"error": "No question in message"}, 400)
+                return
+            
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                answer = loop.run_until_complete(self.purple_agent.solve_problem(question))
+                self._send_json({
+                    "id": data.get("id", "task-1"),
+                    "sessionId": data.get("sessionId", "session-1"),
+                    "status": {"state": "completed"},
+                    "history": [
+                        {"role": "user", "parts": [{"type": "text", "text": question}]},
+                        {"role": "agent", "parts": [{"type": "text", "text": answer}]}
+                    ],
+                    "artifacts": [{"type": "answer", "data": answer}]
+                })
+            except Exception as e:
+                self._send_json({
+                    "id": data.get("id", "task-1"),
+                    "status": {"state": "failed"},
+                    "error": str(e)
+                }, 500)
             finally:
                 loop.close()
         
         elif self.path == "/run-benchmark":
-            # Run full benchmark
+            # Run full benchmark against green agent
             green_agent_url = data.get("green_agent_url")
             if not green_agent_url:
                 self._send_json({"error": "green_agent_url required"}, 400)
@@ -238,6 +454,8 @@ class PurpleAgentHandler(BaseHTTPRequestHandler):
             try:
                 results = loop.run_until_complete(self.purple_agent.run_benchmark(green_agent_url))
                 self._send_json(results)
+            except Exception as e:
+                self._send_json({"error": str(e), "status": "failed"}, 500)
             finally:
                 loop.close()
         
@@ -255,19 +473,54 @@ def run_server(host: str = "0.0.0.0", port: int = 8081, model: str = "qwen-turbo
     PurpleAgentHandler.purple_agent = purple_agent
     
     server = HTTPServer((host, port), PurpleAgentHandler)
-    logger.info(f"Starting WirelessAgent Purple Agent on http://{host}:{port}")
-    logger.info(f"Using model: {model}")
-    logger.info("A2A Endpoints:")
-    logger.info("  GET  /health        - Health check")
-    logger.info("  GET  /agent-card    - Agent capabilities")
-    logger.info("  POST /solve         - Solve a single problem")
-    logger.info("  POST /run-benchmark - Run full benchmark")
+    logger.info(f"=" * 60)
+    logger.info(f"WirelessAgent Purple Agent (Baseline)")
+    logger.info(f"=" * 60)
+    logger.info(f"Server: http://{host}:{port}")
+    logger.info(f"Model: {model}")
+    logger.info(f"Workflow: Round 14 Optimized (81.78% accuracy)")
+    logger.info(f"")
+    logger.info(f"A2A Endpoints:")
+    logger.info(f"  GET  /health              - Health check")
+    logger.info(f"  GET  /.well-known/agent.json - A2A Agent Card")
+    logger.info(f"  POST /solve               - Solve a single problem")
+    logger.info(f"  POST /tasks/send          - A2A task handling")
+    logger.info(f"  POST /run-benchmark       - Run full benchmark")
+    logger.info(f"=" * 60)
     
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         logger.info("Shutting down Purple Agent server")
         server.shutdown()
+
+
+# ============================================================================
+# CLI & DEMO
+# ============================================================================
+
+async def demo():
+    """Demo: solve a sample problem"""
+    agent = WCHWPurpleAgent()
+    await agent.initialize()
+    
+    # Sample problems
+    problems = [
+        "Shannon capacity. B=50 MHz, SNR=0.1 (linear). Compute C (Mbps).",
+        "Compute BER for coherent BPSK at Eb/N0=10 dB.",
+        "Carson bandwidth. FM with f_m=3 kHz and Δf=12 kHz. Find B_FM."
+    ]
+    
+    print("\n" + "=" * 60)
+    print("WirelessAgent Purple Agent - Demo")
+    print("=" * 60)
+    
+    for i, problem in enumerate(problems, 1):
+        print(f"\nProblem {i}: {problem}")
+        answer = await agent.solve_problem(problem)
+        print(f"Answer: {answer}")
+    
+    print("\n" + "=" * 60)
 
 
 if __name__ == "__main__":
@@ -277,7 +530,11 @@ if __name__ == "__main__":
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Host to bind to")
     parser.add_argument("--port", type=int, default=8081, help="Port to listen on")
     parser.add_argument("--model", type=str, default="qwen-turbo-latest", help="LLM model to use")
+    parser.add_argument("--demo", action="store_true", help="Run demo mode")
     
     args = parser.parse_args()
     
-    run_server(host=args.host, port=args.port, model=args.model)
+    if args.demo:
+        asyncio.run(demo())
+    else:
+        run_server(host=args.host, port=args.port, model=args.model)

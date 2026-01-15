@@ -1,30 +1,31 @@
 # WirelessAgent - Docker Compose Configuration
 # UC Berkeley AgentX Competition Submission
 # Author: Jingwen
-# Date: 1/13/2026
+# Date: 1/15/2026
 
 version: '3.8'
 
 services:
-  # Green Agent - Evaluation Server
+  # Green Agent - Evaluation Server (AgentBeats Compatible)
   green-agent:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: wirelessagent-green
     ports:
-      - "8080:8080"
+      - "9009:9009"
     environment:
       - PYTHONUNBUFFERED=1
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ASSESSMENT_MODE=test
     volumes:
       - ./data:/app/data:ro
       - ./logs:/app/logs
       - ./workspace:/app/workspace
-    command: ["python", "agents/green_agent.py", "--port", "8080"]
+    command: ["python", "src/server.py"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:9009/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -32,10 +33,12 @@ services:
       - wirelessagent-network
 
   # Purple Agent - Baseline Competition Agent
+  # Purple Agent - Baseline Competition Agent (Round 14 Optimized)
+  # Performance: 81.78% accuracy on WCHW validation set
   purple-agent:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.purple
     container_name: wirelessagent-purple
     ports:
       - "8081:8081"
@@ -43,7 +46,9 @@ services:
       - PYTHONUNBUFFERED=1
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
-      - GREEN_AGENT_URL=http://green-agent:8080
+      - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY}
+      - GREEN_AGENT_URL=http://green-agent:9009
+      - MODEL_NAME=qwen-turbo-latest
     volumes:
       - ./config:/app/config:ro
       - ./logs:/app/logs
@@ -51,6 +56,11 @@ services:
     depends_on:
       green-agent:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     networks:
       - wirelessagent-network
 
@@ -61,3 +71,4 @@ networks:
 volumes:
   logs:
   workspace:
+
