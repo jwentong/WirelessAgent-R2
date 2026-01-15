@@ -6,6 +6,10 @@
 # Performance: 81.78% accuracy on WCHW validation set
 # Author: Jingwen
 # Date: 1/15/2026
+#
+# AgentBeats Requirements:
+# - ENTRYPOINT must accept: --host, --port, --card-url
+# - Must be built for linux/amd64 architecture
 
 FROM python:3.11-slim
 
@@ -56,5 +60,9 @@ EXPOSE 8081
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8081/health || exit 1
 
-# Default command
-CMD ["python", "agents/purple_agent.py", "--host", "0.0.0.0", "--port", "8081"]
+# AgentBeats ENTRYPOINT requirement:
+# Must accept --host, --port, --card-url arguments
+ENTRYPOINT ["python", "agents/purple_agent.py"]
+
+# Default arguments (can be overridden)
+CMD ["--host", "0.0.0.0", "--port", "8081"]

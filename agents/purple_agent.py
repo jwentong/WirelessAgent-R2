@@ -530,6 +530,8 @@ if __name__ == "__main__":
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Host to bind to")
     parser.add_argument("--port", type=int, default=8081, help="Port to listen on")
     parser.add_argument("--model", type=str, default="qwen-turbo-latest", help="LLM model to use")
+    parser.add_argument("--card-url", type=str, default=None, 
+                        help="URL to advertise in agent card (AgentBeats requirement)")
     parser.add_argument("--demo", action="store_true", help="Run demo mode")
     
     args = parser.parse_args()
@@ -537,4 +539,7 @@ if __name__ == "__main__":
     if args.demo:
         asyncio.run(demo())
     else:
+        # Note: card_url can be used to update the agent card URL if needed
+        if args.card_url:
+            logger.info(f"Agent Card URL: {args.card_url}")
         run_server(host=args.host, port=args.port, model=args.model)

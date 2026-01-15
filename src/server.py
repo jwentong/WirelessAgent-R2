@@ -153,7 +153,14 @@ def main():
     parser = argparse.ArgumentParser(description="WirelessAgent Green Agent Server")
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Host to bind")
     parser.add_argument("--port", type=int, default=9009, help="Port to listen on")
+    parser.add_argument("--card-url", type=str, default=None, 
+                        help="URL to advertise in agent card (AgentBeats requirement)")
     args = parser.parse_args()
+    
+    # Update agent card URL if provided
+    if args.card_url:
+        AGENT_CARD["url"] = args.card_url
+        logger.info(f"Agent Card URL set to: {args.card_url}")
     
     server = WirelessAgentServer(host=args.host, port=args.port)
     server.run()

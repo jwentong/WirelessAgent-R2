@@ -4,7 +4,11 @@
 # 
 # Docker Image: ghcr.io/jwentong/wirelessagent-r2:latest
 # Author: Jingwen
-# Date: 1/13/2026
+# Date: 1/15/2026
+#
+# AgentBeats Requirements:
+# - ENTRYPOINT must accept: --host, --port, --card-url
+# - Must be built for linux/amd64 architecture
 
 FROM python:3.11-slim
 
@@ -56,5 +60,9 @@ EXPOSE 9009
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:9009/health || exit 1
 
-# Default command - run the green agent server
-CMD ["python", "src/server.py"]
+# AgentBeats ENTRYPOINT requirement:
+# Must accept --host, --port, --card-url arguments
+ENTRYPOINT ["python", "src/server.py"]
+
+# Default arguments (can be overridden)
+CMD ["--host", "0.0.0.0", "--port", "9009"]
