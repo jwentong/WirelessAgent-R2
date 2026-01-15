@@ -3,14 +3,18 @@ WirelessAgent Green Agent - A2A Request Executor
 UC Berkeley AgentX Competition - AgentBeats Compatible
 
 This module handles A2A assessment requests and orchestrates the evaluation flow.
+The Green Agent actively sends problems to Purple Agent and collects answers.
 
 Author: Jingwen
-Date: 1/13/2026
+Date: 1/15/2026
 """
 
 import asyncio
+import aiohttp
 import logging
 import uuid
+import time
+import os
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -67,10 +71,10 @@ class WCHWExecutor:
     """
     A2A Request Executor for WCHW Assessment
     
-    Handles the assessment flow:
-    1. Receive task from purple agent
-    2. Send WCHW problems for evaluation
-    3. Receive answers and compute scores
+    Orchestrates the evaluation flow:
+    1. Receive assessment request from AgentBeats client
+    2. Connect to Purple Agent and send WCHW problems
+    3. Collect answers and compute scores
     4. Return assessment results
     """
     
@@ -78,6 +82,8 @@ class WCHWExecutor:
         self.agent = agent
         self.sessions: Dict[str, Dict] = {}
         self.tasks: Dict[str, Task] = {}
+        # Purple Agent endpoint - read from environment or use default
+        self.purple_agent_url = os.environ.get("PURPLE_AGENT_URL", "http://purple-agent:9009")
     
     async def execute(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Execute an A2A request"""
@@ -113,14 +119,134 @@ class WCHWExecutor:
             
         except Exception as e:
             logger.error(f"Execution error: {e}")
+            import traceback
+            traceback.print_exc()
             return {
                 "jsonrpc": "2.0",
                 "id": request_id,
                 "error": {"code": -32603, "message": str(e)}
             }
+
+    async def _send_to_purple_agent(self, problem: Dict[str, Any]) -> str:
+        """Send a problem to Purple Agent and get the answer"""
+        question = problem.get("question", "")
+        task_id = problem.get("id", str(uuid.uuid4()))
+        
+        # Prepare A2A message to Purple Agent
+        a2a_request = {
+            "jsonrpc": "2.0",
+            "id": str(uuid.uuid4()),
+            "method": "message/send",
+            "params": {
+                "id": task_id,
+                "sessionId": str(uuid.uuid4()),
+                "message": {
+                    "role": "user",
+                    "messageId": str(uuid.uuid4()),
+                    "parts": [{"type": "text", "text": question}]
+                }
+            }
+        }
+        
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(
+                    self.purple_agent_url,
+                    json=a2a_request,
+                    timeout=aiohttp.ClientTimeout(total=60)
+                ) as response:
+                    if response.status == 200:
+                        result = await response.json()
+                        # Extract answer from response
+                        if "result" in result:
+                            task_result = result["result"]
+                            # Try to get answer from history
+                            history = task_result.get("history", [])
+                            for msg in reversed(history):
+                                if msg.get("role") == "agent":
+                                    parts = msg.get("parts", [])
+                                    for part in parts:
+                                        if part.get("type") == "text":
+                                            return part.get("text", "")
+                            # Try artifacts
+                            artifacts = task_result.get("artifacts", [])
+                            for artifact in artifacts:
+                                if "answer" in artifact:
+                                    return str(artifact["answer"])
+                        return ""
+                    else:
+                        logger.error(f"Purple Agent returned status {response.status}")
+                        return ""
+        except Exception as e:
+            logger.error(f"Error communicating with Purple Agent: {e}")
+            return ""
+
+    async def _run_assessment(self, purple_agent_url: str = None) -> Dict[str, Any]:
+        """Run full WCHW assessment against Purple Agent"""
+        if purple_agent_url:
+            self.purple_agent_url = purple_agent_url
+            
+        logger.info(f"Starting WCHW assessment with Purple Agent at {self.purple_agent_url}")
+        
+        start_time = time.time()
+        problems = self.agent.get_all_tasks()
+        total_tasks = len(problems)
+        
+        logger.info(f"Evaluating {total_tasks} problems...")
+        
+        results = []
+        correct = 0
+        
+        for i, problem in enumerate(problems):
+            task_id = problem.get("task_id", str(i))
+            question = problem.get("question", "")
+            
+            # Get answer from Purple Agent
+            answer = await self._send_to_purple_agent(problem)
+            
+            # Evaluate the answer
+            eval_result = self.agent.evaluate_response(task_id, answer)
+            score = eval_result.get("score", 0)
+            
+            if score >= 0.5:
+                correct += 1
+            
+            results.append({
+                "task_id": task_id,
+                "question": question[:100] + "..." if len(question) > 100 else question,
+                "predicted_answer": answer[:200] if answer else "",
+                "score": score,
+                "correct": score >= 0.5
+            })
+            
+            if (i + 1) % 10 == 0:
+                logger.info(f"Progress: {i+1}/{total_tasks} ({correct}/{i+1} correct)")
+        
+        end_time = time.time()
+        time_used = end_time - start_time
+        
+        # Calculate final metrics
+        average_score = sum(r["score"] for r in results) / len(results) if results else 0
+        accuracy = correct / total_tasks if total_tasks > 0 else 0
+        
+        summary = {
+            "total_tasks": total_tasks,
+            "correct": correct,
+            "accuracy": accuracy,
+            "average_score": average_score,
+            "time_used": time_used,
+            "avg_time_per_task": time_used / total_tasks if total_tasks > 0 else 0,
+            "results": results
+        }
+        
+        logger.info(f"Assessment complete: {correct}/{total_tasks} correct ({accuracy:.2%})")
+        logger.info(f"Average score: {average_score:.4f}")
+        logger.info(f"Time used: {time_used:.2f}s")
+        
+        return summary
     
     async def _handle_send(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle tasks/send - Start or continue a task"""
+        """Handle tasks/send or message/send - This triggers the assessment"""
         session_id = params.get("sessionId") or str(uuid.uuid4())
         task_id = params.get("id") or str(uuid.uuid4())
         message = params.get("message", {})
@@ -132,90 +258,54 @@ class WCHWExecutor:
                 text = part.get("text", "")
                 break
         
-        # Check if this is an assessment request
-        if "start assessment" in text.lower() or "begin evaluation" in text.lower():
-            # Start WCHW assessment
-            tasks = self.agent.get_all_tasks()
-            
-            task = Task(
-                id=task_id,
-                sessionId=session_id,
-                status={"state": TaskState.INPUT_REQUIRED},
-                history=[
-                    asdict(Message.text("user", text)),
-                    asdict(Message.text("agent", f"Starting WCHW assessment with {len(tasks)} problems. Please solve each problem and submit your answers."))
-                ],
-                artifacts=[{
-                    "type": "assessment_tasks",
-                    "data": tasks
-                }]
-            )
-            
-            self.tasks[task_id] = task
-            self.sessions[session_id] = {
-                "task_id": task_id,
-                "current_problem": 0,
-                "answers": {},
-                "scores": {}
-            }
-            
-            return asdict(task)
+        logger.info(f"Received message: {text[:100] if text else '(empty)'}")
         
-        # Check if this is an answer submission
-        elif task_id in self.tasks:
-            session = self.sessions.get(self.tasks[task_id].sessionId, {})
+        # Run the assessment automatically when receiving any message
+        # The AgentBeats client sends a message to trigger assessment
+        try:
+            # Run full assessment against Purple Agent
+            assessment_result = await self._run_assessment()
             
-            # Parse answer from message
-            # Expected format: "task_id: answer" or JSON
-            try:
-                import json
-                answer_data = json.loads(text)
-                task_answer_id = answer_data.get("task_id")
-                answer = answer_data.get("answer")
-            except:
-                # Try to parse simple format
-                if ":" in text:
-                    parts = text.split(":", 1)
-                    task_answer_id = parts[0].strip()
-                    answer = parts[1].strip()
-                else:
-                    task_answer_id = None
-                    answer = text
-            
-            if task_answer_id and answer:
-                result = self.agent.evaluate_response(task_answer_id, answer)
-                session["answers"][task_answer_id] = answer
-                session["scores"][task_answer_id] = result.get("score", 0)
-                
-                # Check if all problems answered
-                all_tasks = self.agent.get_all_tasks()
-                if len(session["scores"]) >= len(all_tasks):
-                    # Assessment complete
-                    summary = self.agent.get_summary()
-                    self.tasks[task_id].status = {"state": TaskState.COMPLETED}
-                    self.tasks[task_id].artifacts.append({
-                        "type": "assessment_results",
-                        "data": summary
-                    })
-                    self.tasks[task_id].history.append(
-                        asdict(Message.text("agent", f"Assessment complete! Final score: {summary.get('average_score', 0):.2%}"))
-                    )
-                else:
-                    self.tasks[task_id].history.append(
-                        asdict(Message.text("agent", f"Answer received for {task_answer_id}. Score: {result.get('score', 0):.2f}. {len(all_tasks) - len(session['scores'])} problems remaining."))
-                    )
-            
-            return asdict(self.tasks[task_id])
-        
-        else:
-            # New task - return welcome message
+            # Create response task with assessment results
             task = Task(
                 id=task_id,
                 sessionId=session_id,
                 status={"state": TaskState.COMPLETED},
                 history=[
                     asdict(Message.text("user", text)),
-                    asdict(Message.text("agent", "Welcome to WirelessAgent WCHW Benchmark. Send 'start assessment' to begin evaluation."))
+                    asdict(Message.text("agent", f"WCHW Assessment Complete!\n\n"
+                        f"Total Problems: {assessment_result['total_tasks']}\n"
+                        f"Correct: {assessment_result['correct']}\n"
+                        f"Accuracy: {assessment_result['accuracy']:.2%}\n"
+                        f"Average Score: {assessment_result['average_score']:.4f}\n"
+                        f"Time Used: {assessment_result['time_used']:.2f}s"))
+                ],
+                artifacts=[{
+                    "type": "assessment_results",
+                    "data": assessment_result
+                }]
+            )
+            
+            self.tasks[task_id] = task
+            self.sessions[session_id] = {
+                "task_id": task_id,
+                "results": assessment_result
+            }
+            
+            return asdict(task)
+            
+        except Exception as e:
+            logger.error(f"Assessment failed: {e}")
+            import traceback
+            traceback.print_exc()
+            
+            task = Task(
+                id=task_id,
+                sessionId=session_id,
+                status={"state": TaskState.FAILED},
+                history=[
+                    asdict(Message.text("user", text)),
+                    asdict(Message.text("agent", f"Assessment failed: {str(e)}"))
                 ]
             )
             self.tasks[task_id] = task
