@@ -65,6 +65,7 @@ class WirelessAgentServer:
         """Setup HTTP routes for A2A protocol"""
         self.app.router.add_get("/", self._handle_agent_card)
         self.app.router.add_get("/.well-known/agent.json", self._handle_agent_card)
+        self.app.router.add_get("/.well-known/agent-card.json", self._handle_agent_card)
         self.app.router.add_post("/", self._handle_request)
         self.app.router.add_get("/health", self._handle_health)
         
