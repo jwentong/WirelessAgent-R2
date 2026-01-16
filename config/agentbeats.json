@@ -14,10 +14,10 @@
   "datasets": {
     "test": {
       "name": "wchw_test",
-      "path": "data/datasets/wchw_test.jsonl",
+      "path": "data/datasets/wchw_test_70.jsonl",
       "format": "jsonl",
-      "count": 100,
-      "description": "100 wireless communication problems for final evaluation"
+      "count": 70,
+      "description": "70 wireless communication problems for final evaluation"
     },
     "validate": {
       "name": "wchw_validate", 

@@ -70,7 +70,7 @@ class WCHWGreenAgent:
     4. Reports final benchmark results
     """
     
-    def __init__(self, dataset_path: str = "data/datasets/wchw_test.jsonl"):
+    def __init__(self, dataset_path: str = "data/datasets/wchw_test_70.jsonl"):
         self.dataset_path = dataset_path
         self.benchmark = WCHWBenchmark()
         self.problems: List[Dict] = []
@@ -328,7 +328,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="WirelessAgent Green Agent - A2A Evaluation Server")
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Host to bind to")
     parser.add_argument("--port", type=int, default=8080, help="Port to listen on")
-    parser.add_argument("--dataset", type=str, default="data/datasets/wchw_test.jsonl", help="Path to test dataset")
+    parser.add_argument("--dataset", type=str, default="data/datasets/wchw_test_70.jsonl", help="Path to test dataset")
     
     args = parser.parse_args()
     

@@ -16,12 +16,12 @@ category: "Telecommunications"
 # Dataset Configuration
 [datasets]
 
-# Test dataset (100 problems) - Used for final evaluation
+# Test dataset (70 problems) - Used for final evaluation
 test:
   name: "wchw_test"
-  path: "data/datasets/wchw_test.jsonl"
+  path: "data/datasets/wchw_test_70.jsonl"
   format: "jsonl"
-  count: 100
+  count: 70
   fields:
     question: "question"
     answer: "answer"
