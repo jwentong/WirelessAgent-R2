@@ -302,13 +302,13 @@ class ToolAgent(BaseOperator):
             "description": "Returns answer with reasoning steps and metadata"
         }
     
-    async def _execute(self, problem: str, max_steps: int = 5, **kwargs) -> Dict:
+    async def _execute(self, problem: str, max_steps: int = 1, **kwargs) -> Dict:
         """
         Use tools to solve the math problem with intelligent fallback
         
         Args:
             problem: Mathematical problem to solve
-            max_steps: Maximum number of reasoning steps (default: 3)
+            max_steps: Maximum number of reasoning steps (default: 1)
         
         Returns:
             {

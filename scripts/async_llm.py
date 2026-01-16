@@ -249,7 +249,7 @@ class AsyncLLM:
         
         # Rate limiting: track last call time to add delays
         self._last_call_time = 0
-        self._min_interval = 3.0  # Minimum 3.0 seconds between calls (increased for Aliyun API)
+        self._min_interval = 0.5  # Minimum 0.5 seconds between calls (reduced for faster response)
         self._call_count = 0  # Track total API calls for debugging
         self._rate_limit_backoff = 1.0  # Dynamic backoff multiplier
         
