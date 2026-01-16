@@ -74,7 +74,8 @@ class LLMConfig:
         # Use provided base_url, only fall back if explicitly None or missing
         self.base_url = config.get("base_url") or "https://oneapi.deepwisdom.ai/v1"
         self.top_p = config.get("top_p", 1)
-        logger.info(f"LLMConfig initialized: model={self.model}, base_url={self.base_url}")
+        self.max_tokens = config.get("max_tokens", 256)  # Limit output for faster response
+        logger.info(f"LLMConfig initialized: model={self.model}, base_url={self.base_url}, max_tokens={self.max_tokens}")
 
 class LLMsConfig:
     """Configuration manager for multiple LLM configurations"""
@@ -254,7 +255,7 @@ class AsyncLLM:
         self._rate_limit_backoff = 1.0  # Dynamic backoff multiplier
         
     @retry(
-        stop=stop_after_attempt(2),  # Only 2 attempts to avoid timeout
+        stop=stop_after_attempt(1),  # NO retries - fail fast to avoid timeout
         wait=wait_exponential(multiplier=1, min=1, max=5),  # Shorter waits: 1, 2, 4, 5 seconds
         retry=is_retryable_error,  # Use custom retry logic (only retry recoverable errors)
         before_sleep=before_sleep_log(logger, logging.WARNING),  # Log before sleeping
@@ -293,6 +294,7 @@ class AsyncLLM:
                 messages=message,
                 temperature=self.config.temperature,
                 top_p = self.config.top_p,
+                max_tokens=self.config.max_tokens,  # Limit output tokens for faster response
             )
             
             # Successful call - gradually reduce backoff

@@ -127,9 +127,10 @@ def get_llm_config_from_env() -> Dict[str, Any]:
         
         return {
             "model": model_name,
-            "api_key": api_key,
+            "key": api_key,  # Fixed: was "api_key", should be "key"
             "base_url": base_url,
-            "temperature": 0.7
+            "temperature": 0.3,  # Lower for faster response
+            "max_tokens": 256,  # Limit output for faster response
         }
     
     logger.warning("No API key found in environment, will try config file")
