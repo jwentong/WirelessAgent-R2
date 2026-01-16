@@ -28,6 +28,12 @@ ENV PYTHONPATH=/app
 # Default model - can be overridden at runtime
 ENV MODEL_NAME=qwen-turbo-latest
 
+# API configuration - these can be overridden via environment variables at runtime
+# The Purple Agent will read OPENAI_API_KEY or API_KEY from environment
+# and OPENAI_BASE_URL or API_BASE_URL for the API endpoint
+# Example for DashScope: OPENAI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+# Example for OpenAI: OPENAI_BASE_URL=https://api.openai.com/v1
+
 # Set working directory
 WORKDIR /app
 

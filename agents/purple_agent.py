@@ -102,17 +102,47 @@ class AgentConfig:
     model_name: str = "qwen-turbo-latest"
     temperature: float = 0.7
     max_tokens: int = 2048
-    use_workflow: bool = True  # Use Round 14 workflow (recommended)
-    use_tool_agent: bool = True  # Use ToolAgent for verification
+    use_workflow: bool = True  # Enable workflow for 81.78% accuracy (Round 14)
+    use_tool_agent: bool = True  # Enable ToolAgent for better problem solving
+
+
+def get_llm_config_from_env() -> Dict[str, Any]:
+    """
+    Get LLM configuration from environment variables.
+    Supports multiple API providers: OpenAI, DashScope, etc.
+    """
+    # Check for API key in environment
+    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("API_KEY") or os.environ.get("DASHSCOPE_API_KEY")
+    base_url = os.environ.get("OPENAI_BASE_URL") or os.environ.get("API_BASE_URL")
+    model_name = os.environ.get("MODEL_NAME", "qwen-turbo-latest")
+    
+    if api_key:
+        logger.info(f"Using API key from environment variable")
+        if not base_url:
+            # Default to DashScope for qwen models
+            if "qwen" in model_name.lower():
+                base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+            else:
+                base_url = "https://api.openai.com/v1"
+        
+        return {
+            "model": model_name,
+            "api_key": api_key,
+            "base_url": base_url,
+            "temperature": 0.7
+        }
+    
+    logger.warning("No API key found in environment, will try config file")
+    return None
 
 
 class WCHWPurpleAgent:
     """
     Purple Agent (Baseline) for WCHW Benchmark
     
-    This agent uses the Round 14 optimized workflow:
-    1. Step 1: LLM solves the problem with domain-specific prompts
-    2. Step 2: ToolAgent verifies calculations using Python code
+    This agent uses direct LLM mode for reliability:
+    1. Uses environment variables for API configuration
+    2. Fallback to config file if env vars not set
     
     Performance: 81.78% accuracy on WCHW validation set
     """
@@ -124,16 +154,29 @@ class WCHWPurpleAgent:
         self.tool_agent = None
         self.green_agent_url: Optional[str] = None
         self._initialized = False
+        self._init_error: Optional[str] = None
         
     async def initialize(self):
         """Initialize the LLM and operators"""
         if self._initialized:
             return
-            
-        # Create LLM instance using model name directly
-        # This will load the correct API key and base_url from config2.yaml
-        self.llm = create_llm_instance(self.config.model_name)
-        logger.info(f"Initialized LLM: {self.config.model_name}")
+        
+        try:
+            # First try to get config from environment variables
+            env_config = get_llm_config_from_env()
+            if env_config:
+                from scripts.async_llm import AsyncLLM, LLMConfig
+                llm_config = LLMConfig(env_config)
+                self.llm = AsyncLLM(llm_config)
+                logger.info(f"Initialized LLM from environment: model={env_config['model']}, base_url={env_config['base_url']}")
+            else:
+                # Fallback to config file
+                self.llm = create_llm_instance(self.config.model_name)
+                logger.info(f"Initialized LLM from config file: {self.config.model_name}")
+        except Exception as e:
+            self._init_error = f"Failed to initialize LLM: {str(e)}"
+            logger.error(self._init_error)
+            raise
         
         if self.config.use_workflow:
             # Import and initialize operators from Round 14 workflow
@@ -152,14 +195,21 @@ class WCHWPurpleAgent:
     
     async def solve_problem(self, question: str) -> str:
         """
-        Solve a single problem using Round 14 workflow
+        Solve a single problem using direct LLM mode
         
-        Workflow:
-        1. Custom operator: LLM solves with domain-specific prompt
-        2. ToolAgent: Verifies calculation using Python code
+        Uses environment variables for API configuration with fallback to config file.
         """
-        if not self._initialized:
-            await self.initialize()
+        try:
+            if not self._initialized:
+                await self.initialize()
+        except Exception as e:
+            logger.error(f"Initialization failed: {e}")
+            return f"Error: LLM initialization failed - {str(e)}"
+        
+        # Check if LLM is available
+        if self.llm is None:
+            logger.error("LLM is None after initialization")
+            return "Error: LLM not initialized"
         
         try:
             if self.config.use_workflow and self.custom_operator:
@@ -189,13 +239,17 @@ Verify the calculation using Python code. For formula answers, output the formul
                 
                 return answer
             else:
-                # Fallback: Direct LLM mode
-                prompt = SOLVE_PROMPT + question
+                # Direct LLM mode (default for Docker reliability)
+                prompt = SOLVE_PROMPT + "\n\nProblem: " + question + "\n\nProvide your final answer:"
+                logger.info(f"Calling LLM for question: {question[:50]}...")
                 response = await self.llm(prompt)
-                return self._extract_answer(response)
+                logger.info(f"LLM response received, length: {len(response) if response else 0}")
+                answer = self._extract_answer(response)
+                logger.info(f"Extracted answer: {answer[:100] if answer else 'empty'}")
+                return answer
                 
         except Exception as e:
-            logger.error(f"Error solving problem: {e}")
+            logger.error(f"Error solving problem: {e}", exc_info=True)
             return f"Error: {str(e)}"
     
     def _extract_answer(self, response: str) -> str:
