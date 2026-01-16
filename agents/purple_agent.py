@@ -100,8 +100,8 @@ IMPORTANT:
 class AgentConfig:
     """Purple Agent Configuration"""
     model_name: str = "qwen-turbo-latest"
-    temperature: float = 0.7
-    max_tokens: int = 2048
+    temperature: float = 0.3  # Lower temperature for faster, more deterministic responses
+    max_tokens: int = 512  # Reduced for faster response
     use_workflow: bool = False  # Disabled - workflow causes client timeout
     use_tool_agent: bool = False  # Disabled - use direct LLM for speed
 

@@ -249,13 +249,13 @@ class AsyncLLM:
         
         # Rate limiting: track last call time to add delays
         self._last_call_time = 0
-        self._min_interval = 0.5  # Minimum 0.5 seconds between calls (reduced for faster response)
+        self._min_interval = 0.1  # Minimum 0.1 seconds between calls (minimal delay)
         self._call_count = 0  # Track total API calls for debugging
         self._rate_limit_backoff = 1.0  # Dynamic backoff multiplier
         
     @retry(
-        stop=stop_after_attempt(5),  # Increased to 5 attempts for rate limit errors
-        wait=wait_exponential(multiplier=2, min=8, max=120),  # Longer waits: 8, 16, 32, 64, 120 seconds
+        stop=stop_after_attempt(2),  # Only 2 attempts to avoid timeout
+        wait=wait_exponential(multiplier=1, min=1, max=5),  # Shorter waits: 1, 2, 4, 5 seconds
         retry=is_retryable_error,  # Use custom retry logic (only retry recoverable errors)
         before_sleep=before_sleep_log(logger, logging.WARNING),  # Log before sleeping
         after=after_log(logger, logging.INFO)  # Log after attempt
