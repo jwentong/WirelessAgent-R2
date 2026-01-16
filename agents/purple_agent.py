@@ -102,8 +102,8 @@ class AgentConfig:
     model_name: str = "qwen-turbo-latest"
     temperature: float = 0.7
     max_tokens: int = 2048
-    use_workflow: bool = True  # Enable workflow for 81.78% accuracy (Round 14)
-    use_tool_agent: bool = True  # Enable ToolAgent for better problem solving
+    use_workflow: bool = False  # Disabled - workflow causes client timeout
+    use_tool_agent: bool = False  # Disabled - use direct LLM for speed
 
 
 def get_llm_config_from_env() -> Dict[str, Any]:
