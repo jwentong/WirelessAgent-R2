@@ -112,7 +112,7 @@ def parse_args():
     parser.add_argument("--initial_round", type=int, default=1, help="Initial round")
     parser.add_argument("--max_rounds", type=int, default=20, help="Max iteration rounds")
     parser.add_argument("--check_convergence", type=bool, default=True, help="Whether to enable early stop")
-    parser.add_argument("--validation_rounds", type=int, default=1, help="Validation rounds")
+    parser.add_argument("--validation_rounds", type=int, default=5, help="Validation runs per candidate")
     parser.add_argument(
         "--if_force_download",
         type=lambda x: x.lower() == "true",
@@ -122,13 +122,13 @@ def parse_args():
     parser.add_argument(
         "--opt_model_name",
         type=str,
-        default="claude-3-5-sonnet-20241022",
+        default="Claude-Opus-4.5",
         help="Specifies the name of the model used for optimization tasks.",
     )
     parser.add_argument(
         "--exec_model_name",
         type=str,
-        default="gpt-4o-mini",
+        default="qwen-turbo-latest",
         help="Specifies the name of the model used for execution tasks.",
     )
     parser.add_argument(

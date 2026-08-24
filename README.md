@@ -43,7 +43,7 @@
 | 🛠️ **Domain-Specific Tool Integration** | ReAct-based `ToolAgent` and deterministic `CodeLevel` operators seamlessly integrate ray-tracing predictors, Kalman filters, and telecom calculators |
 | 📊 **WirelessBench Suite** | 3,392 problems across 3 dimensions: knowledge reasoning (WCHW), network slicing (WCNS), and mobile service assurance (WCMSA) |
 | 💰 **Ultra-Low Cost** | Full optimization search costs **< \$5** per task; per-problem inference costs **< \$0.001** |
-| 🏆 **State-of-the-Art** | Outperforms prompting baselines by up to **31 pp** and general-purpose workflow optimizers by **11.9 pp** |
+| 🏆 **State-of-the-Art** | Outperforms prompting baselines by up to **31 pp** and the best general-purpose workflow optimizer by **11.1 pp** |
 
 ---
 
@@ -86,9 +86,14 @@ WirelessAgent++ employs three domain-aware enhancements to the standard MCTS alg
 
 ### Optimization Results
 
-- **19 rounds** of optimization, **\$4.95** total search cost, **~63 min** wall-clock time
-- Score improved from **62.44%** (Round 1, seed) to **81.78%** (Round 14, best)  — a **+30.97%** improvement
+- **19 rounds** of WCHW optimization, **\$4.95** total search cost, **~63 min** wall-clock time
+- WCHW validation score improved from **62.44%** (Round 1, seed) to **81.78%** (Round 14, best), a **+19.34 pp** gain
 - The optimizer discovers tool integration (Round 2, +18.42 pp) as the single largest gain
+
+The held-out test scores reported in the revised manuscript are **78.37%** (WCHW),
+**90.95%** (WCNS), and **97.07%** (WCMSA). These values must not be confused with
+the validation-set workflow trajectories below or with the historical WCHW “After”
+value in the comparison table.
 
 ---
 
@@ -111,12 +116,12 @@ WirelessBench is a standardized, multi-dimensional benchmark suite for evaluatin
 
 ### Workflow Evolution Examples
 
-**WCNS (Network Slicing) — 3-Phase Trajectory:**
+**WCNS (Network Slicing) — validation-set 3-phase trajectory:**
 - **Phase 1 — Seed** (61.3%): Bare LLM call, CQI prediction essentially random
 - **Phase 2 — Tool Discovery** (90.5%, +29.2 pp): `ToolAgent` discovers ray-tracing tool
 - **Phase 3 — Tool Compilation** (92.18%, +1.7 pp): `ToolAgent` → `CodeLevelRayTracing` (deterministic, LLM-free)
 
-**WCMSA (Mobile Service Assurance) — 3-Phase Trajectory:**
+**WCMSA (Mobile Service Assurance) — validation-set 3-phase trajectory:**
 - **Phase 1 — Seed** (65.76%): No position prediction or channel estimation
 - **Phase 2 — Multi-Tool Discovery** (93.59%, +27.83 pp): `ToolAgent` chains Kalman filter → ray-tracing
 - **Phase 3 — Tool Compilation** (96.89%, +1.35 pp): Compiled into `CodeLevelKalmanPredictor` → `CodeLevelRayTracing`
@@ -145,14 +150,27 @@ WirelessBench is a standardized, multi-dimensional benchmark suite for evaluatin
 
 ### Main Results
 
-| Method | HotpotQA (F1) | DROP (F1) | MATH (Acc) | WirelessBench |
-|--------|:---:|:---:|:---:|:---:|
-| Qwen-turbo (Zero-shot) | 0.3754 | 0.5764 | 0.7550 | 0.5244 |
-| CoT | 0.5261 | 0.5893 | 0.7737 | 0.5244 |
-| MedPrompt | 0.5099 | 0.6031 | 0.6833 | 0.5244 |
-| ADAS | 0.6108 | 0.6102 | 0.7697 | 0.5244 |
-| AFlow | 0.6818 | 0.7788 | 0.8103 | 0.6992 |
-| **WirelessAgent++** | **0.7273** | **0.8021** | **0.8210** | **0.8102** |
+### Revised-manuscript WirelessBench test results
+
+| Benchmark | Held-out test score |
+|-----------|:------------------:|
+| WCHW | **78.37%** |
+| WCNS | **90.95%** |
+| WCMSA | **97.07%** |
+
+The phase scores listed in the WirelessBench section are validation scores used to
+describe workflow evolution; they are not replacements for these held-out test
+scores.
+
+| Method | HotpotQA (F1) | DROP (F1) | MATH (Solve Rate) | WCHW Before | WCHW After |
+|--------|:---:|:---:|:---:|:---:|:---:|
+| Qwen-turbo-latest | 0.1423 | 0.5641 | 0.6412 | 0.5013 | 0.5834 |
+| CoT | 0.5379 | 0.7607 | 0.6828 | 0.5032 | 0.6032 |
+| MedPrompt | 0.5411 | 0.7559 | 0.6996 | 0.5422 | 0.6122 |
+| ADAS | 0.5110 | 0.7423 | 0.4953 | 0.4813 | 0.5313 |
+| AFlow | 0.5823 | 0.7811 | 0.7864 | 0.5152 | 0.6992 |
+| WirelessAgent | -- | -- | -- | 0.6921 | 0.7649 |
+| **WirelessAgent++ (Ours)** | **0.7273** | **0.8021** | **0.8210** | **0.7164** | **0.8102** |
 
 ### Search Cost
 
