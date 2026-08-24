@@ -1,0 +1,19 @@
+{
+    "Custom": {
+        "description": "Generates anything based on customized input and instruction.",
+        "interface": "custom(input: str, instruction: str) -> dict with key 'response' of type str"
+    },
+    "ScEnsemble": {
+        "description": "Uses self-consistency to select the solution that appears most frequently in the solution list, improve the selection to enhance the choice of the best solution.",
+        "interface": "sc_ensemble(solutions: List[str]) -> dict with key 'response' of type str"
+    },
+    "AnswerGenerate": {
+        "description": "Generate step by step based on the input. The step by step thought process is in the field of 'thought', and the final answer is in the field of 'answer'.",
+        "interface": "answer_generate(input: str) -> dict with key 'thought' of type str, 'answer' of type str"
+    },
+    "ToolAgent": {
+        "description": "Advanced multi-hop question answering agent with 7 tools: (1) wikipedia_search - find pages by query, (2) wikipedia_page - get detailed page content, (3) text_search - search keywords in text, (4) compare_entities - compare two things, (5) extract_year - find dates/years, (6) acronym_expander - expand abbreviations like GmbH/NASA, (7) calculator - math operations. Implements ReAct pattern to iteratively research and reason. Best for complex questions requiring multiple information sources. Provides concise, direct answers.",
+        "interface": "tool_agent(problem: str, max_steps: int = 8) -> dict with key 'answer' of type str, 'steps' of type List[Dict], 'total_cost' of type float"
+    }
+}
+

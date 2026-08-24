@@ -1,0 +1,65 @@
+{
+    "Custom": {
+        "description": "Basic operator for WCNS. Generates solutions based on input and instruction prompt. Best for simple service classification or when LLM reasoning is sufficient.",
+        "interface": "custom(input: str, instruction: str) -> dict with key 'response' of type str"
+    },
+    "ScEnsemble": {
+        "description": "Self-consistency voting for network slicing decisions. Generates multiple allocation proposals and picks the most consistent one. Use for higher accuracy at 3-5x cost.",
+        "interface": "sc_ensemble(solutions: List[str], problem: str) -> dict with key 'response' of type str"
+    },
+    "NetworkSlicingAgent": {
+        "description": "**PRIMARY OPERATOR** - ReAct-based agent with 6 domain-specific tools: ray_tracing, knowledge_base_query, shannon_calculator, slice_allocator, network_state_checker, optimal_bandwidth_calculator. The ray_tracing tool is CRITICAL - it must be called first to obtain the user's CQI from their position and region before any bandwidth/throughput calculation.",
+        "interface": "network_slicing_agent(problem: str, user_cqi: int = 10, network_state: dict = None, max_steps: int = 7) -> dict with 'answer', 'slice_type', 'bandwidth', 'rate', 'steps'"
+    },
+    "DirectSlicingSolver": {
+        "description": "Fast direct solver without ReAct loop. Uses keyword matching for service detection and direct Shannon calculation. Best for baseline comparison or simple, straightforward requests.",
+        "interface": "direct_slicing_solver(problem: str, user_cqi: int = 10) -> dict with 'slice_type', 'bandwidth', 'rate', 'service_type'"
+    },
+    "tools": {
+        "ray_tracing": {
+            "description": "**MUST CALL FIRST** - Perform ray tracing to obtain CQI for a user at a given position. Uses OSM building data to simulate signal propagation. Returns CQI (1-15), SNR, LOS status, received power.",
+            "parameters": "user_x: float, user_y: float, region: str ('HKUST_North', 'HKUST_South', or 'HKUST_Center')"
+        },
+        "knowledge_base_query": {
+            "description": "Query network slicing knowledge base for service classification, slice characteristics, and QoS requirements",
+            "parameters": "query: str"
+        },
+        "shannon_calculator": {
+            "description": "Calculate rate using Shannon formula: Rate = 10.0 × B × log₁₀(1 + 10^(CQI/10))",
+            "parameters": "cqi: int, bandwidth: float"
+        },
+        "slice_allocator": {
+            "description": "Allocate user to slice with bandwidth. Validates against constraints (eMBB: 6-20MHz, URLLC: 1-5MHz)",
+            "parameters": "slice_type: str, bandwidth: float, user_cqi: int"
+        },
+        "network_state_checker": {
+            "description": "Check current network utilization and available capacity in eMBB/URLLC slices",
+            "parameters": "slice_type: str = 'all'"
+        },
+        "optimal_bandwidth_calculator": {
+            "description": "Calculate minimum bandwidth needed to meet QoS target rate",
+            "parameters": "target_rate: float, cqi: int, slice_type: str"
+        }
+    },
+    "slice_constraints": {
+        "eMBB": {
+            "bandwidth_range_mhz": [6, 20],
+            "rate_range_mbps": [100, 400],
+            "total_capacity_mhz": 90,
+            "use_cases": ["video_streaming", "file_download", "ar_navigation", "web_browsing"]
+        },
+        "URLLC": {
+            "bandwidth_range_mhz": [1, 5],
+            "rate_range_mbps": [1, 100],
+            "total_capacity_mhz": 30,
+            "use_cases": ["online_gaming", "voip_call", "remote_control", "iot_monitoring"]
+        }
+    },
+    "workflow_template": {
+        "step_1": "Intent Understanding - Analyze user request to identify service type",
+        "step_2": "Slice Selection - Choose eMBB (bandwidth) or URLLC (latency) based on requirements",
+        "step_3": "Bandwidth Calculation - Use Shannon formula with CQI to determine required bandwidth",
+        "step_4": "QoS Verification - Check if allocation meets minimum rate requirements",
+        "step_5": "Final Allocation - Return slice_type, bandwidth, expected_rate"
+    }
+}

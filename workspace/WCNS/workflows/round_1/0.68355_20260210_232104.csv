@@ -1,0 +1,628 @@
+question,prediction,expected_output,score,cost
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 3 active users (Total capacity: 90 MHz)
+- URLLC Slice: 10 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-175.42, -25.92) meters (local coordinates)
+- Region: HKUST_Center
+- Service Request: ""I want to use virtual reality gaming""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-175.42, user_y=-25.92, region=""HKUST_Center"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: eMBB
+Bandwidth: 15 MHz
+Throughput: 120 Mbps","{'slice_type': 'eMBB', 'cqi': 15, 'bandwidth': 20.0, 'throughput': 302.7}",0.455,0.0001892
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 10 active users (Total capacity: 90 MHz)
+- URLLC Slice: 2 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-63.43, -11.76) meters (local coordinates)
+- Region: HKUST_North
+- Service Request: ""I need early warning system deployment""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-63.43, user_y=-11.76, region=""HKUST_North"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: URLLC
+Bandwidth: 5 MHz
+Throughput: 50.0 Mbps","{'slice_type': 'URLLC', 'cqi': 15, 'bandwidth': 5.0, 'throughput': 75.68}",0.705,0.00068455
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 9 active users (Total capacity: 90 MHz)
+- URLLC Slice: 6 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-26.65, 31.89) meters (local coordinates)
+- Region: HKUST_Center
+- Service Request: ""I need to control a robotic arm in real time""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-26.65, user_y=31.89, region=""HKUST_Center"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: URLLC
+Bandwidth: 4 MHz
+Throughput: 52.0 Mbps","{'slice_type': 'URLLC', 'cqi': 15, 'bandwidth': 4.29, 'throughput': 64.93}",0.7525,0.00057105
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 4 active users (Total capacity: 90 MHz)
+- URLLC Slice: 5 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (47.81, 0.88) meters (local coordinates)
+- Region: HKUST_North
+- Service Request: ""I need factory robot synchronization""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=47.81, user_y=0.88, region=""HKUST_North"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: URLLC
+Bandwidth: 5 MHz
+Throughput: 50.0 Mbps","{'slice_type': 'URLLC', 'cqi': 15, 'bandwidth': 5.0, 'throughput': 75.68}",0.705,3.765e-05
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 7 active users (Total capacity: 90 MHz)
+- URLLC Slice: 6 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-52.95, -24.44) meters (local coordinates)
+- Region: HKUST_North
+- Service Request: ""I need early warning system deployment""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-52.95, user_y=-24.44, region=""HKUST_North"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: URLLC
+Bandwidth: 4 MHz
+Throughput: 40 Mbps","{'slice_type': 'URLLC', 'cqi': 15, 'bandwidth': 4.29, 'throughput': 64.93}",0.6525,0.00030235000000000006
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 8 active users (Total capacity: 90 MHz)
+- URLLC Slice: 3 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (61.67, 164.87) meters (local coordinates)
+- Region: HKUST_South
+- Service Request: ""I need real-time fraud detection""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=61.67, user_y=164.87, region=""HKUST_South"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12  
+Slice Type: URLLC  
+Bandwidth: 5 MHz  
+Throughput: 60.0 Mbps","{'slice_type': 'URLLC', 'cqi': 15, 'bandwidth': 5.0, 'throughput': 75.68}",0.755,7.555e-05
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 11 active users (Total capacity: 90 MHz)
+- URLLC Slice: 5 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-53.64, 123.2) meters (local coordinates)
+- Region: HKUST_Center
+- Service Request: ""I need to control a robotic arm in real time""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-53.64, user_y=123.2, region=""HKUST_Center"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: URLLC
+Bandwidth: 5 MHz
+Throughput: 89.07 Mbps","{'slice_type': 'URLLC', 'cqi': 15, 'bandwidth': 5.0, 'throughput': 75.68}",0.8049999999999999,0.0005330500000000001
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 3 active users (Total capacity: 90 MHz)
+- URLLC Slice: 5 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-180.96, 5.02) meters (local coordinates)
+- Region: HKUST_Center
+- Service Request: ""I need real-time manufacturing control""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-180.96, user_y=5.02, region=""HKUST_Center"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: URLLC
+Bandwidth: 5 MHz
+Throughput: 50.0 Mbps","{'slice_type': 'URLLC', 'cqi': 8, 'bandwidth': 5.0, 'throughput': 43.19}",0.8049999999999999,0.00011334999999999999
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 4 active users (Total capacity: 90 MHz)
+- URLLC Slice: 7 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (38.59, 121.71) meters (local coordinates)
+- Region: HKUST_South
+- Service Request: ""I want to stream 8K video content""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=38.59, user_y=121.71, region=""HKUST_South"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12  
+Slice Type: eMBB  
+Bandwidth: 15 MHz  
+Throughput: 240 Mbps","{'slice_type': 'eMBB', 'cqi': 15, 'bandwidth': 18.0, 'throughput': 272.43}",0.7,0.0004944000000000001
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 3 active users (Total capacity: 90 MHz)
+- URLLC Slice: 4 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (107.83, 74.97) meters (local coordinates)
+- Region: HKUST_South
+- Service Request: ""I need remote surgery equipment control""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=107.83, user_y=74.97, region=""HKUST_South"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 22
+Slice Type: URLLC
+Bandwidth: 5 MHz
+Throughput: 80.41 Mbps","{'slice_type': 'URLLC', 'cqi': 10, 'bandwidth': 5.0, 'throughput': 52.07}",0.6,0.0002277
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 12 active users (Total capacity: 90 MHz)
+- URLLC Slice: 10 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (8.55, -6.43) meters (local coordinates)
+- Region: HKUST_North
+- Service Request: ""I want to stream music while browsing social media""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=8.55, user_y=-6.43, region=""HKUST_North"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: eMBB
+Bandwidth: 6.43 MHz
+Throughput: 75.4 Mbps","{'slice_type': 'eMBB', 'cqi': 15, 'bandwidth': 6.92, 'throughput': 104.74}",0.7025,0.00041720000000000006
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 7 active users (Total capacity: 90 MHz)
+- URLLC Slice: 8 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-30.27, -31.16) meters (local coordinates)
+- Region: HKUST_North
+- Service Request: ""I want to stream a live sports event""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-30.27, user_y=-31.16, region=""HKUST_North"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12  
+Slice Type: eMBB  
+Bandwidth: 10 MHz  
+Throughput: 40 Mbps","{'slice_type': 'eMBB', 'cqi': 15, 'bandwidth': 11.25, 'throughput': 170.27}",0.525,0.00037755000000000004
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 12 active users (Total capacity: 90 MHz)
+- URLLC Slice: 9 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (30.41, 10.25) meters (local coordinates)
+- Region: HKUST_Center
+- Service Request: ""I want to browse websites and check email""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=30.41, user_y=10.25, region=""HKUST_Center"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: eMBB
+Bandwidth: 7.5 MHz
+Throughput: 75.0 Mbps","{'slice_type': 'eMBB', 'cqi': 15, 'bandwidth': 6.92, 'throughput': 104.74}",0.7025,0.00045635000000000006
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 5 active users (Total capacity: 90 MHz)
+- URLLC Slice: 10 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-105.68, -0.04) meters (local coordinates)
+- Region: HKUST_Center
+- Service Request: ""I need early warning system deployment""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-105.68, user_y=-0.04, region=""HKUST_Center"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: URLLC
+Bandwidth: 3 MHz
+Throughput: 30.0 Mbps","{'slice_type': 'URLLC', 'cqi': 15, 'bandwidth': 2.73, 'throughput': 41.32}",0.7025,0.0001512
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 4 active users (Total capacity: 90 MHz)
+- URLLC Slice: 10 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-137.25, 151.2) meters (local coordinates)
+- Region: HKUST_Center
+- Service Request: ""I want to download software updates""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-137.25, user_y=151.2, region=""HKUST_Center"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 22
+Slice Type: eMBB
+Bandwidth: 18 MHz
+Throughput: 144 Mbps","{'slice_type': 'eMBB', 'cqi': 7, 'bandwidth': 18.0, 'throughput': 140.22}",0.8374999999999999,0.0006090000000000001
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 11 active users (Total capacity: 90 MHz)
+- URLLC Slice: 3 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (-41.76, 36.25) meters (local coordinates)
+- Region: HKUST_North
+- Service Request: ""I need holographic communication""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=-41.76, user_y=36.25, region=""HKUST_North"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12
+Slice Type: eMBB
+Bandwidth: 8.18 MHz
+Throughput: 65.44 Mbps","{'slice_type': 'eMBB', 'cqi': 15, 'bandwidth': 7.5, 'throughput': 113.51}",0.6525,0.00072475
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 2 active users (Total capacity: 90 MHz)
+- URLLC Slice: 3 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (59.69, 164.23) meters (local coordinates)
+- Region: HKUST_South
+- Service Request: ""I need precision CNC machine control""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=59.69, user_y=164.23, region=""HKUST_South"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 22
+Slice Type: URLLC
+Bandwidth: 5 MHz
+Throughput: 60.2 Mbps","{'slice_type': 'URLLC', 'cqi': 15, 'bandwidth': 5.0, 'throughput': 75.68}",0.725,0.00034025000000000006
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 6 active users (Total capacity: 90 MHz)
+- URLLC Slice: 8 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (126.44, -31.64) meters (local coordinates)
+- Region: HKUST_South
+- Service Request: ""I want to watch 4K video streaming""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=126.44, user_y=-31.64, region=""HKUST_South"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 22
+Slice Type: eMBB
+Bandwidth: 10 MHz
+Throughput: 100 Mbps","{'slice_type': 'eMBB', 'cqi': 15, 'bandwidth': 12.86, 'throughput': 194.64}",0.5,0.00026575000000000004
+"You are a 5G network slicing expert. Your task is to allocate network resources for a new user joining the network.
+
+=== NETWORK STATE ===
+- eMBB Slice: 10 active users (Total capacity: 90 MHz)
+- URLLC Slice: 4 active users (Total capacity: 30 MHz)
+
+=== NEW USER INFORMATION ===
+- User Position: (30.24, -0.35) meters (local coordinates)
+- Region: HKUST_Center
+- Service Request: ""I need autonomous vehicle communication""
+
+=== IMPORTANT ===
+The user's Channel Quality Indicator (CQI) is NOT directly provided.
+You MUST call the ray_tracing tool with the user's position and region to obtain the CQI value before performing bandwidth and throughput calculations.
+
+=== YOUR TASK ===
+1. Call ray_tracing(user_x=30.24, user_y=-0.35, region=""HKUST_Center"") to obtain the user's CQI
+2. Slice Type: Classify the service as eMBB (high bandwidth) or URLLC (low latency)
+3. Bandwidth: Calculate using Proportional Fairness - B = SliceCapacity / (ExistingUsers + 1)
+4. Throughput: Calculate using Shannon Formula - T = 10 * B * log10(1 + 10^(CQI/10))
+
+=== CONSTRAINTS ===
+- eMBB: Bandwidth range [6-20] MHz
+- URLLC: Bandwidth range [1-5] MHz
+
+=== OUTPUT FORMAT ===
+CQI: [value from ray_tracing tool]
+Slice Type: [eMBB or URLLC]
+Bandwidth: [value] MHz
+Throughput: [value] Mbps","CQI: 12  
+Slice Type: URLLC  
+Bandwidth: 5 MHz  
+Throughput: 50.0 Mbps","{'slice_type': 'URLLC', 'cqi': 15, 'bandwidth': 5.0, 'throughput': 75.68}",0.705,0.0006467

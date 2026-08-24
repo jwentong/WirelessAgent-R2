@@ -1,0 +1,18 @@
+{
+    "Custom": {
+        "description": "Generates anything based on customized input and instruction.",
+        "interface": "custom(input: str, instruction: str) -> dict with key 'response' of type str"
+    },
+    "ScEnsemble": {
+        "description": "Uses self-consistency to select the solution that appears most frequently in the solution list, improve the selection to enhance the choice of the best solution.",
+        "interface": "sc_ensemble(solutions: List[str], problem: str) -> dict with key 'response' of type str"
+    },
+    "Programmer": {
+        "description": "Automatically writes, executes Python code, and returns the solution based on the provided problem description and analysis. The `output` only contains the final answer. If you want to see the detailed solution process, it's recommended to retrieve the `code`.",
+        "interface": "programmer(problem: str, analysis: str = 'None') -> dict with keys 'code' and 'output' of type str"
+    },
+    "ToolAgent": {
+        "description": "Tool-augmented agent for mathematical problems with 9 specialized tools: COMPUTATION - (1) python_code_solver: generates/executes Python code for complex calculations, (2) calculator: evaluates expressions using SymPy, (3) symbolic_solver: solves equations symbolically for exact solutions; GEOMETRY - (4) geometry_constraint_checker: verifies angle sums/triangle inequality/theorems, (5) geometric_formula: calculates using built-in formulas (polygon angles, area, perimeter); COMBINATORICS - (6) combinatorial_enumerator: enumerates permutations/combinations with constraints (not_adjacent, circular, etc.), (7) expression_enumerator: counts unique values from parenthesis insertions; VALIDATION - (8) answer_type_validator: checks answer format and removes unwanted symbols (e.g., ° when not needed), (9) constraint_verifier: verifies magic squares, seating arrangements, etc. Implements ReAct pattern for iterative tool-based reasoning. Best for problems requiring computational verification, geometric theorem checking, combinatorial enumeration, or constraint validation. The internal ReAct reasoning strategy can be customized via react_strategy parameter for optimization.",
+        "interface": "tool_agent(problem: str, max_steps: int = 5, react_strategy: str = None) -> dict with key 'answer' of type str, 'steps' of type List[Dict], 'total_cost' of type float. Note: react_strategy should be provided during ToolAgent initialization in __init__, not during call. Example in __init__: self.tool_agent = operator.ToolAgent(self.llm, react_strategy=prompt_custom.REACT_STRATEGY_PROMPT)"
+    }
+}

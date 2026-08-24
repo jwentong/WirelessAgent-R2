@@ -1,0 +1,1250 @@
+question,prediction,expected_output,score,cost
+"Network State: eMBB 9 users, URLLC 4 users. CQI=8.
+Service Request: ""I want to stream music while browsing social media""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to stream music while browsing social media"".  
+- Streaming music and browsing social media are classic eMBB use cases (media, data processing, immersive).  
+✅ Slice Type: eMBB
+
+Step 2: Calculate Bandwidth  
+eMBB users = 9  
+Raw_B = 90.0 / (9 + 1) = 90.0 / 10 = 9.0 MHz  
+Clamp to [6, 20] MHz → 9.0 MHz is within range ✅  
+Bandwidth = 9.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(1 + 10^0.8) = log₁₀(1 + 6.31) = log₁₀(7.31) = 0.864  
+First: 10 × B = 10 × 9.00 = 90.0  
+Then: 90.0 × 0.864 = 77.76 Mbps  
+Throughput = 77.76 Mbps
+
+Slice Type: eMBB
+Bandwidth: 9.00 MHz
+Throughput: 77.76 Mbps","{'slice_type': 'eMBB', 'bandwidth': 9.0, 'throughput': 77.75}",1.0,0.00021569999999999998
+"Network State: eMBB 12 users, URLLC 9 users. CQI=11.
+Service Request: ""I need emergency response coordination""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need emergency response coordination"".  
+This matches the URLLC category under ""Emergency: emergency response, emergency coordination, first responder"".
+
+Slice Type: URLLC
+
+Step 2: Calculate Bandwidth  
+URLLC users = 9  
+Bandwidth formula: Raw_B = 30.0 / (urllc_users + 1) = 30.0 / (9 + 1) = 30.0 / 10 = 3.0 MHz  
+Clamped to [1, 5] MHz → 3.0 MHz  
+
+Bandwidth: 3.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 11 → log₁₀(1 + 10^(11/10)) = log₁₀(1 + 10^1.1) = log₁₀(1 + 12.589) ≈ log₁₀(13.589) ≈ 1.133 (from reference)
+
+Now compute:
+- Step 1: 10 × B = 10 × 3.00 = 30.0
+- Step 2: 30.0 × 1.133 = 33.99 Mbps
+
+Throughput: 33.99 Mbps
+
+Final Output:
+Slice Type: URLLC
+Bandwidth: 3.00 MHz
+Throughput: 33.99 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.0, 'throughput': 34.0}",1.0,0.0033581
+"Network State: eMBB 7 users, URLLC 2 users. CQI=15.
+Service Request: ""I want to play competitive online gaming""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to play competitive online gaming"".  
+This falls under the **Competitive** category (esports, competitive gaming, online battle) in the URLLC classification.  
+→ Slice Type: URLLC  
+
+Step 2: Calculate Bandwidth  
+URLLC users = 2  
+Bandwidth formula: Raw_B = 30.0 / (urllc_users + 1) = 30.0 / (2 + 1) = 30.0 / 3 = 10.0 MHz  
+Clamp to [1, 5] MHz → 10.0 MHz exceeds the upper limit of 5 MHz  
+→ Final Bandwidth: **5.00 MHz**
+
+Step 3: Calculate Throughput  
+CQI = 15  
+We need log₁₀(1 + 10^(15/10)) = log₁₀(1 + 10^1.5) = log₁₀(1 + 31.62) = log₁₀(32.62)  
+log₁₀(32.62) ≈ 1.513 (since 10^1.513 ≈ 32.62)  
+Now compute:  
+- 10 × B = 10 × 5.00 = 50.0  
+- Throughput = 50.0 × 1.513 = 75.65 Mbps  
+
+Slice Type: URLLC  
+Bandwidth: 5.00 MHz  
+Throughput: 75.65 Mbps","{'slice_type': 'URLLC', 'bandwidth': 5.0, 'throughput': 75.68}",1.0,0.009774549999999998
+"Network State: eMBB 9 users, URLLC 3 users. CQI=9.
+Service Request: ""I want to stream a live sports event""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to stream a live sports event"".  
+This falls under video streaming, which is categorized under eMBB (Enhanced Mobile Broadband) as it requires high bandwidth for smooth playback.
+
+Step 2: Calculate Bandwidth  
+Since this is eMBB and there are 9 users:  
+Raw_B = 90.0 / (9 + 1) = 90.0 / 10 = 9.0 MHz  
+This value is within the [6, 20] MHz range, so no clamping needed.  
+Bandwidth = 9.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 9 → log₁₀(1 + 10^(9/10)) = log₁₀(8.94) = 0.951  
+Now compute:
+- 10 × B = 10 × 9.00 = 90.0  
+- Throughput = 90.0 × 0.951 = 85.59 Mbps  
+
+Slice Type: eMBB
+Bandwidth: 9.00 MHz
+Throughput: 85.59 Mbps","{'slice_type': 'eMBB', 'bandwidth': 9.0, 'throughput': 85.63}",1.0,0.01017415
+"Network State: eMBB 12 users, URLLC 10 users. CQI=8.
+Service Request: ""I need to monitor IoT sensors in real-time""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+Service Request: ""I need to monitor IoT sensors in real-time""  
+- Monitoring IoT sensors in real-time implies a need for reliable, timely data transmission — typically associated with low latency and high reliability.  
+- This matches URLLC (Ultra-Reliable Low Latency) use cases such as industrial monitoring, factory automation, or critical telemetry.  
+
+Slice Type: URLLC
+
+Step 2: Calculate Bandwidth  
+URLLC users = 10  
+Bandwidth formula: Raw_B = 30.0 / (urllc_users + 1)  
+= 30.0 / (10 + 1) = 30.0 / 11 ≈ 2.727 MHz  
+Clamp to [1, 5] MHz → 2.73 MHz  
+
+Bandwidth: 2.73 MHz
+
+Step 3: Calculate Throughput  
+CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(1 + 10^0.8) = log₁₀(1 + 6.3096) = log₁₀(7.3096) ≈ 0.864  
+Now compute step-by-step:  
+10 × B = 10 × 2.73 = 27.3  
+Throughput = 27.3 × 0.864 = 23.57 Mbps  
+
+Throughput: 23.57 Mbps
+
+Final Output:
+Slice Type: URLLC
+Bandwidth: 2.73 MHz
+Throughput: 23.57 Mbps","{'slice_type': 'URLLC', 'bandwidth': 2.73, 'throughput': 23.58}",1.0,0.0071823
+"Network State: eMBB 12 users, URLLC 8 users. CQI=10.
+Service Request: ""I need to download a large game file""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need to download a large game file"".  
+This falls under the eMBB category because it involves downloading a large data file — a classic high-bandwidth use case.
+
+Step 2: Calculate Bandwidth  
+For eMBB:  
+Raw_B = 90.0 / (embb_users + 1) = 90.0 / (12 + 1) = 90.0 / 13 ≈ 6.92 MHz  
+Clamped to [6, 20] MHz → Bandwidth = 6.92 MHz
+
+Step 3: Calculate Throughput  
+CQI = 10 → log₁₀(1 + 10^(10/10)) = log₁₀(1 + 10^1) = log₁₀(11.0) = 1.041  
+Now compute:  
+- 10 × B = 10 × 6.92 = 69.2  
+- Throughput = 69.2 × 1.041 ≈ 72.06 Mbps
+
+Slice Type: eMBB
+Bandwidth: 6.92 MHz
+Throughput: 72.06 Mbps","{'slice_type': 'eMBB', 'bandwidth': 6.92, 'throughput': 72.06}",1.0,0.009978299999999999
+"Network State: eMBB 10 users, URLLC 2 users. CQI=9.
+Service Request: ""I need holographic communication""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""holographic communication"". This falls under immersive use cases like AR/VR, which are classified under **eMBB (Enhanced Mobile Broadband)**.
+
+Step 2: Calculate Bandwidth  
+For eMBB with 10 users:  
+Raw_B = 90.0 / (10 + 1) = 90.0 / 11 ≈ 8.18 MHz  
+Clamped to [6, 20] MHz → Bandwidth = 8.18 MHz
+
+Step 3: Calculate Throughput  
+CQI = 9 → log₁₀(1 + 10^(9/10)) = log₁₀(8.94) ≈ 0.951  
+Now compute:  
+10 × B = 10 × 8.18 = 81.8  
+Throughput = 81.8 × 0.951 ≈ 77.79 Mbps
+
+Slice Type: eMBB
+Bandwidth: 8.18 MHz
+Throughput: 77.79 Mbps","{'slice_type': 'eMBB', 'bandwidth': 8.18, 'throughput': 77.83}",1.0,0.00040124999999999997
+"Network State: eMBB 9 users, URLLC 9 users. CQI=9.
+Service Request: ""I need real-time patient vital signs monitoring""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need real-time patient vital signs monitoring"".  
+This falls under the category of **Medical: patient monitoring** — a critical, low-latency requirement.  
+✅ Slice Type: URLLC
+
+Step 2: Calculate Bandwidth  
+URLLC users = 9  
+Raw_B = 30.0 / (9 + 1) = 30.0 / 10 = 3.0 MHz  
+Clamped to [1, 5] MHz → 3.0 MHz  
+✅ Bandwidth: 3.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 9 → log₁₀(1 + 10^(9/10)) = log₁₀(8.94) = 0.951  
+First: 10 × B = 10 × 3.00 = 30.0  
+Then: 30.0 × 0.951 = 28.53 Mbps  
+✅ Throughput: 28.53 Mbps
+
+Slice Type: URLLC  
+Bandwidth: 3.00 MHz  
+Throughput: 28.53 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.0, 'throughput': 28.54}",1.0,0.00376355
+"Network State: eMBB 5 users, URLLC 6 users. CQI=11.
+Service Request: ""I need emergency response coordination""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need emergency response coordination"".  
+This falls under the **URLLC (Ultra-Reliable Low Latency)** category, as it involves emergency coordination and first responder communication.
+
+Step 2: Calculate Bandwidth  
+For URLLC:  
+Raw_B = 30.0 / (urllc_users + 1) = 30.0 / (6 + 1) = 30.0 / 7 ≈ 4.29 MHz  
+Clamped to [1, 5] MHz → Bandwidth = **4.29 MHz**
+
+Step 3: Calculate Throughput  
+Given CQI = 11 → log₁₀(1 + 10^(11/10)) = log₁₀(1 + 10^1.1) = log₁₀(1 + 12.589) = log₁₀(13.589) ≈ 1.133 (from reference)  
+
+Now compute step-by-step:
+- 10 × B = 10 × 4.29 = 42.9
+- Throughput = 42.9 × 1.133 ≈ 48.49 Mbps
+
+Slice Type: URLLC
+Bandwidth: 4.29 MHz
+Throughput: 48.49 Mbps","{'slice_type': 'URLLC', 'bandwidth': 4.29, 'throughput': 48.61}",1.0,0.0066961
+"Network State: eMBB 12 users, URLLC 5 users. CQI=9.
+Service Request: ""I need real-time patient vital signs monitoring""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need real-time patient vital signs monitoring"".  
+This falls under **Medical: patient monitoring**, which is a critical, low-latency use case.  
+✅ Slice Type: URLLC
+
+Step 2: Calculate Bandwidth  
+URLLC users = 5  
+Bandwidth = 30.0 / (5 + 1) = 30.0 / 6 = 5.0 MHz  
+Clamped to [1, 5] MHz → 5.0 MHz  
+✅ Bandwidth: 5.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 9 → log₁₀(1 + 10^(9/10)) = log₁₀(8.94) = 0.951 (from reference)  
+First: 10 × B = 10 × 5.00 = 50.0  
+Then: 50.0 × 0.951 = 47.55 Mbps  
+✅ Throughput: 47.55 Mbps
+
+Slice Type: URLLC
+Bandwidth: 5.00 MHz
+Throughput: 47.55 Mbps","{'slice_type': 'URLLC', 'bandwidth': 5.0, 'throughput': 47.57}",1.0,0.0056496
+"Network State: eMBB 2 users, URLLC 6 users. CQI=13.
+Service Request: ""I want to watch 4K video streaming""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to watch 4K video streaming"".  
+This falls under eMBB (Enhanced Mobile Broadband) because it involves high-bandwidth video streaming.
+
+Step 2: Calculate Bandwidth  
+eMBB users = 2  
+Bandwidth = 90.0 / (2 + 1) = 90.0 / 3 = 30.0 MHz  
+Clamp to [6, 20] MHz → 20.0 MHz  
+
+Bandwidth: 20.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 13 → log₁₀(1 + 10^(13/10)) = log₁₀(20.95) = 1.321  
+B = 20.00 MHz  
+First: 10 × B = 10 × 20.00 = 200.0  
+Then: 200.0 × 1.321 = 264.2 Mbps  
+
+Throughput: 264.20 Mbps
+
+Slice Type: eMBB
+Bandwidth: 20.00 MHz
+Throughput: 264.20 Mbps","{'slice_type': 'eMBB', 'bandwidth': 20.0, 'throughput': 264.25}",1.0,0.0052578500000000005
+"Network State: eMBB 6 users, URLLC 8 users. CQI=15.
+Service Request: ""I need early warning system deployment""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need early warning system deployment"".  
+This falls under emergency or critical infrastructure monitoring.  
+→ **URLLC**
+
+Step 2: Calculate Bandwidth  
+URLLC users = 8  
+Raw_B = 30.0 / (8 + 1) = 30.0 / 9 = 3.33 MHz  
+Clamped to [1, 5] MHz → **3.33 MHz**
+
+Step 3: Calculate Throughput  
+CQI = 15  
+log₁₀(1 + 10^(15/10)) = log₁₀(1 + 10^1.5) = log₁₀(1 + 31.62) = log₁₀(32.62) ≈ 1.513  
+
+Now compute step-by-step:  
+- 10 × B = 10 × 3.33 = 33.3  
+- Throughput = 33.3 × 1.513 ≈ 50.40 Mbps  
+
+Slice Type: URLLC  
+Bandwidth: 3.33 MHz  
+Throughput: 50.40 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.33, 'throughput': 50.4}",1.0,0.00160205
+"Network State: eMBB 11 users, URLLC 6 users. CQI=10.
+Service Request: ""I want to use virtual reality gaming""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to use virtual reality gaming"".  
+According to the classification:  
+- Immersive: AR, VR, navigation, casual gaming → This falls under eMBB.  
+
+Slice Type: eMBB  
+
+Step 2: Calculate Bandwidth  
+eMBB users = 11  
+Raw_B = 90.0 / (11 + 1) = 90.0 / 12 = 7.5 MHz  
+Clamped to [6, 20] MHz → 7.5 MHz is within range.  
+
+Bandwidth: 7.50 MHz  
+
+Step 3: Calculate Throughput  
+CQI = 10 → log₁₀(1 + 10^(10/10)) = log₁₀(1 + 10^1) = log₁₀(11) ≈ 1.041  
+First: 10 × B = 10 × 7.5 = 75  
+Then: 75 × 1.041 = 78.075 Mbps  
+
+Throughput: 78.08 Mbps  
+
+Slice Type: eMBB  
+Bandwidth: 7.50 MHz  
+Throughput: 78.08 Mbps","{'slice_type': 'eMBB', 'bandwidth': 7.5, 'throughput': 78.1}",1.0,0.01038025
+"Network State: eMBB 10 users, URLLC 7 users. CQI=15.
+Service Request: ""I want to download software updates""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to download software updates"".  
+This falls under the eMBB category because it involves data downloading, which is a high-bandwidth use case.
+
+Step 2: Calculate Bandwidth  
+eMBB users = 10  
+Bandwidth formula for eMBB:  
+Raw_B = 90.0 / (10 + 1) = 90.0 / 11 ≈ 8.18 MHz  
+Clamped to [6, 20] MHz → 8.18 MHz is within range → Final Bandwidth = 8.18 MHz
+
+Step 3: Calculate Throughput  
+CQI = 15  
+First, compute log₁₀(1 + 10^(CQI/10)):  
+CQI/10 = 1.5  
+10^1.5 = 31.62  
+1 + 31.62 = 32.62  
+log₁₀(32.62) ≈ 1.513 (using calculator or interpolation; not in table but can derive)
+
+Now compute throughput:  
+Throughput = 10 × B × log_value  
+= 10 × 8.18 × 1.513  
+First: 10 × 8.18 = 81.8  
+Then: 81.8 × 1.513 ≈ 123.74 Mbps
+
+Slice Type: eMBB
+Bandwidth: 8.18 MHz
+Throughput: 123.74 Mbps","{'slice_type': 'eMBB', 'bandwidth': 8.18, 'throughput': 123.81}",1.0,0.009524099999999999
+"Network State: eMBB 3 users, URLLC 4 users. CQI=10.
+Service Request: ""I want to stream music while browsing social media""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to stream music while browsing social media"".  
+- Streaming music and browsing social media are both eMBB use cases (media, data processing, immersive).  
+✅ Slice Type: eMBB  
+
+Step 2: Calculate Bandwidth  
+eMBB users = 3  
+Raw_B = 90.0 / (3 + 1) = 90.0 / 4 = 22.5 MHz  
+Clamp to [6, 20] MHz → Bandwidth = 20.00 MHz  
+
+Step 3: Calculate Throughput  
+CQI = 10 → log₁₀(1 + 10^(10/10)) = log₁₀(1 + 10^1) = log₁₀(11.0) = 1.041  
+Bandwidth B = 20.00 MHz  
+First: 10 × B = 10 × 20.00 = 200.00  
+Then: Throughput = 200.00 × 1.041 = 208.20 Mbps  
+
+Slice Type: eMBB  
+Bandwidth: 20.00 MHz  
+Throughput: 208.20 Mbps","{'slice_type': 'eMBB', 'bandwidth': 20.0, 'throughput': 208.28}",1.0,0.00585875
+"Network State: eMBB 4 users, URLLC 7 users. CQI=8.
+Service Request: ""I want to play competitive online gaming""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to play competitive online gaming"".  
+This falls under the **Competitive** category → **URLLC**.
+
+Step 2: Calculate Bandwidth  
+URLLC users = 7  
+Bandwidth formula: Raw_B = 30.0 / (urllc_users + 1) = 30.0 / 8 = 3.75 MHz  
+Clamped to [1, 5] MHz → remains **3.75 MHz**
+
+Step 3: Calculate Throughput  
+CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(1 + 10^0.8) = log₁₀(1 + 6.31) = log₁₀(7.31) = 0.864  
+Now compute:
+- 10 × B = 10 × 3.75 = 37.5
+- Throughput = 37.5 × 0.864 = 32.4 Mbps
+
+Slice Type: URLLC
+Bandwidth: 3.75 MHz
+Throughput: 32.40 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.75, 'throughput': 32.4}",1.0,0.00179725
+"Network State: eMBB 4 users, URLLC 3 users. CQI=12.
+Service Request: ""I need real-time manufacturing control""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need real-time manufacturing control"".  
+This falls under Industrial automation, machinery control, and synchronization — a classic URLLC use case.  
+
+Slice Type: URLLC
+
+Step 2: Calculate Bandwidth  
+URLLC bandwidth formula:  
+Raw_B = 30.0 / (urllc_users + 1)  
+urllc_users = 3  
+Raw_B = 30.0 / (3 + 1) = 30.0 / 4 = 7.5 MHz  
+
+Clamp to [1, 5] MHz → 7.5 MHz exceeds the max of 5 MHz ⇒ clamp to 5.00 MHz  
+
+Bandwidth: 5.00 MHz
+
+Step 3: Calculate Throughput  
+Given CQI = 12 → log₁₀(1 + 10^(12/10)) = log₁₀(1 + 10^1.2) = log₁₀(1 + 15.85) = log₁₀(16.85) = 1.227  
+
+Now compute step by step:  
+10 × B = 10 × 5.00 = 50.0  
+Throughput = 50.0 × 1.227 = 61.35 Mbps  
+
+Throughput: 61.35 Mbps
+
+Final Output:
+Slice Type: URLLC
+Bandwidth: 5.00 MHz
+Throughput: 61.35 Mbps","{'slice_type': 'URLLC', 'bandwidth': 5.0, 'throughput': 61.33}",1.0,0.0031257
+"Network State: eMBB 2 users, URLLC 2 users. CQI=8.
+Service Request: ""I need precision CNC machine control""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need precision CNC machine control"".  
+CNC (Computer Numerical Control) machines require precise, real-time control and synchronization — this falls under industrial automation with strict timing requirements.  
+✅ This matches URLLC (Ultra-Reliable Low Latency) use case.
+
+Step 2: Calculate Bandwidth  
+For URLLC:  
+Raw_B = 30.0 / (urllc_users + 1) = 30.0 / (2 + 1) = 30.0 / 3 = 10.0 MHz  
+But URLLC bandwidth must be clamped to [1, 5] MHz → So, clamp 10.0 → **5.00 MHz**
+
+Step 3: Calculate Throughput  
+Given CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(7.31) = 0.864  
+Bandwidth B = 5.00 MHz  
+
+First: 10 × B = 10 × 5.00 = 50.00  
+Then: Throughput = 50.00 × 0.864 = 43.20 Mbps
+
+Slice Type: URLLC  
+Bandwidth: 5.00 MHz  
+Throughput: 43.20 Mbps","{'slice_type': 'URLLC', 'bandwidth': 5.0, 'throughput': 43.19}",1.0,0.00783635
+"Network State: eMBB 7 users, URLLC 10 users. CQI=11.
+Service Request: ""I need high-frequency trading connectivity""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+Service Request: ""I need high-frequency trading connectivity""  
+This falls under the **URLLC (Ultra-Reliable Low Latency)** category — specifically, it's listed in the Financial use case: ""trading"".
+
+Step 2: Calculate Bandwidth  
+URLLC users = 10  
+Bandwidth formula: Raw_B = 30.0 / (urllc_users + 1) = 30.0 / (10 + 1) = 30.0 / 11 ≈ 2.727 MHz  
+Clamped to [1, 5] MHz → Bandwidth = **2.73 MHz**
+
+Step 3: Calculate Throughput  
+CQI = 11  
+log₁₀(1 + 10^(11/10)) = log₁₀(1 + 10^1.1) = log₁₀(1 + 12.589) = log₁₀(13.589) ≈ 1.133  
+Now compute step by step:
+- 10 × B = 10 × 2.73 = 27.3
+- Throughput = 27.3 × 1.133 ≈ 30.91 Mbps
+
+Final Output:
+Slice Type: URLLC
+Bandwidth: 2.73 MHz
+Throughput: 30.91 Mbps","{'slice_type': 'URLLC', 'bandwidth': 2.73, 'throughput': 30.94}",1.0,0.00853545
+"Network State: eMBB 2 users, URLLC 7 users. CQI=14.
+Service Request: ""I need to monitor IoT sensors in real-time""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+Service Request: ""I need to monitor IoT sensors in real-time""  
+- Monitoring IoT sensors in real-time typically requires low latency and high reliability for timely data updates.  
+- This aligns with URLLC (Ultra-Reliable Low Latency) use cases such as industrial monitoring or critical telemetry.  
+
+Slice Type: URLLC  
+
+Step 2: Calculate Bandwidth  
+URLLC users = 7  
+Raw_B = 30.0 / (7 + 1) = 30.0 / 8 = 3.75 MHz  
+Clamped to [1, 5] MHz → 3.75 MHz is within range ✅  
+
+Bandwidth: 3.75 MHz  
+
+Step 3: Calculate Throughput  
+CQI = 14  
+log₁₀(1 + 10^(14/10)) = log₁₀(1 + 10^1.4) = log₁₀(1 + 25.1189) = log₁₀(26.1189) ≈ 1.417  
+(As given in reference: CQI=14 → 1.417)  
+
+Now compute:  
+10 × B = 10 × 3.75 = 37.5  
+Throughput = 37.5 × 1.417 = 53.1375 Mbps  
+
+Throughput: 53.14 Mbps  
+
+Final Output:
+Slice Type: URLLC
+Bandwidth: 3.75 MHz
+Throughput: 53.14 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.75, 'throughput': 53.14}",1.0,0.00903635
+"Network State: eMBB 7 users, URLLC 2 users. CQI=12.
+Service Request: ""I need autonomous vehicle communication""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""autonomous vehicle communication"".  
+This falls under Industrial automation and requires low latency for real-time control and synchronization.  
+→ Slice Type: URLLC  
+
+Step 2: Calculate Bandwidth  
+URLLC users = 2  
+Raw_B = 30.0 / (2 + 1) = 30.0 / 3 = 10.0 MHz  
+Clamp to [1, 5] MHz → 10.0 MHz exceeds upper limit of 5 MHz  
+→ Bandwidth = 5.00 MHz  
+
+Step 3: Calculate Throughput  
+Bandwidth B = 5.00 MHz  
+CQI = 12 → log₁₀(1 + 10^(12/10)) = log₁₀(1 + 10^1.2) = log₁₀(1 + 15.8489) = log₁₀(16.85) ≈ 1.227  
+Now compute step by step:  
+First: 10 × B = 10 × 5.00 = 50.0  
+Then: 50.0 × 1.227 = 61.35 Mbps  
+
+Final Output:
+Slice Type: URLLC
+Bandwidth: 5.00 MHz
+Throughput: 61.35 Mbps","{'slice_type': 'URLLC', 'bandwidth': 5.0, 'throughput': 61.33}",1.0,0.00224335
+"Network State: eMBB 11 users, URLLC 9 users. CQI=12.
+Service Request: ""I need remote surgery equipment control""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need remote surgery equipment control"".  
+This falls under **Medical: surgery, remote surgery, vital signs, patient monitoring** → **URLLC (Ultra-Reliable Low Latency)**.
+
+Step 2: Calculate Bandwidth  
+URLLC users = 9  
+Raw_B = 30.0 / (9 + 1) = 30.0 / 10 = 3.0 MHz  
+Clamped to [1, 5] MHz → **3.00 MHz**
+
+Step 3: Calculate Throughput  
+CQI = 12 → log₁₀(1 + 10^(12/10)) = log₁₀(1 + 10^1.2) = log₁₀(1 + 15.8489) = log₁₀(16.85) ≈ 1.227  
+
+Now compute step-by-step:  
+- 10 × B = 10 × 3.00 = 30.0  
+- Throughput = 30.0 × 1.227 = 36.81 Mbps  
+
+Final Output:
+Slice Type: URLLC
+Bandwidth: 3.00 MHz
+Throughput: 36.81 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.0, 'throughput': 36.8}",1.0,0.0028855
+"Network State: eMBB 12 users, URLLC 7 users. CQI=10.
+Service Request: ""I need emergency machine shutdown capability""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need emergency machine shutdown capability"". This involves critical control of industrial machinery, which falls under the URLLC category due to its low-latency and high-reliability requirements.
+
+Step 2: Calculate Bandwidth  
+URLLC users = 7  
+Raw_B = 30.0 / (7 + 1) = 30.0 / 8 = 3.75 MHz  
+This is within the [1, 5] MHz range → Bandwidth = 3.75 MHz
+
+Step 3: Calculate Throughput  
+CQI = 10 → log₁₀(1 + 10^(10/10)) = log₁₀(1 + 10¹) = log₁₀(11) ≈ 1.041  
+First: 10 × B = 10 × 3.75 = 37.5  
+Then: 37.5 × 1.041 = 39.0375 Mbps → Round to 39.04 Mbps
+
+Slice Type: URLLC  
+Bandwidth: 3.75 MHz  
+Throughput: 39.04 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.75, 'throughput': 39.05}",1.0,0.0007953000000000001
+"Network State: eMBB 8 users, URLLC 9 users. CQI=11.
+Service Request: ""I need remote desktop access""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""remote desktop access"".  
+This falls under: **screen sharing, remote desktop, monitor, etc.** → eMBB (Enhanced Mobile Broadband)
+
+Step 2: Calculate Bandwidth  
+eMBB users = 8  
+Bandwidth for eMBB:  
+Raw_B = 90.0 / (8 + 1) = 90.0 / 9 = 10.0 MHz  
+Clamped to [6, 20] MHz → **10.0 MHz**
+
+Step 3: Calculate Throughput  
+CQI = 11 → log₁₀(1 + 10^(11/10)) = log₁₀(1 + 10^1.1)  
+10^1.1 ≈ 12.589 → 1 + 12.589 = 13.589  
+log₁₀(13.589) ≈ 1.133 (from reference table)  
+
+Now compute:  
+Throughput = 10 × B × log_value  
+First: 10 × 10.0 = 100.0  
+Then: 100.0 × 1.133 = 113.3 Mbps
+
+Slice Type: eMBB
+Bandwidth: 10.00 MHz
+Throughput: 113.30 Mbps","{'slice_type': 'eMBB', 'bandwidth': 10.0, 'throughput': 113.32}",1.0,0.00740925
+"Network State: eMBB 10 users, URLLC 3 users. CQI=12.
+Service Request: ""I want to use virtual reality gaming""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to use virtual reality gaming"".  
+VR (Virtual Reality) falls under the **eMBB** category (Immersive: AR, VR, navigation, casual gaming).
+
+Step 2: Calculate Bandwidth  
+For eMBB with 10 users:  
+Raw_B = 90.0 / (10 + 1) = 90.0 / 11 ≈ 8.18 MHz  
+Clamped to [6, 20] → Bandwidth = 8.18 MHz
+
+Step 3: Calculate Throughput  
+CQI = 12 → log₁₀(1 + 10^(12/10)) = log₁₀(1 + 10^1.2) = log₁₀(1 + 15.849) = log₁₀(16.849) ≈ 1.227  
+Now compute:  
+10 × B = 10 × 8.18 = 81.8  
+Throughput = 81.8 × 1.227 ≈ 100.24 Mbps
+
+Slice Type: eMBB
+Bandwidth: 8.18 MHz
+Throughput: 100.24 Mbps","{'slice_type': 'eMBB', 'bandwidth': 8.18, 'throughput': 100.33}",1.0,0.00647755
+"Network State: eMBB 2 users, URLLC 8 users. CQI=13.
+Service Request: ""I want to stream 8K video content""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to stream 8K video content"".  
+This falls under eMBB (Enhanced Mobile Broadband) because it involves high-bandwidth video streaming.
+
+Step 2: Calculate Bandwidth  
+For eMBB:  
+Raw_B = 90.0 / (embb_users + 1) = 90.0 / (2 + 1) = 90.0 / 3 = 30.0 MHz  
+Clamp to [6, 20] MHz → 20.0 MHz  
+Bandwidth = 20.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 13 → log₁₀(1 + 10^(13/10)) = log₁₀(20.95) = 1.321  
+Now compute:  
+First: 10 × B = 10 × 20.00 = 200.0  
+Then: 200.0 × 1.321 = 264.20 Mbps  
+Throughput = 264.20 Mbps
+
+Slice Type: eMBB
+Bandwidth: 20.00 MHz
+Throughput: 264.20 Mbps","{'slice_type': 'eMBB', 'bandwidth': 20.0, 'throughput': 264.25}",1.0,0.0076172
+"Network State: eMBB 2 users, URLLC 2 users. CQI=9.
+Service Request: ""I need cloud-based AI image processing""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need cloud-based AI image processing"".  
+This falls under data processing and AI processing, which are part of eMBB (Enhanced Mobile Broadband).  
+✅ Slice Type: eMBB
+
+Step 2: Calculate Bandwidth  
+eMBB users = 2  
+Raw_B = 90.0 / (2 + 1) = 90.0 / 3 = 30.0 MHz  
+Clamp to [6, 20] MHz → 20.0 MHz  
+✅ Bandwidth: 20.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 9 → log₁₀(1 + 10^(9/10)) = log₁₀(8.94) = 0.951  
+Now compute step by step:  
+- 10 × B = 10 × 20.00 = 200.0  
+- Throughput = 200.0 × 0.951 = 190.2 Mbps  
+✅ Throughput: 190.20 Mbps
+
+Slice Type: eMBB
+Bandwidth: 20.00 MHz
+Throughput: 190.20 Mbps","{'slice_type': 'eMBB', 'bandwidth': 20.0, 'throughput': 190.3}",1.0,0.00482105
+"Network State: eMBB 3 users, URLLC 4 users. CQI=12.
+Service Request: ""I need emergency response coordination""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need emergency response coordination"".  
+This falls under the **URLLC (Ultra-Reliable Low Latency)** category because it involves emergency response, which requires low latency and high reliability.
+
+Step 2: Calculate Bandwidth  
+URLLC users = 4  
+Bandwidth formula: Raw_B = 30.0 / (urllc_users + 1) = 30.0 / (4 + 1) = 30.0 / 5 = 6.0 MHz  
+Clamp to [1, 5] MHz → 6.0 MHz exceeds upper limit of 5 MHz → clamp to 5.0 MHz  
+
+Bandwidth: 5.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 12 → log₁₀(1 + 10^(12/10)) = log₁₀(1 + 10^1.2) = log₁₀(1 + 15.849) ≈ log₁₀(16.849) ≈ 1.227  
+From reference: CQI=12 → log_value = 1.227  
+
+Now compute:
+- 10 × B = 10 × 5.00 = 50.00  
+- Throughput = 50.00 × 1.227 = 61.35 Mbps  
+
+Throughput: 61.35 Mbps
+
+Slice Type: URLLC
+Bandwidth: 5.00 MHz
+Throughput: 61.35 Mbps","{'slice_type': 'URLLC', 'bandwidth': 5.0, 'throughput': 61.33}",1.0,0.0087852
+"Network State: eMBB 4 users, URLLC 7 users. CQI=10.
+Service Request: ""I need precision CNC machine control""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+Service Request: ""I need precision CNC machine control""  
+This is a critical industrial control application involving precise, real-time machinery coordination. This falls under URLLC (Ultra-Reliable Low Latency) requirements.
+
+Step 2: Calculate Bandwidth  
+URLLC users = 7  
+Raw_B = 30.0 / (7 + 1) = 30.0 / 8 = 3.75 MHz  
+Clamped to [1, 5] MHz → Bandwidth = 3.75 MHz
+
+Step 3: Calculate Throughput  
+CQI = 10 → log₁₀(1 + 10^(10/10)) = log₁₀(1 + 10) = log₁₀(11) ≈ 1.041  
+
+First: 10 × B = 10 × 3.75 = 37.5  
+Then: 37.5 × 1.041 = 39.0375 Mbps → Rounded to 39.04 Mbps
+
+Slice Type: URLLC
+Bandwidth: 3.75 MHz
+Throughput: 39.04 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.75, 'throughput': 39.05}",1.0,0.00626785
+"Network State: eMBB 12 users, URLLC 8 users. CQI=8.
+Service Request: ""I need to participate in a video conference""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need to participate in a video conference"".  
+This falls under the eMBB category because it involves video conferencing, which is a high-bandwidth use case (media, video call).  
+
+Step 2: Calculate Bandwidth  
+For eMBB:  
+Raw_B = 90.0 / (12 + 1) = 90.0 / 13 ≈ 6.923 MHz  
+Clamped to [6, 20] MHz → Bandwidth = 6.92 MHz  
+
+Step 3: Calculate Throughput  
+CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(1 + 10^0.8) = log₁₀(1 + 6.31) = log₁₀(7.31) ≈ 0.864  
+Now compute:  
+First: 10 × B = 10 × 6.92 = 69.2  
+Then: 69.2 × 0.864 = 59.76 Mbps  
+
+Slice Type: eMBB  
+Bandwidth: 6.92 MHz  
+Throughput: 59.76 Mbps","{'slice_type': 'eMBB', 'bandwidth': 6.92, 'throughput': 59.78}",1.0,0.00461505
+"Network State: eMBB 12 users, URLLC 6 users. CQI=13.
+Service Request: ""I need precision CNC machine control""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need precision CNC machine control"".  
+This falls under Industrial automation, specifically machinery control and synchronization — a classic URLLC use case.  
+
+Slice Type: URLLC  
+
+Step 2: Calculate Bandwidth  
+URLLC users = 6  
+Raw_B = 30.0 / (6 + 1) = 30.0 / 7 ≈ 4.29 MHz  
+Clamped to [1, 5] MHz → 4.29 MHz is within range → Bandwidth = 4.29 MHz  
+
+Step 3: Calculate Throughput  
+CQI = 13 → log₁₀(1 + 10^(13/10)) = log₁₀(20.95) = 1.321  
+Now compute step-by-step:  
+- 10 × B = 10 × 4.29 = 42.9  
+- Throughput = 42.9 × 1.321 = 56.69 Mbps  
+
+Final Output:
+Slice Type: URLLC
+Bandwidth: 4.29 MHz
+Throughput: 56.69 Mbps","{'slice_type': 'URLLC', 'bandwidth': 4.29, 'throughput': 56.68}",1.0,0.0054537000000000006
+"Network State: eMBB 6 users, URLLC 10 users. CQI=12.
+Service Request: ""I want to download software updates""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to download software updates"".  
+This falls under data processing and media usage — specifically, file downloads.  
+→ This is an eMBB use case.
+
+Step 2: Calculate Bandwidth  
+eMBB users = 6  
+Raw_B = 90.0 / (6 + 1) = 90.0 / 7 ≈ 12.857 MHz  
+Clamp to [6, 20] MHz → 12.857 MHz is within range → Bandwidth = 12.86 MHz
+
+Step 3: Calculate Throughput  
+CQI = 12 → log₁₀(1 + 10^(12/10)) = log₁₀(1 + 10^1.2)  
+10^1.2 ≈ 15.849 → 1 + 15.849 = 16.849 → log₁₀(16.849) ≈ 1.227 (from reference table)
+
+Now compute:
+- 10 × B = 10 × 12.857 = 128.57
+- Throughput = 128.57 × 1.227 ≈ 157.75 Mbps
+
+Slice Type: eMBB
+Bandwidth: 12.86 MHz
+Throughput: 157.75 Mbps","{'slice_type': 'eMBB', 'bandwidth': 12.86, 'throughput': 157.74}",1.0,0.0050547000000000005
+"Network State: eMBB 7 users, URLLC 10 users. CQI=11.
+Service Request: ""I want to stream 8K video content""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to stream 8K video content"".  
+This falls under eMBB (Enhanced Mobile Broadband) as it involves high-bandwidth video streaming.
+
+Step 2: Calculate Bandwidth  
+eMBB users = 7  
+Raw_B = 90.0 / (7 + 1) = 90.0 / 8 = 11.25 MHz  
+Clamped to [6, 20] MHz → Bandwidth = 11.25 MHz
+
+Step 3: Calculate Throughput  
+CQI = 11 → log₁₀(1 + 10^(11/10)) = log₁₀(1 + 10^1.1) = log₁₀(1 + 12.589) = log₁₀(13.589) ≈ 1.133  
+Now compute:  
+10 × B = 10 × 11.25 = 112.5  
+Throughput = 112.5 × 1.133 ≈ 127.46 Mbps
+
+Slice Type: eMBB  
+Bandwidth: 11.25 MHz  
+Throughput: 127.46 Mbps","{'slice_type': 'eMBB', 'bandwidth': 11.25, 'throughput': 127.48}",1.0,0.0041758
+"Network State: eMBB 5 users, URLLC 2 users. CQI=13.
+Service Request: ""I need emergency response coordination""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need emergency response coordination"".  
+This matches the URLLC category: Emergency: emergency response, emergency coordination, first responder.
+
+Step 2: Calculate Bandwidth  
+URLLC: Raw_B = 30.0 / (urllc_users + 1) = 30.0 / (2 + 1) = 30.0 / 3 = 10.0 MHz  
+Clamp to [1, 5] MHz → 10.0 MHz exceeds max of 5 MHz → Bandwidth = 5.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 13 → log₁₀(20.95) = 1.321  
+B = 5.00 MHz  
+First: 10 × B = 10 × 5.00 = 50.0  
+Then: 50.0 × 1.321 = 66.05 Mbps
+
+Slice Type: URLLC
+Bandwidth: 5.00 MHz
+Throughput: 66.05 Mbps","{'slice_type': 'URLLC', 'bandwidth': 5.0, 'throughput': 66.06}",1.0,0.00140565
+"Network State: eMBB 11 users, URLLC 8 users. CQI=8.
+Service Request: ""I need to participate in a video conference""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need to participate in a video conference"".  
+This falls under the eMBB category because it involves a video call, which is classified as a media and communication activity requiring high bandwidth.
+
+Step 2: Calculate Bandwidth  
+For eMBB:  
+Raw_B = 90.0 / (eMBB_users + 1) = 90.0 / (11 + 1) = 90.0 / 12 = 7.5 MHz  
+Clamped to [6, 20] MHz → Bandwidth = 7.50 MHz
+
+Step 3: Calculate Throughput  
+CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(1 + 10^0.8) = log₁₀(1 + 6.31) = log₁₀(7.31) = 0.864  
+Now compute:
+- 10 × B = 10 × 7.50 = 75.0
+- Throughput = 75.0 × 0.864 = 64.80 Mbps
+
+Slice Type: eMBB
+Bandwidth: 7.50 MHz
+Throughput: 64.80 Mbps","{'slice_type': 'eMBB', 'bandwidth': 7.5, 'throughput': 64.79}",1.0,0.0010068
+"Network State: eMBB 5 users, URLLC 2 users. CQI=14.
+Service Request: ""I need emergency response coordination""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need emergency response coordination"".  
+This falls under the **URLLC (Ultra-Reliable Low Latency)** category, as it involves emergency coordination and first responder communication.
+
+Step 2: Calculate Bandwidth  
+For URLLC:  
+Raw_B = 30.0 / (urllc_users + 1) = 30.0 / (2 + 1) = 30.0 / 3 = 10.0 MHz  
+Clamp to [1, 5] MHz → 10.0 > 5 → clamp to **5.00 MHz**
+
+Bandwidth: 5.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 14 → log₁₀(1 + 10^(14/10)) = log₁₀(1 + 10^1.4) = log₁₀(1 + 25.1189) ≈ log₁₀(26.1189) = 1.417  
+(Reference value for CQI=14 is already provided: 1.417)
+
+Now compute:  
+Throughput = 10 × B × log_value  
+= 10 × 5.00 × 1.417  
+= 50.00 × 1.417  
+= 70.85 Mbps
+
+Throughput: 70.85 Mbps
+
+Slice Type: URLLC
+Bandwidth: 5.00 MHz
+Throughput: 70.85 Mbps","{'slice_type': 'URLLC', 'bandwidth': 5.0, 'throughput': 70.85}",1.0,0.0083096
+"Network State: eMBB 5 users, URLLC 8 users. CQI=10.
+Service Request: ""I need high-frequency trading connectivity""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","STEP 1: IDENTIFY SLICE TYPE  
+The service request is ""I need high-frequency trading connectivity"".  
+This falls under **Financial: trading** → URLLC (Ultra-Reliable Low Latency).
+
+STEP 2: CALCULATE BANDWIDTH  
+URLLC users = 8  
+Raw_B = 30.0 / (8 + 1) = 30.0 / 9 = 3.33... MHz  
+Clamped to [1, 5] MHz → Bandwidth = 3.33 MHz
+
+STEP 3: CALCULATE THROUGHPUT  
+CQI = 10 → log₁₀(1 + 10^(10/10)) = log₁₀(1 + 10) = log₁₀(11) = 1.041  
+
+Step-by-step:
+- 10 × B = 10 × 3.33 = 33.3
+- Throughput = 33.3 × 1.041 = 34.6653 Mbps → Rounded to 34.67 Mbps
+
+Slice Type: URLLC  
+Bandwidth: 3.33 MHz  
+Throughput: 34.67 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.33, 'throughput': 34.68}",1.0,0.00059825
+"Network State: eMBB 9 users, URLLC 9 users. CQI=11.
+Service Request: ""I want to browse websites and check email""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to browse websites and check email"".  
+This falls under the category of **eMBB (Enhanced Mobile Broadband)** because it involves web browsing and email — both are standard data-intensive tasks that benefit from high bandwidth, not low latency.
+
+Step 2: Calculate Bandwidth  
+For eMBB:  
+Raw_B = 90.0 / (embb_users + 1)  
+= 90.0 / (9 + 1)  
+= 90.0 / 10  
+= 9.0 MHz  
+
+Clamp to [6, 20] MHz → 9.0 MHz is within range ⇒ Bandwidth = 9.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 11 → log₁₀(1 + 10^(11/10)) = log₁₀(1 + 10^1.1) ≈ log₁₀(13.59) = 1.133 (from reference table)
+
+Now compute step by step:
+- 10 × B = 10 × 9.00 = 90.0
+- Throughput = 90.0 × 1.133 = 101.97 Mbps
+
+Slice Type: eMBB
+Bandwidth: 9.00 MHz
+Throughput: 101.97 Mbps","{'slice_type': 'eMBB', 'bandwidth': 9.0, 'throughput': 101.99}",1.0,0.00806165
+"Network State: eMBB 8 users, URLLC 7 users. CQI=14.
+Service Request: ""I need precision CNC machine control""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""precision CNC machine control"".  
+This falls under industrial automation and machinery control — a classic URLLC use case.  
+
+Slice Type: URLLC  
+
+Step 2: Calculate Bandwidth  
+URLLC users = 7  
+Raw_B = 30.0 / (7 + 1) = 30.0 / 8 = 3.75 MHz  
+Clamped to [1, 5] MHz → 3.75 MHz is within range  
+Bandwidth: 3.75 MHz  
+
+Step 3: Calculate Throughput  
+CQI = 14 → log₁₀(1 + 10^(14/10)) = log₁₀(1 + 10^1.4) = log₁₀(1 + 25.1189) = log₁₀(26.1189) ≈ 1.417  
+Now compute throughput:  
+10 × B = 10 × 3.75 = 37.5  
+Throughput = 37.5 × 1.417 = 53.1375 Mbps  
+Rounded to two decimal places: 53.14 Mbps  
+
+Final Output:
+Slice Type: URLLC
+Bandwidth: 3.75 MHz
+Throughput: 53.14 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.75, 'throughput': 53.14}",1.0,0.0108085
+"Network State: eMBB 6 users, URLLC 6 users. CQI=9.
+Service Request: ""I want to browse websites and check email""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+Service Request: ""I want to browse websites and check email""  
+This falls under eMBB (Enhanced Mobile Broadband) because it involves web browsing and email — both are standard internet usage with high bandwidth needs but not critical latency requirements.
+
+Step 2: Calculate Bandwidth  
+For eMBB:  
+Raw_B = 90.0 / (6 + 1) = 90.0 / 7 ≈ 12.857 MHz  
+Clamped to [6, 20] → 12.86 MHz  
+
+Bandwidth: 12.86 MHz
+
+Step 3: Calculate Throughput  
+CQI = 9 → log₁₀(1 + 10^(9/10)) = log₁₀(8.94) = 0.951  
+Now compute step-by-step:
+- 10 × B = 10 × 12.86 = 128.6  
+- Throughput = 128.6 × 0.951 ≈ 122.32 Mbps  
+
+Throughput: 122.32 Mbps
+
+Slice Type: eMBB
+Bandwidth: 12.86 MHz
+Throughput: 122.32 Mbps","{'slice_type': 'eMBB', 'bandwidth': 12.86, 'throughput': 122.36}",1.0,0.010588700000000001
+"Network State: eMBB 12 users, URLLC 3 users. CQI=8.
+Service Request: ""I need to download a large game file""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need to download a large game file"".  
+This falls under the eMBB category as it involves high bandwidth data transfer (file download) — consistent with the eMBB use case of ""Data processing: cloud processing, AI processing, image processing, data analytics"" and general ""download"".
+
+Step 2: Calculate Bandwidth  
+For eMBB:  
+Raw_B = 90.0 / (embb_users + 1)  
+embb_users = 12  
+Raw_B = 90.0 / (12 + 1) = 90.0 / 13 ≈ 6.92 MHz  
+Clamped to [6, 20] MHz → 6.92 MHz is within range → Bandwidth = 6.92 MHz
+
+Step 3: Calculate Throughput  
+CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(1 + 10^0.8) = log₁₀(1 + 6.31) = log₁₀(7.31) = 0.864  
+Now compute:  
+First: 10 × B = 10 × 6.92 = 69.2  
+Then: 69.2 × 0.864 = 59.78 Mbps  
+
+Slice Type: eMBB  
+Bandwidth: 6.92 MHz  
+Throughput: 59.78 Mbps","{'slice_type': 'eMBB', 'bandwidth': 6.92, 'throughput': 59.78}",1.0,0.00927425
+"Network State: eMBB 12 users, URLLC 9 users. CQI=9.
+Service Request: ""I need holographic communication""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""holographic communication"". Holography involves high-bandwidth transmission of immersive visual data, typically requiring significant bandwidth for real-time 3D rendering and streaming. This aligns with the eMBB category (Immersive: AR, VR, navigation, casual gaming — holography fits under immersive).
+
+Slice Type: eMBB
+
+Step 2: Calculate Bandwidth  
+eMBB users = 12  
+Raw_B = 90.0 / (12 + 1) = 90.0 / 13 ≈ 6.923 MHz  
+Clamp to [6, 20] → 6.923 MHz remains valid.
+
+Bandwidth: 6.92 MHz
+
+Step 3: Calculate Throughput  
+CQI = 9 → log₁₀(1 + 10^(9/10)) = log₁₀(8.94) = 0.951  
+Now compute step by step:  
+First: 10 × B = 10 × 6.923 = 69.23  
+Then: Throughput = 69.23 × 0.951 ≈ 65.83 Mbps
+
+Throughput: 65.83 Mbps
+
+Slice Type: eMBB
+Bandwidth: 6.92 MHz
+Throughput: 65.83 Mbps","{'slice_type': 'eMBB', 'bandwidth': 6.92, 'throughput': 65.84}",1.0,0.002023
+"Network State: eMBB 7 users, URLLC 7 users. CQI=14.
+Service Request: ""I need to download a large game file""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need to download a large game file"".  
+This falls under the eMBB category because it involves data downloading, which is a high-bandwidth activity.
+
+Step 2: Calculate Bandwidth  
+For eMBB with 7 users:  
+Raw_B = 90.0 / (7 + 1) = 90.0 / 8 = 11.25 MHz  
+This is within the [6, 20] MHz range, so no clamping needed.  
+Bandwidth = 11.25 MHz
+
+Step 3: Calculate Throughput  
+CQI = 14 → log₁₀(1 + 10^(14/10)) = log₁₀(1 + 10^1.4) = log₁₀(1 + 25.1189) = log₁₀(26.1189) ≈ 1.417  
+Now compute:  
+First: 10 × B = 10 × 11.25 = 112.5  
+Then: 112.5 × 1.417 = 159.4125 Mbps  
+Throughput ≈ 159.41 Mbps
+
+Slice Type: eMBB
+Bandwidth: 11.25 MHz
+Throughput: 159.41 Mbps","{'slice_type': 'eMBB', 'bandwidth': 11.25, 'throughput': 159.41}",1.0,0.00246805
+"Network State: eMBB 8 users, URLLC 5 users. CQI=11.
+Service Request: ""I want to monitor home security cameras""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to monitor home security cameras"".  
+This falls under video/screen monitoring, which is categorized as eMBB (Enhanced Mobile Broadband).
+
+Step 2: Calculate Bandwidth  
+eMBB users = 8  
+Raw_B = 90.0 / (8 + 1) = 90.0 / 9 = 10.0 MHz  
+Clamped to [6, 20] MHz → Bandwidth = 10.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 11 → log₁₀(1 + 10^(11/10)) = log₁₀(1 + 10^1.1) = log₁₀(1 + 12.589) = log₁₀(13.589) ≈ 1.133  
+Now compute step-by-step:  
+10 × B = 10 × 10.00 = 100  
+Throughput = 100 × 1.133 = 113.30 Mbps
+
+Slice Type: eMBB
+Bandwidth: 10.00 MHz
+Throughput: 113.30 Mbps","{'slice_type': 'eMBB', 'bandwidth': 10.0, 'throughput': 113.32}",1.0,0.0039678000000000005
+"Network State: eMBB 8 users, URLLC 8 users. CQI=12.
+Service Request: ""I want to browse websites and check email""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to browse websites and check email"".  
+This falls under **eMBB (Enhanced Mobile Broadband)** because it involves web browsing and email — typical low-latency, high-bandwidth consumer data usage.
+
+Step 2: Calculate Bandwidth  
+For eMBB with 8 users:  
+Raw_B = 90.0 / (8 + 1) = 90.0 / 9 = 10.0 MHz  
+Clamped to [6, 20] MHz → Bandwidth = 10.00 MHz
+
+Step 3: Calculate Throughput  
+Given CQI=12, log₁₀(1 + 10^(12/10)) = log₁₀(1 + 10^1.2) = log₁₀(1 + 15.8489) = log₁₀(16.85) ≈ 1.227  
+Now compute:  
+10 × B = 10 × 10.00 = 100  
+Throughput = 100 × 1.227 = 122.70 Mbps
+
+Slice Type: eMBB
+Bandwidth: 10.00 MHz
+Throughput: 122.70 Mbps","{'slice_type': 'eMBB', 'bandwidth': 10.0, 'throughput': 122.66}",1.0,0.00607085
+"Network State: eMBB 12 users, URLLC 9 users. CQI=8.
+Service Request: ""I need to control a robotic arm in real time""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need to control a robotic arm in real time"".  
+This falls under Industrial automation and machinery control — a critical, low-latency application.  
+→ Slice Type: URLLC
+
+Step 2: Calculate Bandwidth  
+URLLC bandwidth formula: Raw_B = 30.0 / (urllc_users + 1)  
+urllc_users = 9  
+Raw_B = 30.0 / (9 + 1) = 30.0 / 10 = 3.0 MHz  
+Clamped to [1, 5] MHz → 3.0 MHz  
+→ Bandwidth: 3.00 MHz
+
+Step 3: Calculate Throughput  
+CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(1 + 10^0.8) = log₁₀(1 + 6.31) = log₁₀(7.31) = 0.864  
+Now apply the formula:  
+Throughput = 10 × B × log_value  
+= 10 × 3.00 × 0.864  
+= 30 × 0.864  
+= 25.92 Mbps  
+→ Throughput: 25.92 Mbps
+
+Slice Type: URLLC
+Bandwidth: 3.00 MHz
+Throughput: 25.92 Mbps","{'slice_type': 'URLLC', 'bandwidth': 3.0, 'throughput': 25.92}",1.0,0.0069275
+"Network State: eMBB 7 users, URLLC 10 users. CQI=8.
+Service Request: ""I need to download a large game file""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+Service Request: ""I need to download a large game file""  
+This falls under the eMBB category because it involves downloading a large data file — a high-bandwidth use case.
+
+Step 2: Calculate Bandwidth  
+eMBB Users = 7  
+Raw_B = 90.0 / (7 + 1) = 90.0 / 8 = 11.25 MHz  
+Clamp to [6, 20] → 11.25 MHz is within range ✅  
+Bandwidth = 11.25 MHz
+
+Step 3: Calculate Throughput  
+CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(1 + 10^0.8) = log₁₀(1 + 6.31) = log₁₀(7.31) = 0.864  
+
+Now compute step by step:  
+- 10 × B = 10 × 11.25 = 112.5  
+- Throughput = 112.5 × 0.864 = 97.2 Mbps
+
+Slice Type: eMBB
+Bandwidth: 11.25 MHz
+Throughput: 97.20 Mbps","{'slice_type': 'eMBB', 'bandwidth': 11.25, 'throughput': 97.19}",1.0,0.0012189
+"Network State: eMBB 5 users, URLLC 10 users. CQI=9.
+Service Request: ""I need to monitor IoT sensors in real-time""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I need to monitor IoT sensors in real-time"".  
+Monitoring IoT sensors in real-time typically involves low-latency data transmission for timely responses, which aligns with URLLC (Ultra-Reliable Low Latency) requirements — especially if the sensor data must trigger immediate actions (e.g., industrial control, safety alerts).  
+
+Slice Type: URLLC
+
+Step 2: Calculate Bandwidth  
+URLLC users = 10  
+Bandwidth formula: Raw_B = 30.0 / (urllc_users + 1) = 30.0 / (10 + 1) = 30.0 / 11 ≈ 2.73 MHz  
+Clamped to [1, 5] MHz → Bandwidth = 2.73 MHz  
+
+Bandwidth: 2.73 MHz
+
+Step 3: Calculate Throughput  
+CQI = 9 → log₁₀(1 + 10^(9/10)) = log₁₀(8.94) = 0.951  
+Now compute step-by-step:  
+10 × B = 10 × 2.73 = 27.3  
+Throughput = 27.3 × 0.951 ≈ 25.96 Mbps  
+
+Throughput: 25.96 Mbps
+
+Slice Type: URLLC
+Bandwidth: 2.73 MHz
+Throughput: 25.96 Mbps","{'slice_type': 'URLLC', 'bandwidth': 2.73, 'throughput': 25.98}",1.0,0.00440955
+"Network State: eMBB 10 users, URLLC 6 users. CQI=9.
+Service Request: ""I want to download software updates""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+The service request is ""I want to download software updates"".  
+This falls under the eMBB category because it involves data downloads, which are a core use case of Enhanced Mobile Broadband.
+
+Step 2: Calculate Bandwidth  
+For eMBB:  
+Raw_B = 90.0 / (embb_users + 1) = 90.0 / (10 + 1) = 90.0 / 11 ≈ 8.18 MHz  
+Clamped to [6, 20] MHz → Bandwidth = 8.18 MHz
+
+Step 3: Calculate Throughput  
+CQI = 9 → log₁₀(1 + 10^(9/10)) = log₁₀(1 + 10^0.9) = log₁₀(1 + 7.943) = log₁₀(8.943) ≈ 0.951  
+Now compute:  
+10 × B = 10 × 8.18 = 81.8  
+Throughput = 81.8 × 0.951 ≈ 77.79 Mbps
+
+Slice Type: eMBB
+Bandwidth: 8.18 MHz
+Throughput: 77.79 Mbps","{'slice_type': 'eMBB', 'bandwidth': 8.18, 'throughput': 77.83}",1.0,0.0035689000000000003
+"Network State: eMBB 6 users, URLLC 5 users. CQI=8.
+Service Request: ""I want to use virtual reality gaming""
+Task: Determine slice type (eMBB/URLLC), bandwidth (MHz), and throughput (Mbps).
+Formula: Bandwidth = SliceCapacity / (Users + 1), Throughput = 10 × B × log₁₀(1 + 10^(CQI/10))
+Constraints: eMBB [6-20 MHz, 90 MHz total], URLLC [1-5 MHz, 30 MHz total]","Step 1: Identify Slice Type  
+Service Request: ""I want to use virtual reality gaming""  
+→ This falls under **Immersive** category → **eMBB**
+
+Step 2: Calculate Bandwidth  
+For eMBB:  
+Raw_B = 90.0 / (embb_users + 1) = 90.0 / (6 + 1) = 90.0 / 7 = 12.857 MHz  
+Clamped to [6, 20] MHz → 12.86 MHz
+
+Step 3: Calculate Throughput  
+CQI = 8 → log₁₀(1 + 10^(8/10)) = log₁₀(1 + 10^0.8) = log₁₀(1 + 6.31) = log₁₀(7.31) = 0.864 (from reference)
+
+Now compute:
+- 10 × B = 10 × 12.857 = 128.57
+- Throughput = 128.57 × 0.864 = 111.09 Mbps
+
+Slice Type: eMBB
+Bandwidth: 12.86 MHz
+Throughput: 111.09 Mbps","{'slice_type': 'eMBB', 'bandwidth': 12.86, 'throughput': 111.1}",1.0,0.00267705

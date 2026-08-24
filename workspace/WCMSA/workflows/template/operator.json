@@ -1,0 +1,37 @@
+{
+    "Custom": {
+        "description": "Basic operator for WCMSA. After CodeLevelKalmanPredictor and CodeLevelRayTracing provide predicted position and CQI, Custom must determine slice type, bandwidth, throughput, and QoS.",
+        "interface": "custom(input: str, instruction: str) -> dict with key 'response' of type str"
+    },
+    "ScEnsemble": {
+        "description": "Self-consistency voting for mobile service decisions. Generates multiple allocation proposals and picks the most consistent one. Use for higher accuracy at 3-5x cost.",
+        "interface": "sc_ensemble(solutions: List[str], problem: str) -> dict with key 'response' of type str"
+    },
+    "CodeLevelKalmanPredictor": {
+        "description": "Code-level helper (NOT an LLM operator). Extracts trajectory from problem text and predicts next position using constant-velocity Kalman Filter. Returns pred_x, pred_y, region. Use inject_prediction() to append position to problem text.",
+        "interface": "kalman.predict(problem: str) -> dict; kalman.inject_prediction(problem: str, pos_info: dict) -> str"
+    },
+    "CodeLevelRayTracing": {
+        "description": "Code-level helper (NOT an LLM operator). Calls ray_tracing tool directly at Python level to get accurate CQI at a given position. Use get_cqi_at() with predicted position from KalmanPredictor.",
+        "interface": "rt.get_cqi_at(x: float, y: float, region: str) -> dict; rt.inject_cqi(problem: str, cqi_info: dict) -> str"
+    },
+    "MobileServiceAssuranceAgent": {
+        "description": "ReAct-based agent with 6 domain-specific tools including Kalman Filter predictor and ray_tracing. The agent calls tools via XML. Works but relies on executor LLM's XML parsing ability.",
+        "interface": "msa_agent(problem: str, trajectory_history: List, max_steps: int = 6) -> dict with 'answer'"
+    },
+    "DirectMobileSolver": {
+        "description": "Direct LLM-based mobile service solver. Sends problem directly to LLM with structured prompt to get all 6 fields. Simpler than MobileServiceAssuranceAgent (no ReAct loop). Less accurate without code-level position/CQI.",
+        "interface": "direct_solver(problem: str) -> dict with 'answer' of type str"
+    },
+    "tools": {
+        "kalman_filter_predictor": "Predict next user position using Kalman Filter",
+        "ray_tracing": "Get CQI at a position using real building data",
+        "shannon_calculator": "Rate = 10.0 × B × log₁₀(1 + 10^(CQI/10))",
+        "slice_allocator": "Allocate user to eMBB (6-20MHz) or URLLC (1-5MHz) slice",
+        "knowledge_base_query": "Query service QoS requirements"
+    },
+    "slice_constraints": {
+        "eMBB": {"bandwidth_mhz": [6, 20], "total_capacity_mhz": 90},
+        "URLLC": {"bandwidth_mhz": [1, 5], "total_capacity_mhz": 30}
+    }
+}
