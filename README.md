@@ -133,19 +133,19 @@ WirelessBench is a standardized, multi-dimensional benchmark suite for evaluatin
 ### WCHW — Wireless Communication Homework
 
 <p align="center">
-  <img src="assets/wchw_results.png" width="75%" alt="WCHW Method Comparison">
+  [WCHW method comparison figure](assets/wchw_method_comparison.pdf)
 </p>
 
 ### WCNS — Wireless Communication Network Slicing
 
 <p align="center">
-  <img src="assets/wcns_results.png" width="75%" alt="WCNS Full Comparison">
+  [WCNS full comparison figure](assets/wcns_full_comparison.pdf)
 </p>
 
 ### WCMSA — Mobile Service Assurance
 
 <p align="center">
-  <img src="assets/wcmsa_results.png" width="75%" alt="WCMSA Overall Score">
+  [WCMSA overall score figure](assets/wcmsa_overall_score.pdf)
 </p>
 
 ### Main Results
